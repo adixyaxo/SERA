@@ -1,6 +1,14 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, AlertTriangle, Target, Clock, Loader2, RefreshCw, Lightbulb, TrendingUp, Zap } from 'lucide-react';
+import {
+  Brain,
+  Target,
+  Clock,
+  Loader2,
+  RefreshCw,
+  Lightbulb,
+  TrendingUp
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useSeraPlanner } from '@/hooks/useSeraPlanner';
@@ -15,45 +23,41 @@ export function SeraPlannerCard() {
   }, []);
 
   const workloadConfig = {
-    light: { 
+    light: {
       color: 'bg-green-500/20 text-green-400 border-green-500/30',
-      icon: '✓',
       label: 'Light'
     },
-    moderate: { 
+    moderate: {
       color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-      icon: '○',
       label: 'Balanced'
     },
-    heavy: { 
+    heavy: {
       color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-      icon: '!',
       label: 'Heavy'
     },
-    overloaded: { 
+    overloaded: {
       color: 'bg-red-500/20 text-red-400 border-red-500/30',
-      icon: '⚠',
       label: 'Overloaded'
     },
   };
 
   const workloadKey = plan?.analysis?.workload || 'moderate';
-  const workload = workloadConfig[workloadKey] || workloadConfig.moderate;
+  const workload = workloadConfig[workloadKey as keyof typeof workloadConfig] || workloadConfig.moderate;
 
   return (
-    <motion.div 
-      className="glass rounded-3xl p-5 animate-fade-in"
+    <motion.div
+      className="glass rounded-3xl p-6 animate-fade-in w-full"
       layout
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-            <Brain className="w-4 h-4 text-accent" />
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+            <Brain className="w-5 h-5 text-accent" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold">AI Planner</h3>
-            <p className="text-[10px] text-muted-foreground">Smart insights</p>
+            <h3 className="text-lg font-medium">AI Planner</h3>
+            <p className="text-xs text-muted-foreground">Smart insights</p>
           </div>
         </div>
         <Button
@@ -61,12 +65,12 @@ export function SeraPlannerCard() {
           size="icon"
           onClick={analyzeTasks}
           disabled={isLoading}
-          className="h-8 w-8 rounded-lg hover:bg-accent/10"
+          className="h-9 w-9 rounded-lg hover:bg-accent/10"
         >
           {isLoading ? (
-            <Loader2 className="w-4 h-4 animate-spin text-accent" />
+            <Loader2 className="w-5 h-5 animate-spin text-accent" />
           ) : (
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className="w-5 h-5" />
           )}
         </Button>
       </div>
@@ -75,6 +79,7 @@ export function SeraPlannerCard() {
         {/* Loading State */}
         {isLoading && !plan && (
           <motion.div
+            key="loading"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -92,108 +97,64 @@ export function SeraPlannerCard() {
           </motion.div>
         )}
 
-        {/* Empty State */}
-        {!plan && !isLoading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="text-center py-6"
-          >
-            <Brain className="w-10 h-10 mx-auto mb-3 text-muted-foreground/30" />
-            <p className="text-xs text-muted-foreground">
-              Click refresh to analyze tasks
-            </p>
-          </motion.div>
-        )}
-
         {/* Content */}
         {plan && (
           <motion.div
+            key="content"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="space-y-4"
+            className="space-y-5"
           >
             {/* Workload Indicator */}
-            <div className="flex items-center justify-between p-3 rounded-xl bg-muted/30">
-              <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between p-4 rounded-2xl bg-muted/30">
+              <div className="flex items-center gap-3">
                 <TrendingUp className="w-4 h-4 text-muted-foreground" />
-                <span className="text-xs text-muted-foreground">Workload</span>
+                <span className="text-sm text-muted-foreground">Current Workload</span>
               </div>
-              <Badge 
-                variant="outline" 
-                className={cn("text-[10px] font-medium", workload.color)}
+              <Badge
+                variant="outline"
+                className={cn("px-3 py-0.5 text-xs font-medium", workload.color)}
               >
                 {workload.label}
               </Badge>
             </div>
 
-            {/* Summary */}
-            {plan.summary && (
-              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
-                {plan.summary}
-              </p>
-            )}
-
-            {/* Risk Items */}
-            {plan.analysis?.risk_items && plan.analysis.risk_items.length > 0 && (
-              <div className="space-y-2">
-                <div className="flex items-center gap-1.5 text-xs font-medium text-yellow-400">
-                  <AlertTriangle className="w-3.5 h-3.5" />
-                  <span>Attention</span>
-                </div>
-                <div className="space-y-1">
-                  {plan.analysis.risk_items.slice(0, 2).map((item, i) => (
-                    <motion.div 
-                      key={i} 
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.1 }}
-                      className="text-[11px] text-muted-foreground pl-5 py-1 border-l-2 border-yellow-500/30"
-                    >
-                      {item}
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* Today's Focus */}
             {plan.today_focus && plan.today_focus.length > 0 && (
-              <div className="space-y-2">
-                <div className="flex items-center gap-1.5 text-xs font-medium text-accent">
-                  <Target className="w-3.5 h-3.5" />
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-sm font-medium text-accent">
+                  <Target className="w-4 h-4" />
                   <span>Today's Focus</span>
                 </div>
-                <div className="space-y-1.5">
+                <div className="grid gap-2">
                   {plan.today_focus.slice(0, 2).map((focus, i) => (
-                    <motion.div 
+                    <div
                       key={i}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.1 }}
-                      className="flex items-center gap-2 text-[11px] text-muted-foreground bg-accent/5 rounded-lg px-3 py-2"
+                      className="flex items-center justify-between text-sm text-muted-foreground bg-accent/5 rounded-xl px-4 py-3"
                     >
-                      <Clock className="w-3 h-3 text-accent/60" />
-                      <span className="capitalize font-medium">{focus.suggested_time}</span>
-                      <span className="text-muted-foreground/50">•</span>
-                      <span>{focus.duration_estimate}</span>
-                    </motion.div>
+                      <div className="flex items-center gap-3">
+                        <Clock className="w-4 h-4 text-accent/60" />
+                        <span className="capitalize font-medium text-foreground">
+                          {focus.suggested_time}
+                        </span>
+                      </div>
+                      <span className="text-xs opacity-70">{focus.duration_estimate}</span>
+                    </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Quick Recommendations */}
+            {/* Strategic Tip */}
             {plan.recommendations && plan.recommendations.length > 0 && (
-              <div className="pt-2 border-t border-border/30">
-                <div className="flex items-center gap-1.5 text-xs font-medium mb-2">
-                  <Lightbulb className="w-3.5 h-3.5 text-muted-foreground" />
-                  <span className="text-muted-foreground">Tip</span>
+              <div className="pt-4 border-t border-border/30">
+                <div className="flex items-center gap-2 text-sm font-medium mb-2">
+                  <Lightbulb className="w-4 h-4 text-yellow-500/80" />
+                  <span className="text-muted-foreground">Strategic Tip</span>
                 </div>
-                <p className="text-[11px] text-muted-foreground/80 leading-relaxed">
-                  {plan.recommendations[0]?.suggestion}
+                <p className="text-sm text-muted-foreground/80 leading-relaxed italic">
+                  "{plan.recommendations[0]?.suggestion}"
                 </p>
               </div>
             )}

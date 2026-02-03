@@ -31,7 +31,7 @@ const Index = () => {
     <div className="min-h-screen w-full relative">
       <FloatingBackground />
       <Header />
-      
+
       {/* Main content with transparent glass effect to show floating background */}
       <main className="pt-32 sm:pt-28 pb-24 sm:pb-16 px-4 sm:px-8 min-h-screen relative z-10">
         <div className="max-w-7xl mx-auto space-y-6">
@@ -48,9 +48,9 @@ const Index = () => {
             {/* Left Column - Timeline and AI Planner (2/3 width) */}
             <div className="lg:col-span-2 space-y-6">
               <TimelineWidget />
-              
+
               {/* AI Planner Card - positioned left-aligned below Timeline */}
-              <div className="max-w-md">
+              <div className="lg:col-span-2 space-y-6">
                 <SeraPlannerCard />
               </div>
             </div>
