@@ -17,6 +17,7 @@ import Projects from "./pages/Projects";
 import Profile from "./pages/Profile";
 import Tags from "./pages/Tags";
 import NotFound from "./pages/NotFound";
+import Tracker from "./pages/Tracker";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
               <Route path="/automations" element={<ProtectedRoute><Automations /></ProtectedRoute>} />
               <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              <Route path="/tracker" element={<ProtectedRoute><Tracker /></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </VoiceCommandProvider>
