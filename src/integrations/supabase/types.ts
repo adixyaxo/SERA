@@ -151,20 +151,23 @@ export type Database = {
       }
       habit_logs: {
         Row: {
-          completed_date: string
+          completed: boolean
           created_at: string
+          date_string: string
           habit_id: string
           id: string
         }
         Insert: {
-          completed_date: string
+          completed?: boolean
           created_at?: string
+          date_string: string
           habit_id: string
           id?: string
         }
         Update: {
-          completed_date?: string
+          completed?: boolean
           created_at?: string
+          date_string?: string
           habit_id?: string
           id?: string
         }
@@ -181,28 +184,34 @@ export type Database = {
       habits: {
         Row: {
           archived: boolean
+          category: string | null
           created_at: string
           frequency: string
           id: string
           name: string
+          start_date: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
           archived?: boolean
+          category?: string | null
           created_at?: string
           frequency?: string
           id?: string
           name: string
+          start_date?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
           archived?: boolean
+          category?: string | null
           created_at?: string
           frequency?: string
           id?: string
           name?: string
+          start_date?: string | null
           updated_at?: string
           user_id?: string
         }
