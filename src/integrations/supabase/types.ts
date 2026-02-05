@@ -340,6 +340,108 @@ export type Database = {
         }
         Relationships: []
       }
+      user_calibration: {
+        Row: {
+          blackout_hours: Json | null
+          buffer_minutes: number | null
+          chronotype: Database["public"]["Enums"]["chronotype_type"] | null
+          communication_style:
+            | Database["public"]["Enums"]["communication_style"]
+            | null
+          commute: Database["public"]["Enums"]["commute_type"] | null
+          commute_duration_minutes: number | null
+          created_at: string
+          deep_work_end: number | null
+          deep_work_start: number | null
+          energy_windows: Json | null
+          id: string
+          max_focus_hours: number | null
+          methodology: Database["public"]["Enums"]["methodology_type"] | null
+          notes_destination: string | null
+          onboarding_completed: boolean | null
+          onboarding_step: number | null
+          open_loop_handling: string | null
+          primary_calendar: string | null
+          priority_contacts: Json | null
+          proactivity: Database["public"]["Enums"]["proactivity_type"] | null
+          scenario_response: string | null
+          slump_end: number | null
+          slump_start: number | null
+          updated_at: string
+          urgency_threshold_minutes: number | null
+          user_id: string
+          voice_mode_on_transit: boolean | null
+          wake_time: string | null
+          wind_down_time: string | null
+        }
+        Insert: {
+          blackout_hours?: Json | null
+          buffer_minutes?: number | null
+          chronotype?: Database["public"]["Enums"]["chronotype_type"] | null
+          communication_style?:
+            | Database["public"]["Enums"]["communication_style"]
+            | null
+          commute?: Database["public"]["Enums"]["commute_type"] | null
+          commute_duration_minutes?: number | null
+          created_at?: string
+          deep_work_end?: number | null
+          deep_work_start?: number | null
+          energy_windows?: Json | null
+          id?: string
+          max_focus_hours?: number | null
+          methodology?: Database["public"]["Enums"]["methodology_type"] | null
+          notes_destination?: string | null
+          onboarding_completed?: boolean | null
+          onboarding_step?: number | null
+          open_loop_handling?: string | null
+          primary_calendar?: string | null
+          priority_contacts?: Json | null
+          proactivity?: Database["public"]["Enums"]["proactivity_type"] | null
+          scenario_response?: string | null
+          slump_end?: number | null
+          slump_start?: number | null
+          updated_at?: string
+          urgency_threshold_minutes?: number | null
+          user_id: string
+          voice_mode_on_transit?: boolean | null
+          wake_time?: string | null
+          wind_down_time?: string | null
+        }
+        Update: {
+          blackout_hours?: Json | null
+          buffer_minutes?: number | null
+          chronotype?: Database["public"]["Enums"]["chronotype_type"] | null
+          communication_style?:
+            | Database["public"]["Enums"]["communication_style"]
+            | null
+          commute?: Database["public"]["Enums"]["commute_type"] | null
+          commute_duration_minutes?: number | null
+          created_at?: string
+          deep_work_end?: number | null
+          deep_work_start?: number | null
+          energy_windows?: Json | null
+          id?: string
+          max_focus_hours?: number | null
+          methodology?: Database["public"]["Enums"]["methodology_type"] | null
+          notes_destination?: string | null
+          onboarding_completed?: boolean | null
+          onboarding_step?: number | null
+          open_loop_handling?: string | null
+          primary_calendar?: string | null
+          priority_contacts?: Json | null
+          proactivity?: Database["public"]["Enums"]["proactivity_type"] | null
+          scenario_response?: string | null
+          slump_end?: number | null
+          slump_start?: number | null
+          updated_at?: string
+          urgency_threshold_minutes?: number | null
+          user_id?: string
+          voice_mode_on_transit?: boolean | null
+          wake_time?: string | null
+          wind_down_time?: string | null
+        }
+        Relationships: []
+      }
       user_sessions: {
         Row: {
           cards: Json | null
@@ -372,7 +474,16 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      chronotype_type: "morning_lark" | "night_owl" | "third_bird"
+      communication_style: "concise" | "conversational"
+      commute_type: "walking" | "driving" | "public_transit" | "remote"
+      methodology_type:
+        | "gtd"
+        | "time_blocking"
+        | "nuke_the_day"
+        | "pomodoro"
+        | "organic"
+      proactivity_type: "co_pilot" | "chief_of_staff"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -499,6 +610,18 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      chronotype_type: ["morning_lark", "night_owl", "third_bird"],
+      communication_style: ["concise", "conversational"],
+      commute_type: ["walking", "driving", "public_transit", "remote"],
+      methodology_type: [
+        "gtd",
+        "time_blocking",
+        "nuke_the_day",
+        "pomodoro",
+        "organic",
+      ],
+      proactivity_type: ["co_pilot", "chief_of_staff"],
+    },
   },
 } as const
