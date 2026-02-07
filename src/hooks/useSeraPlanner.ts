@@ -6,6 +6,8 @@ interface PlanAnalysis {
   workload: 'light' | 'moderate' | 'heavy' | 'overloaded';
   focus_areas: string[];
   risk_items: string[];
+  productivity_score?: number;
+  bottlenecks?: string[];
 }
 
 interface Recommendation {
@@ -13,6 +15,7 @@ interface Recommendation {
   task_id?: string;
   suggestion: string;
   reason: string;
+  priority?: 'high' | 'medium' | 'low';
 }
 
 interface TodayFocus {
@@ -20,6 +23,13 @@ interface TodayFocus {
   suggested_time: 'morning' | 'afternoon' | 'evening';
   duration_estimate: string;
   energy_level: 'high' | 'medium' | 'low';
+  why?: string;
+}
+
+interface PlanInsights {
+  quick_wins: string[];
+  time_blocks_needed?: string;
+  best_start?: string;
 }
 
 interface PlannerResult {
@@ -27,6 +37,7 @@ interface PlannerResult {
   recommendations: Recommendation[];
   today_focus: TodayFocus[];
   summary: string;
+  insights?: PlanInsights;
 }
 
 export function useSeraPlanner() {
