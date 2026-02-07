@@ -7,29 +7,33 @@ import { SeraFAB } from "@/components/sera/SeraFAB";
 import { VoiceOverlay } from "@/components/dashboard/VoiceOverlay";
 import { QuickCaptureInbox } from "@/components/dashboard/QuickCaptureInbox";
 import { TimeBlockView } from "@/components/dashboard/TimeBlockView";
-import { EnergySortedTasks } from "@/components/dashboard/EnergySortedTasks";
-import { TimelineWidget } from "@/components/dashboard/TimelineWidget";
+import { TodayTimeline } from "@/components/dashboard/TodayTimeline";
+import { SmartTaskQueue } from "@/components/dashboard/SmartTaskQueue";
+import { DailyProgressCard } from "@/components/dashboard/DailyProgressCard";
 import { FocusModeCard } from "@/components/dashboard/FocusModeCard";
 import { GTDWidget } from "@/components/dashboard/GTDWidget";
 import { GTDAnalytics } from "@/components/dashboard/GTDAnalytics";
 import { SeraPlannerCard } from "@/components/sera/SeraPlannerCard";
 import { useAuth } from "@/contexts/AuthContext";
+import { useDashboardTasks } from "@/hooks/useDashboardTasks";
 import { motion } from "framer-motion";
-
-// Mock tasks for demo
-const mockTasks = [
-  { id: "1", title: "Complete project proposal", priority: "high" as const, energyRequired: "high" as const, deadline: "Today", gtd_status: "NOW" },
-  { id: "2", title: "Review team feedback", priority: "medium" as const, energyRequired: "medium" as const, deadline: "Tomorrow", gtd_status: "NEXT" },
-  { id: "3", title: "Respond to emails", priority: "low" as const, energyRequired: "low" as const, gtd_status: "NEXT" },
-  { id: "4", title: "Strategic planning session", priority: "high" as const, energyRequired: "high" as const, deadline: "This week", gtd_status: "NEXT" },
-  { id: "5", title: "Update documentation", priority: "low" as const, energyRequired: "low" as const, gtd_status: "LATER" },
-];
 
 export function AdaptiveDashboard() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { calibration, loading } = useCalibration();
   const [currentEnergyLevel, setCurrentEnergyLevel] = useState<'high' | 'medium' | 'low'>('medium');
+
+  const {
+    tasks,
+    habits,
+    isLoading: tasksLoading,
+    completedToday,
+    totalActive,
+    completeTask,
+    uncompleteTask,
+    toggleHabit,
+  } = useDashboardTasks();
 
   useEffect(() => {
     if (!user) {
@@ -39,13 +43,11 @@ export function AdaptiveDashboard() {
   }, [user, navigate]);
 
   useEffect(() => {
-    // Check if user needs onboarding
     if (!loading && calibration && !calibration.onboarding_completed) {
       navigate('/onboarding');
     }
   }, [calibration, loading, navigate]);
 
-  // Determine current energy level based on time and calibration
   useEffect(() => {
     if (calibration?.energy_windows) {
       const hour = new Date().getHours();
@@ -72,6 +74,16 @@ export function AdaptiveDashboard() {
   const isGTDMode = calibration?.methodology === 'gtd';
   const isTimeBlockMode = calibration?.methodology === 'time_blocking';
 
+  // Build task data for TimeBlockView
+  const timeBlockTasks = tasks
+    .filter((t) => t.source === 'gtd')
+    .map((t) => ({
+      id: t.id,
+      title: t.title,
+      duration: 30,
+      energyRequired: t.energyRequired,
+    }));
+
   return (
     <div className="min-h-screen w-full relative">
       <FloatingBackground />
@@ -85,17 +97,25 @@ export function AdaptiveDashboard() {
             animate={{ opacity: 1, y: 0 }}
             className="glass p-6 rounded-3xl bg-background/60 backdrop-blur-md"
           >
-            <h1 className="text-2xl sm:text-3xl font-light mb-2">{getGreeting()}</h1>
-            <p className="text-muted-foreground text-sm sm:text-base">
-              {calibration?.methodology === 'gtd' && "Your GTD inbox is ready. Capture thoughts, then process."}
-              {calibration?.methodology === 'time_blocking' && "Your time blocks are set. Focus on what matters."}
-              {calibration?.methodology === 'pomodoro' && "Ready for focused intervals? Let's start a session."}
-              {calibration?.methodology === 'nuke_the_day' && "Let's crush today's tasks. Maximum impact mode."}
-              {(!calibration?.methodology || calibration?.methodology === 'organic') && "Here's your productivity overview. Use SERA to stay on track."}
-            </p>
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-light mb-1">{getGreeting()}</h1>
+                <p className="text-muted-foreground text-sm sm:text-base">
+                  {totalActive > 0
+                    ? `You have ${totalActive} active task${totalActive !== 1 ? 's' : ''} and ${habits.length} habit${habits.length !== 1 ? 's' : ''} today.`
+                    : "Your task queue is clear. Time to capture some ideas!"}
+                </p>
+              </div>
+              {completedToday > 0 && (
+                <div className="hidden sm:block text-right">
+                  <p className="text-2xl font-semibold text-accent">{completedToday}</p>
+                  <p className="text-xs text-muted-foreground">done today</p>
+                </div>
+              )}
+            </div>
           </motion.div>
 
-          {/* Main Grid - Adaptive based on methodology */}
+          {/* Main Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left Column - 2/3 width */}
             <div className="lg:col-span-2 space-y-6">
@@ -106,18 +126,20 @@ export function AdaptiveDashboard() {
               {isTimeBlockMode && calibration && (
                 <TimeBlockView
                   calibration={calibration}
-                  tasks={mockTasks.map(t => ({ ...t, duration: 30 }))}
+                  tasks={timeBlockTasks}
                 />
               )}
 
-              {/* Default: Show regular timeline */}
-              {!isGTDMode && !isTimeBlockMode && <TimelineWidget />}
+              {/* Default: Show today's timeline */}
+              {!isGTDMode && !isTimeBlockMode && <TodayTimeline />}
 
-              {/* Energy-Sorted Tasks */}
-              <EnergySortedTasks
-                tasks={mockTasks}
+              {/* Smart Task Queue – Real data */}
+              <SmartTaskQueue
+                tasks={tasks}
                 currentEnergyLevel={currentEnergyLevel}
-                energyWindows={calibration?.energy_windows}
+                onCompleteTask={completeTask}
+                onUncompleteTask={uncompleteTask}
+                onToggleHabit={toggleHabit}
               />
 
               {/* AI Planner */}
@@ -126,9 +148,15 @@ export function AdaptiveDashboard() {
 
             {/* Right Column - 1/3 width */}
             <div className="space-y-6">
+              {/* Daily Progress + Habits */}
+              <DailyProgressCard
+                completedToday={completedToday}
+                totalActive={totalActive}
+                habits={habits}
+                onToggleHabit={toggleHabit}
+              />
+
               <FocusModeCard />
-              
-              {/* Show GTD Widget for GTD users, or regular widget otherwise */}
               <GTDWidget />
               <GTDAnalytics />
             </div>
@@ -136,10 +164,7 @@ export function AdaptiveDashboard() {
         </div>
       </main>
 
-      {/* Voice Overlay - Always visible */}
       <VoiceOverlay />
-
-      {/* SERA FAB */}
       <SeraFAB />
 
       <div className="fixed bottom-2 left-2 text-[0.5rem] text-muted-foreground/50 select-none z-50">
