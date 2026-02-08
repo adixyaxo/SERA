@@ -1,99 +1,67 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, Zap, Brain, Coffee } from 'lucide-react';
+import { Clock, CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { format, isToday, parseISO } from 'date-fns';
+import { format, parseISO, startOfMonth, endOfMonth, isSameDay } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 interface TimelineEvent {
   id: string;
+  date: string;
   time: string;
   title: string;
-  type: 'event' | 'task';
-  status: 'completed' | 'active' | 'upcoming';
+  color?: string;
+  allDay?: boolean;
 }
 
 export function TodayTimeline() {
   const { user } = useAuth();
   const [events, setEvents] = useState<TimelineEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
   useEffect(() => {
     if (!user) return;
 
     const loadTimeline = async () => {
-      const todayStart = new Date();
-      todayStart.setHours(0, 0, 0, 0);
-      const todayEnd = new Date();
-      todayEnd.setHours(23, 59, 59, 999);
+      setIsLoading(true);
+      const monthStart = startOfMonth(currentMonth);
+      const monthEnd = endOfMonth(currentMonth);
 
-      const [eventsRes, tasksRes] = await Promise.all([
-        supabase
-          .from('events')
-          .select('id, title, start_time, end_time')
-          .eq('user_id', user.id)
-          .gte('start_time', todayStart.toISOString())
-          .lte('start_time', todayEnd.toISOString())
-          .order('start_time', { ascending: true }),
-        supabase
-          .from('cards')
-          .select('card_id, title, deadline, gtd_status')
-          .eq('user_id', user.id)
-          .eq('type', 'task')
-          .eq('gtd_status', 'NOW')
-          .neq('status', 'completed')
-          .is('completed_at', null),
-      ]);
+      const { data: eventsData } = await supabase
+        .from('events')
+        .select('id, title, start_time, end_time, color, all_day')
+        .eq('user_id', user.id)
+        .gte('start_time', monthStart.toISOString())
+        .lte('start_time', monthEnd.toISOString())
+        .order('start_time', { ascending: true });
 
-      const now = new Date();
-      const currentHour = now.getHours();
-
-      const timelineItems: TimelineEvent[] = [];
-
-      // Add events
-      (eventsRes.data || []).forEach((e) => {
+      const timelineItems: TimelineEvent[] = (eventsData || []).map((e) => {
         const startTime = parseISO(e.start_time);
-        const endTime = e.end_time ? parseISO(e.end_time) : null;
-        const status: TimelineEvent['status'] = 
-          endTime && endTime < now ? 'completed' :
-          startTime <= now && (!endTime || endTime > now) ? 'active' : 'upcoming';
-
-        timelineItems.push({
+        return {
           id: e.id,
-          time: format(startTime, 'HH:mm'),
+          date: format(startTime, 'MMM d'),
+          time: e.all_day ? 'All day' : format(startTime, 'HH:mm'),
           title: e.title,
-          type: 'event',
-          status,
-        });
+          color: e.color || undefined,
+          allDay: e.all_day || false,
+        };
       });
 
-      // Add NOW tasks as timeline items (spread across morning/afternoon)
-      const nowTasks = tasksRes.data || [];
-      const startHour = 9;
-      nowTasks.slice(0, 4).forEach((t, i) => {
-        const taskHour = startHour + i * 2;
-        const status: TimelineEvent['status'] = 
-          taskHour < currentHour ? 'completed' :
-          taskHour === currentHour ? 'active' : 'upcoming';
-
-        timelineItems.push({
-          id: t.card_id,
-          time: `${String(taskHour).padStart(2, '0')}:00`,
-          title: t.title,
-          type: 'task',
-          status,
-        });
-      });
-
-      // Sort by time
-      timelineItems.sort((a, b) => a.time.localeCompare(b.time));
       setEvents(timelineItems);
       setIsLoading(false);
     };
 
     loadTimeline();
-  }, [user]);
+  }, [user, currentMonth]);
+
+  const handleMonthChange = (offset: number) => {
+    const newDate = new Date(currentMonth);
+    newDate.setMonth(newDate.getMonth() + offset);
+    setCurrentMonth(newDate);
+  };
 
   if (isLoading) {
     return (
@@ -114,60 +82,60 @@ export function TodayTimeline() {
       animate={{ opacity: 1, y: 0 }}
       className="glass rounded-3xl p-6"
     >
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-          <Clock className="h-5 w-5 text-primary" />
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+            <CalendarDays className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <h3 className="text-base font-medium">Monthly Events</h3>
+            <p className="text-xs text-muted-foreground">{events.length} events this month</p>
+          </div>
         </div>
-        <div>
-          <h3 className="text-base font-medium">Today's Timeline</h3>
-          <p className="text-xs text-muted-foreground">{events.length} items scheduled</p>
+        <div className="flex items-center gap-1">
+          <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => handleMonthChange(-1)}>
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <span className="text-xs font-medium w-20 text-center">
+            {format(currentMonth, 'MMM yyyy')}
+          </span>
+          <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => handleMonthChange(1)}>
+            <ChevronRight className="h-4 w-4" />
+          </Button>
         </div>
       </div>
 
       {events.length === 0 ? (
         <div className="text-center py-6 text-muted-foreground">
-          <Clock className="w-8 h-8 mx-auto mb-2 opacity-50" />
-          <p className="text-sm">No events or tasks today</p>
-          <p className="text-xs mt-1">Add NOW tasks or schedule events</p>
+          <CalendarDays className="w-8 h-8 mx-auto mb-2 opacity-50" />
+          <p className="text-sm">No events this month</p>
+          <p className="text-xs mt-1">Schedule events in the Calendar tab</p>
         </div>
       ) : (
-        <div className="space-y-3">
-          {events.map((event, index) => (
-            <motion.div
-              key={event.id}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className="flex items-center gap-4 group"
-            >
-              <div
-                className={cn(
-                  'w-2 h-2 rounded-full shrink-0',
-                  event.status === 'completed' && 'bg-muted-foreground/30',
-                  event.status === 'active' && 'bg-accent animate-pulse',
-                  event.status === 'upcoming' && 'bg-border'
-                )}
-              />
-              <div className="text-sm text-muted-foreground font-mono w-14">
-                {event.time}
-              </div>
-              <div
-                className={cn(
-                  'flex-1 text-sm',
-                  event.status === 'active' && 'text-accent font-medium',
-                  event.status === 'completed' && 'text-muted-foreground line-through'
-                )}
+        <div className="space-y-2 max-h-[300px] overflow-y-auto">
+          {events.map((event, index) => {
+            const isToday = isSameDay(parseISO(new Date().toISOString()), new Date());
+            return (
+              <motion.div
+                key={event.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.03 }}
+                className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/20 hover:bg-muted/40 transition-colors group"
               >
-                {event.title}
-              </div>
-              <span className={cn(
-                'text-[10px] px-2 py-0.5 rounded-full',
-                event.type === 'event' ? 'bg-primary/10 text-primary' : 'bg-accent/10 text-accent'
-              )}>
-                {event.type === 'event' ? 'Event' : 'Task'}
-              </span>
-            </motion.div>
-          ))}
+                <div
+                  className="w-1.5 h-8 rounded-full shrink-0"
+                  style={{ backgroundColor: event.color || 'hsl(var(--primary))' }}
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium truncate">{event.title}</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    {event.date} • {event.time}
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       )}
     </motion.div>

@@ -45,13 +45,13 @@ export function NavBar({ items, className }: NavBarProps) {
     >
       {/* === Desktop / Tablet Nav === */}
       {!isMobile && (
-        <div className="flex items-center gap-3 glass-strong py-1 px-2 rounded-full shadow-lg backdrop-blur-lg bg-white/10 dark:bg-black/40 border border-white/20">
+        <div className="flex items-center gap-2 glass-strong py-1 px-2 rounded-full shadow-lg backdrop-blur-lg bg-white/10 dark:bg-black/40 border border-white/20 max-w-[calc(100vw-2rem)] overflow-x-auto scrollbar-hide">
           {/* Logo */}
-          <div className="px-3 py-1">
+          <div className="px-2 py-1 shrink-0">
             <SeraLogo size="sm" showText={true} animated={false} />
           </div>
           
-          <div className="w-px h-6 bg-border/50" />
+          <div className="w-px h-6 bg-border/50 shrink-0" />
           
           {items.map((item) => {
             const Icon = item.icon
@@ -62,14 +62,14 @@ export function NavBar({ items, className }: NavBarProps) {
                 to={item.url}
                 onClick={() => setActiveTab(item.name)}
                 className={cn(
-                  "relative cursor-pointer text-sm font-semibold px-4 py-2 rounded-full transition-colors",
+                  "relative cursor-pointer text-xs font-semibold px-3 py-2 rounded-full transition-colors whitespace-nowrap shrink-0",
                   "text-foreground/80 hover:text-primary",
                   isActive && "bg-muted text-primary",
                 )}
               >
-                <span className="hidden md:inline">{item.name}</span>
-                <span className="md:hidden">
-                  <Icon size={18} strokeWidth={2.5} />
+                <span className="hidden lg:inline">{item.name}</span>
+                <span className="lg:hidden">
+                  <Icon size={16} strokeWidth={2.5} />
                 </span>
                 {isActive && (
                   <motion.div

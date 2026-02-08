@@ -88,22 +88,22 @@ export const useTaskAnalytics = () => {
       const completedTasks = activeTasks.filter((t) => t.status === "completed");
       const pendingTasks = activeTasks.filter((t) => t.status !== "completed");
 
-      // Today's completions (approximated by created_at as we don't have completed_at)
+      // Today's completions (use completed_at)
       const completedToday = completedTasks.filter((t) => {
-        const date = new Date(t.created_at || "");
-        return date >= todayStart;
+        const date = t.completed_at ? new Date(t.completed_at) : null;
+        return date && date >= todayStart;
       }).length;
 
       // This week's completions
       const completedThisWeek = completedTasks.filter((t) => {
-        const date = new Date(t.created_at || "");
-        return date >= weekStart && date <= weekEnd;
+        const date = t.completed_at ? new Date(t.completed_at) : null;
+        return date && date >= weekStart && date <= weekEnd;
       }).length;
 
       // This month's completions
       const completedThisMonth = completedTasks.filter((t) => {
-        const date = new Date(t.created_at || "");
-        return date >= monthStart && date <= monthEnd;
+        const date = t.completed_at ? new Date(t.completed_at) : null;
+        return date && date >= monthStart && date <= monthEnd;
       }).length;
 
       // Daily stats for last 7 days
@@ -119,8 +119,8 @@ export const useTaskAnalytics = () => {
         dayEnd.setHours(23, 59, 59, 999);
 
         const completed = completedTasks.filter((t) => {
-          const date = new Date(t.created_at || "");
-          return date >= dayStart && date <= dayEnd;
+          const date = t.completed_at ? new Date(t.completed_at) : null;
+          return date && date >= dayStart && date <= dayEnd;
         }).length;
 
         const created = activeTasks.filter((t) => {
@@ -171,8 +171,8 @@ export const useTaskAnalytics = () => {
         dayEnd.setHours(23, 59, 59, 999);
 
         const hasCompleted = completedTasks.some((t) => {
-          const date = new Date(t.created_at || "");
-          return date >= dayStart && date <= dayEnd;
+          const date = t.completed_at ? new Date(t.completed_at) : null;
+          return date && date >= dayStart && date <= dayEnd;
         });
 
         if (hasCompleted) {
