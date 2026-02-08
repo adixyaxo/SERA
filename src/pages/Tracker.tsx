@@ -84,8 +84,8 @@ const useHabitLogic = () => {
     if (!user) return;
     setLoading(true);
     try {
-      // FIX: Cast supabase to 'any' to bypass missing table definition error
-      const { data: habitsData, error: habitsError } = await (supabase as any)
+      // Fetch habits
+      const { data: habitsData, error: habitsError } = await supabase
         .from('habits')
         .select('*')
         .eq('user_id', user.id)
@@ -94,8 +94,8 @@ const useHabitLogic = () => {
 
       if (habitsError) throw habitsError;
 
-      // FIX: Cast supabase to 'any' for logs as well
-      const { data: logsData, error: logsError } = await (supabase as any)
+      // Fetch logs
+      const { data: logsData, error: logsError } = await supabase
         .from('habit_logs')
         .select('*')
         .in('habit_id', habitsData.map((h: any) => h.id));
@@ -147,12 +147,12 @@ const useHabitLogic = () => {
 
     try {
       if (isCompleted) {
-        await (supabase as any)
+        await supabase
           .from('habit_logs')
           .delete()
           .match({ habit_id: habitId, date_string: dateStr });
       } else {
-        await (supabase as any)
+        await supabase
           .from('habit_logs')
           .insert({ habit_id: habitId, date_string: dateStr, completed: true });
       }
@@ -172,14 +172,13 @@ const useHabitLogic = () => {
   const addHabit = async (name: string) => {
     if (!user) return;
     try {
-      const { data, error } = await (supabase as any)
+      const { data, error } = await supabase
         .from('habits')
         .insert({
           user_id: user.id,
           name: name,
           category: 'General',
           frequency: 'daily',
-          // FIX: Correct date format for Postgres Date column
           start_date: new Date().toISOString().split('T')[0]
         })
         .select()
@@ -204,7 +203,7 @@ const useHabitLogic = () => {
 
   const deleteHabit = async (id: string) => {
     try {
-      const { error } = await (supabase as any)
+      const { error } = await supabase
         .from('habits')
         .delete()
         .eq('id', id);

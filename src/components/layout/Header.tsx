@@ -22,8 +22,8 @@ export const Header = () => {
     { name: "Projects", url: "/projects", icon: Folder },
     { name: "Notes", url: "/notes", icon: FileText },
     { name: "Automations", url: "/automations", icon: Zap },
-    { name: "Analytics", url: "/analytics", icon: BarChart3 },
     { name: "Tracker", url: "/tracker", icon: Target },
+    { name: "Analytics", url: "/analytics", icon: BarChart3 },
   ];
 
   const handleSignOut = async () => {

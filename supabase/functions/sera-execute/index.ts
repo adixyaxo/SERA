@@ -7,30 +7,13 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Input validation schemas
-const createTaskSchema = z.object({
-  title: z.string().min(1).max(500),
-  description: z.string().max(2000).nullable().optional(),
-  priority: z.enum(['high', 'medium', 'low']).nullable().optional().default('medium'),
-  gtd_status: z.enum(['NOW', 'NEXT', 'LATER']).nullable().optional().default('NEXT'),
-  deadline: z.string().nullable().optional(),
-  project_id: z.string().uuid().nullable().optional(),
-});
-
-const updateTaskSchema = z.object({
-  card_id: z.string().min(1),
-  updates: z.object({
-    title: z.string().min(1).max(500).optional(),
-    description: z.string().max(2000).optional(),
-    priority: z.enum(['high', 'medium', 'low']).optional(),
-    gtd_status: z.enum(['NOW', 'NEXT', 'LATER']).optional(),
-    deadline: z.string().optional(),
-    status: z.enum(['pending', 'in_progress', 'completed', 'rejected']).optional(),
-  }),
-});
-
 const executeActionSchema = z.object({
-  intent: z.enum(['create_task', 'update_task', 'complete_task', 'delete_task', 'reschedule_task']),
+  intent: z.enum([
+    'create_task', 'update_task', 'complete_task', 'delete_task', 'reschedule_task',
+    'create_event', 'update_event', 'delete_event',
+    'create_habit', 'delete_habit',
+    'create_note', 'update_note',
+  ]),
   data: z.record(z.any()),
 });
 
@@ -63,142 +46,199 @@ serve(async (req) => {
     }
 
     const body = await req.json();
-    const validationResult = executeActionSchema.safeParse(body);
+    const validation = executeActionSchema.safeParse(body);
     
-    if (!validationResult.success) {
+    if (!validation.success) {
       return new Response(
-        JSON.stringify({ error: 'Invalid input', details: validationResult.error.errors }),
+        JSON.stringify({ error: 'Invalid input', details: validation.error.errors }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    const { intent, data } = validationResult.data;
+    const { intent, data } = validation.data;
     let result;
 
     switch (intent) {
+      // ===== TASK OPERATIONS =====
       case 'create_task': {
-        const taskData = createTaskSchema.safeParse(data);
-        if (!taskData.success) {
-          return new Response(
-            JSON.stringify({ error: 'Invalid task data', details: taskData.error.errors }),
-            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-          );
-        }
-
         const card_id = `sera_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        
         const { data: newTask, error } = await supabaseClient
           .from('cards')
           .insert({
             card_id,
             user_id: user.id,
             type: 'task',
-            title: taskData.data.title,
-            description: taskData.data.description || '',
-            priority: taskData.data.priority,
-            gtd_status: taskData.data.gtd_status,
-            deadline: taskData.data.deadline,
-            project_id: taskData.data.project_id,
+            title: data.title || 'Untitled Task',
+            description: data.description || '',
+            priority: data.priority || 'medium',
+            gtd_status: data.gtd_status || 'NEXT',
+            deadline: data.deadline || null,
+            project_id: data.project_id || null,
             status: 'pending',
           })
           .select()
           .single();
-
         if (error) throw error;
-        result = { action: 'created', task: newTask };
+        result = { action: 'Task created', task: newTask };
         break;
       }
 
       case 'update_task': {
-        const updateData = updateTaskSchema.safeParse(data);
-        if (!updateData.success) {
-          return new Response(
-            JSON.stringify({ error: 'Invalid update data', details: updateData.error.errors }),
-            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-          );
-        }
-
+        const { card_id, updates, ...updateFields } = data;
+        const actualUpdates = updates || updateFields;
         const { data: updatedTask, error } = await supabaseClient
           .from('cards')
-          .update(updateData.data.updates)
-          .eq('card_id', updateData.data.card_id)
+          .update(actualUpdates)
+          .eq('card_id', card_id)
           .eq('user_id', user.id)
           .select()
           .single();
-
         if (error) throw error;
-        result = { action: 'updated', task: updatedTask };
+        result = { action: 'Task updated', task: updatedTask };
         break;
       }
 
       case 'complete_task': {
-        const { card_id } = data;
-        if (!card_id) {
-          return new Response(
-            JSON.stringify({ error: 'card_id is required' }),
-            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-          );
-        }
-
         const { data: completedTask, error } = await supabaseClient
           .from('cards')
-          .update({ 
-            status: 'completed',
-            completed_at: new Date().toISOString()
-          })
-          .eq('card_id', card_id)
+          .update({ status: 'completed', completed_at: new Date().toISOString() })
+          .eq('card_id', data.card_id)
           .eq('user_id', user.id)
           .select()
           .single();
-
         if (error) throw error;
-        result = { action: 'completed', task: completedTask };
+        result = { action: 'Task completed', task: completedTask };
         break;
       }
 
       case 'delete_task': {
-        const { card_id } = data;
-        if (!card_id) {
-          return new Response(
-            JSON.stringify({ error: 'card_id is required' }),
-            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-          );
-        }
-
         const { error } = await supabaseClient
           .from('cards')
           .delete()
-          .eq('card_id', card_id)
+          .eq('card_id', data.card_id)
           .eq('user_id', user.id);
-
         if (error) throw error;
-        result = { action: 'deleted', card_id };
+        result = { action: 'Task deleted', card_id: data.card_id };
         break;
       }
 
       case 'reschedule_task': {
-        const { card_id, new_deadline, new_gtd_status } = data;
-        if (!card_id) {
-          return new Response(
-            JSON.stringify({ error: 'card_id is required' }),
-            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-          );
-        }
-
         const updates: Record<string, any> = {};
-        if (new_deadline) updates.deadline = new_deadline;
-        if (new_gtd_status) updates.gtd_status = new_gtd_status;
-
-        const { data: rescheduledTask, error } = await supabaseClient
+        if (data.new_deadline || data.deadline) updates.deadline = data.new_deadline || data.deadline;
+        if (data.new_gtd_status || data.gtd_status) updates.gtd_status = data.new_gtd_status || data.gtd_status;
+        const { data: rescheduled, error } = await supabaseClient
           .from('cards')
           .update(updates)
-          .eq('card_id', card_id)
+          .eq('card_id', data.card_id)
           .eq('user_id', user.id)
           .select()
           .single();
-
         if (error) throw error;
-        result = { action: 'rescheduled', task: rescheduledTask };
+        result = { action: 'Task rescheduled', task: rescheduled };
+        break;
+      }
+
+      // ===== EVENT OPERATIONS =====
+      case 'create_event': {
+        const { data: newEvent, error } = await supabaseClient
+          .from('events')
+          .insert({
+            user_id: user.id,
+            title: data.title || 'Untitled Event',
+            description: data.description || '',
+            start_time: data.start_time || new Date().toISOString(),
+            end_time: data.end_time || null,
+            all_day: data.all_day || false,
+            color: data.color || null,
+          })
+          .select()
+          .single();
+        if (error) throw error;
+        result = { action: 'Event created', event: newEvent };
+        break;
+      }
+
+      case 'update_event': {
+        const { id, ...eventUpdates } = data;
+        const { data: updatedEvent, error } = await supabaseClient
+          .from('events')
+          .update(eventUpdates)
+          .eq('id', id)
+          .eq('user_id', user.id)
+          .select()
+          .single();
+        if (error) throw error;
+        result = { action: 'Event updated', event: updatedEvent };
+        break;
+      }
+
+      case 'delete_event': {
+        const { error } = await supabaseClient
+          .from('events')
+          .delete()
+          .eq('id', data.id)
+          .eq('user_id', user.id);
+        if (error) throw error;
+        result = { action: 'Event deleted', id: data.id };
+        break;
+      }
+
+      // ===== HABIT OPERATIONS =====
+      case 'create_habit': {
+        const { data: newHabit, error } = await supabaseClient
+          .from('habits')
+          .insert({
+            user_id: user.id,
+            name: data.name || 'New Habit',
+            category: data.category || 'General',
+            frequency: data.frequency || 'daily',
+            start_date: new Date().toISOString().split('T')[0],
+          })
+          .select()
+          .single();
+        if (error) throw error;
+        result = { action: 'Habit created', habit: newHabit };
+        break;
+      }
+
+      case 'delete_habit': {
+        const { error } = await supabaseClient
+          .from('habits')
+          .delete()
+          .eq('id', data.id)
+          .eq('user_id', user.id);
+        if (error) throw error;
+        result = { action: 'Habit deleted', id: data.id };
+        break;
+      }
+
+      // ===== NOTE OPERATIONS =====
+      case 'create_note': {
+        const { data: newNote, error } = await supabaseClient
+          .from('notes')
+          .insert({
+            user_id: user.id,
+            title: data.title || 'Untitled Note',
+            content: data.content || '',
+          })
+          .select()
+          .single();
+        if (error) throw error;
+        result = { action: 'Note created', note: newNote };
+        break;
+      }
+
+      case 'update_note': {
+        const { id, ...noteUpdates } = data;
+        const { data: updatedNote, error } = await supabaseClient
+          .from('notes')
+          .update(noteUpdates)
+          .eq('id', id)
+          .eq('user_id', user.id)
+          .select()
+          .single();
+        if (error) throw error;
+        result = { action: 'Note updated', note: updatedNote };
         break;
       }
 
@@ -209,17 +249,12 @@ serve(async (req) => {
         );
     }
 
-    console.log('SERA Execute result:', JSON.stringify(result, null, 2));
+    console.log('SERA Execute:', JSON.stringify(result, null, 2));
 
     return new Response(
-      JSON.stringify({
-        success: true,
-        result,
-        timestamp: new Date().toISOString()
-      }),
+      JSON.stringify({ success: true, result, timestamp: new Date().toISOString() }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('SERA Execute error:', error);
     return new Response(
