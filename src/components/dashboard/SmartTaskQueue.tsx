@@ -108,7 +108,7 @@ export function SmartTaskQueue({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass rounded-3xl p-6 space-y-4"
+      className="glass rounded-3xl p-4 sm:p-6 space-y-4"
     >
       {/* Header */}
       <div className="flex items-center justify-between">
@@ -132,13 +132,13 @@ export function SmartTaskQueue({
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex gap-1.5 p-1 rounded-xl bg-muted/30">
+      <div className="flex gap-1 sm:gap-1.5 p-1 rounded-xl bg-muted/30 overflow-x-auto">
         {filters.map((f) => (
           <button
             key={f.key}
             onClick={() => setActiveFilter(f.key)}
             className={cn(
-              'flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all',
+              'flex-1 flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-medium transition-all whitespace-nowrap',
               activeFilter === f.key
                 ? 'bg-background text-foreground shadow-sm'
                 : 'text-muted-foreground hover:text-foreground'

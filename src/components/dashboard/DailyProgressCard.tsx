@@ -25,7 +25,7 @@ export function DailyProgressCard({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass rounded-3xl p-6 space-y-5"
+      className="glass rounded-3xl p-4 sm:p-6 space-y-4 sm:space-y-5"
     >
       {/* Header */}
       <div className="flex items-center gap-3">

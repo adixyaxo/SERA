@@ -89,17 +89,17 @@ export function AdaptiveDashboard() {
       <FloatingBackground />
       <Header />
 
-      <main className="pt-32 sm:pt-28 pb-24 sm:pb-16 px-4 sm:px-8 min-h-screen relative z-10">
+      <main className="pt-24 sm:pt-28 pb-24 sm:pb-16 px-3 sm:px-8 min-h-screen relative z-10">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Greeting Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="glass p-6 rounded-3xl bg-background/60 backdrop-blur-md"
+            className="glass p-4 sm:p-6 rounded-3xl bg-background/60 backdrop-blur-md"
           >
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl sm:text-3xl font-light mb-1">{getGreeting()}</h1>
+                <h1 className="text-xl sm:text-3xl font-light mb-1">{getGreeting()}</h1>
                 <p className="text-muted-foreground text-sm sm:text-base">
                   {totalActive > 0
                     ? `You have ${totalActive} active task${totalActive !== 1 ? 's' : ''} and ${habits.length} habit${habits.length !== 1 ? 's' : ''} today.`

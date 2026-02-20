@@ -80,7 +80,7 @@ export function TodayTimeline() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass rounded-3xl p-6"
+      className="glass rounded-3xl p-4 sm:p-6"
     >
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
