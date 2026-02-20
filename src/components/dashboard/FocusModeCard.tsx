@@ -86,7 +86,7 @@ export const FocusModeCard = () => {
   return (
     <motion.div 
       className={cn(
-        "glass rounded-3xl p-6 animate-fade-in transition-all duration-500",
+        "glass rounded-3xl p-4 sm:p-6 animate-fade-in transition-all duration-500",
         isActive && "ring-2 ring-accent/30 glow-soft"
       )}
       layout
