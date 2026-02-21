@@ -1,4 +1,4 @@
-import { LayoutDashboard, Calendar, CheckSquare, Folder, FileText, Zap, BarChart3, LogOut, User, Target } from "lucide-react";
+import { LayoutDashboard, Calendar, CheckSquare, Folder, FileText, Zap, BarChart3, LogOut, User, Target, Table2 } from "lucide-react";
 import { NavBar } from "@/components/ui/tubelight-navbar";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,7 @@ export const Header = () => {
     { name: "Projects", url: "/projects", icon: Folder },
     { name: "Notes", url: "/notes", icon: FileText },
     { name: "Automations", url: "/automations", icon: Zap },
+    { name: "Timetable", url: "/timetable", icon: Table2 },
     { name: "Tracker", url: "/tracker", icon: Target },
     { name: "Analytics", url: "/analytics", icon: BarChart3 },
   ];
