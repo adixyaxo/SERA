@@ -18,6 +18,7 @@ import Profile from "./pages/Profile";
 import Tags from "./pages/Tags";
 import NotFound from "./pages/NotFound";
 import Tracker from "./pages/Tracker";
+import Timetable from "./pages/Timetable";
 import Onboarding from "./pages/Onboarding";
 
 const queryClient = new QueryClient();
@@ -43,6 +44,7 @@ const App = () => (
               <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="/tracker" element={<ProtectedRoute><Tracker /></ProtectedRoute>} />
+              <Route path="/timetable" element={<ProtectedRoute><Timetable /></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </VoiceCommandProvider>

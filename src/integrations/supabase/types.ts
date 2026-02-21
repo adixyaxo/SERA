@@ -340,6 +340,51 @@ export type Database = {
         }
         Relationships: []
       }
+      timetable_entries: {
+        Row: {
+          color: string | null
+          created_at: string
+          day_of_week: number
+          description: string | null
+          end_time: string
+          id: string
+          location: string | null
+          repeat_type: string | null
+          start_time: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          day_of_week: number
+          description?: string | null
+          end_time: string
+          id?: string
+          location?: string | null
+          repeat_type?: string | null
+          start_time: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          day_of_week?: number
+          description?: string | null
+          end_time?: string
+          id?: string
+          location?: string | null
+          repeat_type?: string | null
+          start_time?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_calibration: {
         Row: {
           blackout_hours: Json | null
