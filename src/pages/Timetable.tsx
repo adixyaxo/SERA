@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Header } from "@/components/layout/Header";
 import { FloatingBackground } from "@/components/dashboard/FloatingBackground";
 import { useTimetable, TimetableFormData, TimetableEntry } from "@/hooks/useTimetable";
-import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Clock, MapPin, Repeat, Trash2, Edit2, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { Plus, MapPin, Repeat, Trash2, ChevronLeft, ChevronRight, GripVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
-const HOURS = Array.from({ length: 16 }, (_, i) => i + 6); // 6 AM to 9 PM
+const HOURS = Array.from({ length: 16 }, (_, i) => i + 6);
+const CELL_HEIGHT = 64;
+const CELL_HEIGHT_MOBILE = 48;
 const COLORS = [
   "#7E9EF9", "#F97066", "#F9A846", "#4ADE80",
   "#A78BFA", "#F472B6", "#38BDF8", "#FBBF24",
@@ -28,11 +31,35 @@ const timeToMinutes = (t: string) => {
   return parseInt(h) * 60 + parseInt(m);
 };
 
+const minutesToTime = (mins: number) => {
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+};
+
+interface DragState {
+  entryId: string;
+  startX: number;
+  startY: number;
+  offsetY: number;
+  originalDay: number;
+  originalStartMin: number;
+  duration: number;
+  currentDay: number;
+  currentStartMin: number;
+  active: boolean;
+}
+
 export default function Timetable() {
   const { entries, loading, addEntry, updateEntry, deleteEntry, getEntriesForDay, DAYS } = useTimetable();
+  const { toast } = useToast();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editEntry, setEditEntry] = useState<TimetableEntry | null>(null);
   const [mobileDay, setMobileDay] = useState(new Date().getDay());
+  const [drag, setDrag] = useState<DragState | null>(null);
+
+  const gridRef = useRef<HTMLDivElement>(null);
+  const dayColRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const [form, setForm] = useState<TimetableFormData>({
     title: "",
@@ -61,6 +88,7 @@ export default function Timetable() {
   };
 
   const openEdit = (entry: TimetableEntry) => {
+    if (drag?.active) return;
     setEditEntry(entry);
     setForm({
       title: entry.title,
@@ -85,18 +113,102 @@ export default function Timetable() {
     setDialogOpen(false);
   };
 
-  const renderEntry = (entry: TimetableEntry, compact = false) => {
+  // === Drag-and-drop logic ===
+  const handleDragStart = useCallback((e: React.PointerEvent, entry: TimetableEntry) => {
+    e.preventDefault();
+    e.stopPropagation();
     const startMin = timeToMinutes(entry.start_time);
     const endMin = timeToMinutes(entry.end_time);
-    const top = ((startMin - 360) / 60) * (compact ? 48 : 64); // 6AM = 360 min
-    const height = Math.max(((endMin - startMin) / 60) * (compact ? 48 : 64), compact ? 24 : 32);
+
+    setDrag({
+      entryId: entry.id,
+      startX: e.clientX,
+      startY: e.clientY,
+      offsetY: 0,
+      originalDay: entry.day_of_week,
+      originalStartMin: startMin,
+      duration: endMin - startMin,
+      currentDay: entry.day_of_week,
+      currentStartMin: startMin,
+      active: false,
+    });
+
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+  }, []);
+
+  const handleDragMove = useCallback((e: React.PointerEvent) => {
+    if (!drag) return;
+    const dx = e.clientX - drag.startX;
+    const dy = e.clientY - drag.startY;
+
+    if (!drag.active && Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
+
+    // Determine which day column we're over
+    let newDay = drag.originalDay;
+    for (let i = 0; i < 7; i++) {
+      const col = dayColRefs.current[i];
+      if (col) {
+        const rect = col.getBoundingClientRect();
+        if (e.clientX >= rect.left && e.clientX <= rect.right) {
+          newDay = i;
+          break;
+        }
+      }
+    }
+
+    // Calculate new start time based on vertical movement
+    const deltaMinutes = Math.round((dy / CELL_HEIGHT) * 60);
+    let newStartMin = drag.originalStartMin + deltaMinutes;
+    // Snap to 15-minute intervals
+    newStartMin = Math.round(newStartMin / 15) * 15;
+    // Clamp to grid bounds (6AM to 9PM)
+    newStartMin = Math.max(360, Math.min(newStartMin, 21 * 60 - drag.duration));
+
+    setDrag((prev) =>
+      prev
+        ? { ...prev, active: true, currentDay: newDay, currentStartMin: newStartMin }
+        : null
+    );
+  }, [drag]);
+
+  const handleDragEnd = useCallback(async () => {
+    if (!drag) return;
+    if (drag.active) {
+      const newStart = minutesToTime(drag.currentStartMin);
+      const newEnd = minutesToTime(drag.currentStartMin + drag.duration);
+      await updateEntry(drag.entryId, {
+        day_of_week: drag.currentDay,
+        start_time: newStart,
+        end_time: newEnd,
+      });
+      toast({ title: "Entry moved", description: `${DAYS[drag.currentDay]} at ${formatTime(newStart)}` });
+    }
+    setDrag(null);
+  }, [drag, updateEntry, toast, DAYS]);
+
+  const renderEntry = (entry: TimetableEntry, compact = false) => {
+    const isDragging = drag?.active && drag.entryId === entry.id;
+    const startMin = isDragging ? drag.currentStartMin : timeToMinutes(entry.start_time);
+    const endMin = isDragging ? drag.currentStartMin + drag.duration : timeToMinutes(entry.end_time);
+    const cellH = compact ? CELL_HEIGHT_MOBILE : CELL_HEIGHT;
+    const top = ((startMin - 360) / 60) * cellH;
+    const height = Math.max(((endMin - startMin) / 60) * cellH, compact ? 24 : 32);
 
     return (
       <motion.div
         key={entry.id}
+        layout={!isDragging}
         initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="absolute left-0.5 right-0.5 sm:left-1 sm:right-1 rounded-lg sm:rounded-xl cursor-pointer group overflow-hidden z-10"
+        animate={{
+          opacity: isDragging ? 0.85 : 1,
+          scale: isDragging ? 1.04 : 1,
+          boxShadow: isDragging ? "0 8px 30px rgba(0,0,0,0.18)" : "none",
+        }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        className={cn(
+          "absolute left-0.5 right-0.5 sm:left-1 sm:right-1 rounded-lg sm:rounded-xl cursor-pointer group overflow-hidden",
+          isDragging ? "z-50 ring-2 ring-accent" : "z-10"
+        )}
         style={{
           top: `${top}px`,
           height: `${height}px`,
@@ -105,12 +217,27 @@ export default function Timetable() {
         }}
         onClick={() => openEdit(entry)}
       >
-        <div className="p-1 sm:p-2 h-full flex flex-col justify-between">
+        <div className="p-1 sm:p-2 h-full flex flex-col justify-between relative">
+          {/* Drag handle */}
+          {!compact && (
+            <div
+              className="absolute top-0.5 right-0.5 p-0.5 cursor-grab active:cursor-grabbing opacity-0 group-hover:opacity-60 hover:!opacity-100 transition-opacity touch-none"
+              onPointerDown={(e) => handleDragStart(e, entry)}
+              onPointerMove={handleDragMove}
+              onPointerUp={handleDragEnd}
+              onPointerCancel={() => setDrag(null)}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <GripVertical size={12} className="text-muted-foreground" />
+            </div>
+          )}
           <div>
-            <p className="text-[10px] sm:text-xs font-semibold text-foreground truncate">{entry.title}</p>
+            <p className="text-[10px] sm:text-xs font-semibold text-foreground truncate pr-4">{entry.title}</p>
             {height > 40 && (
               <p className="text-[9px] sm:text-[10px] text-muted-foreground">
-                {formatTime(entry.start_time)} - {formatTime(entry.end_time)}
+                {isDragging
+                  ? `${formatTime(minutesToTime(drag!.currentStartMin))} - ${formatTime(minutesToTime(drag!.currentStartMin + drag!.duration))}`
+                  : `${formatTime(entry.start_time)} - ${formatTime(entry.end_time)}`}
               </p>
             )}
           </div>
@@ -120,12 +247,40 @@ export default function Timetable() {
             </p>
           )}
           {entry.repeat_type !== "none" && (
-            <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
               <Repeat size={10} className="text-muted-foreground" />
             </div>
           )}
         </div>
       </motion.div>
+    );
+  };
+
+  // Ghost preview shown in the target day column during drag
+  const renderDragGhost = (dayIdx: number) => {
+    if (!drag?.active || drag.currentDay !== dayIdx) return null;
+    const entry = entries.find((e) => e.id === drag.entryId);
+    if (!entry) return null;
+
+    const top = ((drag.currentStartMin - 360) / 60) * CELL_HEIGHT;
+    const height = Math.max((drag.duration / 60) * CELL_HEIGHT, 32);
+
+    return (
+      <div
+        className="absolute left-1 right-1 rounded-xl z-40 pointer-events-none border-2 border-dashed border-accent/50"
+        style={{
+          top: `${top}px`,
+          height: `${height}px`,
+          backgroundColor: entry.color + "10",
+        }}
+      >
+        <div className="p-2">
+          <p className="text-[10px] font-medium text-accent truncate">{entry.title}</p>
+          <p className="text-[9px] text-muted-foreground">
+            {formatTime(minutesToTime(drag.currentStartMin))} - {formatTime(minutesToTime(drag.currentStartMin + drag.duration))}
+          </p>
+        </div>
+      </div>
     );
   };
 
@@ -154,6 +309,8 @@ export default function Timetable() {
               <h1 className="text-xl sm:text-3xl font-light">Weekly Timetable</h1>
               <p className="text-muted-foreground text-xs sm:text-sm">
                 {entries.length} scheduled {entries.length === 1 ? "entry" : "entries"}
+                {" · "}
+                <span className="text-accent">Drag entries to reschedule</span>
               </p>
             </div>
             <Button onClick={() => openCreate()} size="sm" className="rounded-full gap-1">
@@ -173,7 +330,7 @@ export default function Timetable() {
           </div>
 
           {/* Desktop Week Grid */}
-          <div className="hidden sm:block glass rounded-3xl bg-background/60 backdrop-blur-md overflow-hidden">
+          <div ref={gridRef} className="hidden sm:block glass rounded-3xl bg-background/60 backdrop-blur-md overflow-hidden">
             <div className="grid grid-cols-[60px_repeat(7,1fr)] border-b border-border/30">
               <div className="p-2" />
               {DAYS.map((day, i) => (
@@ -181,7 +338,8 @@ export default function Timetable() {
                   key={day}
                   className={cn(
                     "p-3 text-center text-xs font-semibold border-l border-border/20",
-                    i === new Date().getDay() && "bg-accent/10 text-accent"
+                    i === new Date().getDay() && "bg-accent/10 text-accent",
+                    drag?.active && drag.currentDay === i && "bg-accent/5"
                   )}
                 >
                   {day.slice(0, 3)}
@@ -209,7 +367,14 @@ export default function Timetable() {
 
               {/* Day columns */}
               {DAYS.map((_, dayIdx) => (
-                <div key={dayIdx} className="relative border-l border-border/10">
+                <div
+                  key={dayIdx}
+                  ref={(el) => { dayColRefs.current[dayIdx] = el; }}
+                  className={cn(
+                    "relative border-l border-border/10",
+                    drag?.active && drag.currentDay === dayIdx && "bg-accent/[0.03]"
+                  )}
+                >
                   {HOURS.map((hour) => (
                     <div
                       key={hour}
@@ -225,8 +390,18 @@ export default function Timetable() {
                       }}
                     />
                   ))}
-                  {/* Entries */}
-                  {getEntriesForDay(dayIdx).map((e) => renderEntry(e))}
+                  {/* Drag ghost preview */}
+                  {renderDragGhost(dayIdx)}
+                  {/* Entries - hide original during drag if moved to different day */}
+                  {getEntriesForDay(dayIdx).map((e) => {
+                    if (drag?.active && drag.entryId === e.id && drag.currentDay !== dayIdx) return null;
+                    return renderEntry(e);
+                  })}
+                  {/* Show dragged entry in new day */}
+                  {drag?.active && drag.currentDay === dayIdx && drag.originalDay !== dayIdx && (() => {
+                    const entry = entries.find((e) => e.id === drag.entryId);
+                    return entry ? renderEntry(entry) : null;
+                  })()}
                 </div>
               ))}
             </div>
@@ -278,13 +453,11 @@ export default function Timetable() {
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
             />
-
             <Input
               placeholder="Description (optional)"
               value={form.description || ""}
               onChange={(e) => setForm({ ...form, description: e.target.value || null })}
             />
-
             <Input
               placeholder="Location (optional)"
               value={form.location || ""}
@@ -306,31 +479,17 @@ export default function Timetable() {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="text-xs text-muted-foreground mb-1 block">Start</label>
-                <Input
-                  type="time"
-                  value={form.start_time}
-                  onChange={(e) => setForm({ ...form, start_time: e.target.value })}
-                />
+                <Input type="time" value={form.start_time} onChange={(e) => setForm({ ...form, start_time: e.target.value })} />
               </div>
               <div>
                 <label className="text-xs text-muted-foreground mb-1 block">End</label>
-                <Input
-                  type="time"
-                  value={form.end_time}
-                  onChange={(e) => setForm({ ...form, end_time: e.target.value })}
-                />
+                <Input type="time" value={form.end_time} onChange={(e) => setForm({ ...form, end_time: e.target.value })} />
               </div>
             </div>
 
-            <Select
-              value={form.repeat_type}
-              onValueChange={(v) => setForm({ ...form, repeat_type: v })}
-            >
+            <Select value={form.repeat_type} onValueChange={(v) => setForm({ ...form, repeat_type: v })}>
               <SelectTrigger>
-                <div className="flex items-center gap-2">
-                  <Repeat size={14} />
-                  <SelectValue />
-                </div>
+                <div className="flex items-center gap-2"><Repeat size={14} /><SelectValue /></div>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="weekly">Every week</SelectItem>
@@ -339,7 +498,6 @@ export default function Timetable() {
               </SelectContent>
             </Select>
 
-            {/* Color picker */}
             <div>
               <label className="text-xs text-muted-foreground mb-2 block">Color</label>
               <div className="flex gap-2 flex-wrap">
@@ -359,25 +517,13 @@ export default function Timetable() {
 
             <div className="flex gap-2 pt-2">
               {editEntry && (
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  className="rounded-full"
-                  onClick={async () => {
-                    await deleteEntry(editEntry.id);
-                    setDialogOpen(false);
-                  }}
-                >
+                <Button variant="destructive" size="sm" className="rounded-full" onClick={async () => { await deleteEntry(editEntry.id); setDialogOpen(false); }}>
                   <Trash2 size={14} className="mr-1" /> Delete
                 </Button>
               )}
               <div className="flex-1" />
-              <Button variant="ghost" size="sm" className="rounded-full" onClick={() => setDialogOpen(false)}>
-                Cancel
-              </Button>
-              <Button size="sm" className="rounded-full" onClick={handleSubmit}>
-                {editEntry ? "Save" : "Add"}
-              </Button>
+              <Button variant="ghost" size="sm" className="rounded-full" onClick={() => setDialogOpen(false)}>Cancel</Button>
+              <Button size="sm" className="rounded-full" onClick={handleSubmit}>{editEntry ? "Save" : "Add"}</Button>
             </div>
           </div>
         </DialogContent>
