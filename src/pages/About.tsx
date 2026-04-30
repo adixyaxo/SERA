@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { SeraLogo } from "@/components/ui/sera-logo";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import AboutPage from "@/components/ui/about-page";
 
 gsap.registerPlugin(ScrollTrigger);
 
