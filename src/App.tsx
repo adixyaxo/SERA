@@ -21,6 +21,7 @@ import Tracker from "./pages/Tracker";
 import Timetable from "./pages/Timetable";
 import Onboarding from "./pages/Onboarding";
 import Landing from "./pages/Landing";
+import About from "./pages/About";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
           <VoiceCommandProvider>
             <Routes>
               <Route path="/landing" element={<Landing />} />
+              <Route path="/about" element={<About />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
               <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
