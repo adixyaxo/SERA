@@ -106,33 +106,8 @@ export default function About() {
         </div>
       </header>
 
-      {/* HERO */}
-      <section className="relative pt-40 pb-24 px-6">
-        <div className="absolute inset-0 -z-10 opacity-40">
-          <div className="absolute top-1/4 left-1/4 h-72 w-72 rounded-full bg-accent/20 blur-3xl animate-float" />
-          <div className="absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-primary/10 blur-3xl animate-float-delay-2" />
-        </div>
-
-        <div className="mx-auto max-w-4xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-xs uppercase tracking-widest text-muted-foreground mb-8">
-              <Sparkles className="h-3 w-3" /> About SERA
-            </span>
-            <h1 className="text-5xl md:text-7xl font-semibold tracking-tight leading-[1.05]">
-              The system behind <br />
-              <span className="text-muted-foreground">the schedule.</span>
-            </h1>
-            <p className="mt-8 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              SERA is a cognitive-state-aware scheduling system. It doesn't optimize time blocks —
-              it optimizes the human inside them.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      {/* HERO + ABOUT (new layout) */}
+      <AboutPage />
 
       {/* CORE STATEMENT */}
       <section id="philosophy" className="px-6 py-24 border-t border-border/50">
