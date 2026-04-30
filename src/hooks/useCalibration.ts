@@ -154,7 +154,7 @@ export const useCalibration = () => {
 
     const { data, error } = await supabase
       .from("user_calibration")
-      .update(dbUpdates)
+      .update(dbUpdates as never)
       .eq("user_id", user.id)
       .select()
       .single();
