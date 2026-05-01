@@ -1,0 +1,27 @@
+/* 12-column grid system for consistent layouts across sections */
+@import url('./tokens.css');
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--grid-gap);
+}
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.col-12 { grid-column: span 12; }
+.col-6  { grid-column: span 6; }
+.col-4  { grid-column: span 4; }
+.col-3  { grid-column: span 3; }
+@media (min-width: 768px) {
+  .col-md-12 { grid-column: span 12; }
+  .col-md-8  { grid-column: span 8;  }
+  .col-md-6  { grid-column: span 6;  }
+  .col-md-4  { grid-column: span 4;  }
+  .col-md-3  { grid-column: span 3;  }
+}

@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { Home, Info } from "lucide-react";
 
 export const Header = () => {
   const { user, signOut } = useAuth();
@@ -48,6 +49,14 @@ export const Header = () => {
               <DropdownMenuItem onClick={() => navigate('/profile')}>
                 <User className="h-4 w-4 mr-2" />
                 Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/landing')}>
+                <Home className="h-4 w-4 mr-2" />
+                Home
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/about')}>
+                <Info className="h-4 w-4 mr-2" />
+                About
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleSignOut}>

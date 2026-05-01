@@ -1,0 +1,46 @@
+@import url('../../design-system/tokens.css');
+.system-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: var(--blur);
+  background: rgba(8, 12, 18, 0.9);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.system-navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+}
+.system-navbar__brand {
+  font-weight: 800;
+  color: #e8f5ff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+}
+.system-navbar__list {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.system-navbar__item {
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+  text-decoration: none;
+  color: #e6f0ff;
+  background: rgba(255,255,255,0.04);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.system-navbar__item:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-1px);
+}
+.system-navbar__item[aria-current="page"] {
+  background: rgba(106,126,255,0.25);
+  border-color: rgba(106,126,255,0.6);
+  color: #fff;
+}

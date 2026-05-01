@@ -1,0 +1,40 @@
+/* Typography System: H1/H2/H3, Body, Caption */
+@import url('./tokens.css');
+
+h1, .h1 {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-weight: 800;
+  font-size: 2.75rem;
+  line-height: 1.05;
+  margin: 0.25rem 0;
+  color: var(--ds-text);
+}
+h2, .h2 {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-weight: 700;
+  font-size: 2.0rem;
+  line-height: 1.25;
+  margin: 0.25rem 0;
+  color: var(--ds-text);
+}
+h3, .h3 {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin: 0.25rem 0;
+  color: var(--ds-text);
+}
+.body, .p {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ds-muted);
+  max-width: 60ch;
+}
+.caption {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--ds-muted);
+}

@@ -1,0 +1,35 @@
+/* SERA Design System Tokens (dark, futuristic) */
+
+:root {
+  /* Core colors */
+  --ds-bg: #0b0f14;
+  --ds-surface: #111722;
+  --ds-surface-2: #0b111b;
+  --ds-text: #e6f0ff;
+  --ds-muted: #9fb3cc;
+  --ds-border: rgba(255, 255, 255, 0.14);
+
+  /* Radii (4 equal corners) */
+  --radius-xs: 12px;
+  --radius-sm: 12px;
+  --radius-md: 14px;
+  --radius-lg: 16px;
+
+  /* Grid & spacing */
+  --grid-gap: 24px;
+  --max-width: 1120px;
+  --shadow-soft: 0 6px 18px rgba(0, 0, 0, 0.35);
+
+  /* Backdrop blur for nav etc */
+  --blur: saturate(1.2) blur(6px);
+
+  /* Card surfaces */
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-border: rgba(255, 255, 255, 0.14);
+
+  /* CTAs & gradients */
+  --cta-bg: linear-gradient(135deg, #6a7eff 0%, #00e0ff 100%);
+  --gradient-primary: linear-gradient(135deg, #6a7eff 0%, #00e0ff 60%, #6a7eff 100%);
+  --gradient-secondary: linear-gradient(135deg, #ff6bd6 0%, #5b9cff 100%);
+  --cta-text: #041226;
+}

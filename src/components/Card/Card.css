@@ -1,0 +1,21 @@
+@import url('../../design-system/tokens.css');
+.card {
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--ds-text);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.5);
+}
+.card--info { background: rgba(255,255,255,0.04); }
+.card--feature { background: rgba(106,126,255,0.08); border-color: rgba(106,126,255,0.25); }
+.card--highlight { background: rgba(255,214,0,0.12); border-color: rgba(255,214,0,0.3); }
+.card__title { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.5rem; }
+.card__content { font-size: 0.95rem; color: var(--ds-muted); }
