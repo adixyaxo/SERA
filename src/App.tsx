@@ -22,6 +22,7 @@ import Timetable from "./pages/Timetable";
 import Onboarding from "./pages/Onboarding";
 import Landing from "./pages/Landing";
 import About from "./pages/About";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -32,13 +33,16 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <VoiceCommandProvider>
             <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/home" element={<Landing />} />
               <Route path="/landing" element={<Landing />} />
               <Route path="/about" element={<About />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
-              <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+              <Route path="/dashboard" element={<ProtectedRoute><Index /></ProtectedRoute>} />
               <Route path="/calendar" element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
               <Route path="/tasks" element={<ProtectedRoute><Tasks /></ProtectedRoute>} />
               <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />

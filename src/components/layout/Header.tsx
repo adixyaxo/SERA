@@ -17,7 +17,7 @@ export const Header = () => {
   const navigate = useNavigate();
 
   const navItems = [
-    { name: "Dashboard", url: "/", icon: LayoutDashboard },
+    { name: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
     { name: "Calendar", url: "/calendar", icon: Calendar },
     { name: "Tasks", url: "/tasks", icon: CheckSquare },
     { name: "Projects", url: "/projects", icon: Folder },

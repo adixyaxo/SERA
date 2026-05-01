@@ -10,7 +10,6 @@ import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { RevealText } from "@/components/ui/reveal-text";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { TextRoll } from "@/components/ui/text-roll";
 
 const transitionVariants = {
   item: {
@@ -25,11 +24,10 @@ const transitionVariants = {
 };
 
 const menuItems = [
-  { name: "About", href: "/about", isRouterLink: true },
-  { name: "Problem", href: "/landing#problem" },
-  { name: "Solution", href: "/landing#solution" },
-  { name: "Reality", href: "/landing#reality" },
-  { name: "Tech", href: "/landing#tech" },
+  { name: "Problem", href: "#problem" },
+  { name: "Solution", href: "#solution" },
+  { name: "Reality", href: "#reality" },
+  { name: "Tech", href: "#tech" },
 ];
 
 const Section: React.FC<{ id?: string; className?: string; children: React.ReactNode; showBlur?: boolean }> = ({ id, className, children, showBlur = true }) => (
@@ -64,55 +62,66 @@ const Landing = () => {
   const yVideo = useTransform(scrollY, [0, 1000], [0, 100]);
 
   return (
-    <main className="overflow-x-hidden bg-background text-foreground">
-      <LiquidNavbar items={menuItems} />
-
-      {/* HERO SECTION - 12-column grid */}
-      <section className="relative min-h-[calc(100vh-100px)] mt-[100px] flex flex-col justify-center pb-24 overflow-hidden">
-        <ProgressiveBlur position="bottom" backgroundColor="hsl(var(--background))" blurAmount="8px" className="h-32 bottom-0" />
-        <motion.div style={{ y: yBg }} className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--background)_75%)]"></motion.div>
-        <div className="mx-auto max-w-6xl px-6 relative z-10 grid grid-cols-12 gap-8 items-center">
-          <div className="col-span-12 lg:col-span-7 text-center lg:text-left">
-            <AnimatedGroup
-              variants={{
-                container: {
-                  visible: {
-                    transition: { staggerChildren: 0.05, delayChildren: 0.2 },
-                  },
-                },
-                ...transitionVariants,
-              }}
-            >
-              <Link
-                to="/auth"
-                className="hover:bg-background dark:hover:border-t-border bg-muted group flex w-fit items-center gap-4 rounded-lg border p-1 pl-4 shadow-md shadow-black/5 transition-all duration-300 dark:border-t-white/5 dark:shadow-zinc-950 mx-auto lg:mx-0"
-              >
-                <span className="text-foreground text-sm">Adaptive Routine OS — Now in Beta</span>
-                <span className="dark:border-background block h-4 w-0.5 border-l bg-white dark:bg-zinc-700"></span>
-
-                <div className="bg-background group-hover:bg-muted size-6 overflow-hidden rounded-lg duration-500">
-                  <div className="flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
-                    <span className="flex size-6">
-                      <ArrowRight className="m-auto size-3" />
-                    </span>
-                    <span className="flex size-6">
-                      <ArrowRight className="m-auto size-3" />
-                    </span>
-                  </div>
-                </div>
+    <header>
+      <nav
+        data-state={menuState ? "active" : undefined}
+        className="fixed z-50 w-full px-2 group"
+      >
+        <div
+          className={cn(
+            "mx-auto mt-2 max-w-6xl px-6 transition-all duration-300 lg:px-12",
+            isScrolled && "glass-strong max-w-5xl rounded-2xl lg:px-6"
+          )}
+        >
+          <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
+            <div className="flex w-full justify-between lg:w-auto">
+              <Link to="/landing" className="flex items-center space-x-2">
+                <SeraLogo size="sm" />
               </Link>
 
-              <div className="mt-8">
-                <RevealText
-                  text="ADAPTIVE"
-                  textColor="text-foreground"
-                  overlayColor="text-primary"
-                  fontSize="text-h1"
-                  className="justify-center lg:justify-start -ml-2"
-                />
-                <h1 className="mt-2 text-h1 font-bold leading-tight text-foreground">
-                  Routine OS for modern workflows
-                </h1>
+              <button
+                onClick={() => setMenuState(!menuState)}
+                aria-label={menuState ? "Close Menu" : "Open Menu"}
+                className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
+              >
+                {menuState ? <X className="size-6" /> : <Menu className="size-6" />}
+              </button>
+            </div>
+
+            <div className="absolute inset-0 m-auto hidden size-fit lg:block">
+              <ul className="flex gap-8 text-sm">
+                {menuItems.map((item, index) => (
+                  <li key={index}>
+                    <a
+                      href={item.href}
+                      className="text-muted-foreground hover:text-foreground block duration-150"
+                    >
+                      <span>{item.name}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div
+              className={cn(
+                "bg-background/95 mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent",
+                menuState && "block"
+              )}
+            >
+              <div className="lg:hidden">
+                <ul className="space-y-6 text-base">
+                  {menuItems.map((item, index) => (
+                    <li key={index}>
+                      <a
+                        href={item.href}
+                        className="text-muted-foreground hover:text-foreground block duration-150"
+                      >
+                        <span>{item.name}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               <p className="mt-8 text-body text-muted-foreground max-w-2xl mx-auto lg:mx-0">
@@ -157,30 +166,65 @@ const Landing = () => {
             </AnimatedGroup>
           </div>
         </div>
-      </section>
+      </nav>
+    </header>
+  );
+};
 
-      {/* CUSTOMERS SLIDER */}
-      <section className="bg-background pb-16 md:pb-24 border-b border-border/50">
-        <div className="group relative m-auto max-w-6xl px-6">
-          <div className="flex flex-col items-center md:flex-row gap-8 md:gap-0">
-            <div className="md:max-w-48 md:border-r border-border md:pr-8 text-center md:text-right shrink-0">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-4">The Real Enemy</p>
-            </div>
-            <div className="relative py-6 w-full md:w-[calc(100%-12rem)] md:pl-8">
-              <InfiniteSlider speedOnHover={20} speed={40} gap={112}>
-                {["nvidia", "column", "github", "nike", "lemonsqueezy", "laravel", "lilly", "openai"].map((logo) => (
-                  <div key={logo} className="flex">
-                    <img
-                      className="mx-auto h-5 w-fit dark:invert opacity-60 hover:opacity-100 transition-opacity"
-                      src={`https://html.tailus.io/blocks/customers/${logo}.svg`}
-                      alt={`${logo} Logo`}
-                    />
-                  </div>
-                ))}
-              </InfiniteSlider>
+const Section: React.FC<{ id?: string; className?: string; children: React.ReactNode }> = ({ id, className, children }) => (
+  <section id={id} className={cn("relative py-24 md:py-32 px-6", className)}>
+    <div className="mx-auto max-w-6xl">{children}</div>
+  </section>
+);
 
-              <div className="bg-gradient-to-r from-background absolute inset-y-0 left-0 w-20 z-10 pointer-events-none md:left-8"></div>
-              <div className="bg-gradient-to-l from-background absolute inset-y-0 right-0 w-20 z-10 pointer-events-none"></div>
+const Landing = () => {
+  const navigate = useNavigate();
+
+  return (
+    <main className="overflow-hidden bg-background text-foreground">
+      <HeroHeader />
+
+      {/* HERO */}
+      <section className="relative pt-36 md:pt-44 pb-20 px-6">
+        {/* Ambient gradient */}
+        <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute -top-40 left-1/2 -translate-x-1/2 h-[600px] w-[900px] rounded-full bg-accent/10 blur-3xl" />
+          <div className="absolute top-40 right-0 h-[300px] w-[300px] rounded-full bg-primary/10 blur-3xl" />
+        </div>
+
+        <div className="mx-auto max-w-5xl text-center">
+          <AnimatedGroup variants={{ container: { visible: { transition: { staggerChildren: 0.1 } } }, item: transitionVariants.item }}>
+            <Link
+              to="/auth"
+              className="hover:bg-secondary group mx-auto flex w-fit items-center gap-3 rounded-full border p-1 pl-4 text-xs transition-colors duration-300 glass"
+            >
+              <span className="text-foreground">Adaptive Routine OS — Now in Beta</span>
+              <span className="block h-3 w-0.5 border-l bg-border"></span>
+              <div className="bg-background size-6 overflow-hidden rounded-full duration-500 flex items-center justify-center">
+                <ArrowRight className="size-3" />
+              </div>
+            </Link>
+
+            <h1 className="mt-10 text-balance text-5xl md:text-7xl lg:text-[5.5rem] font-semibold tracking-tight leading-[1.05]">
+              You don't have a time problem.
+              <br />
+              <span className="bg-gradient-to-r from-foreground via-foreground/70 to-foreground/40 bg-clip-text text-transparent">
+                You have a control problem.
+              </span>
+            </h1>
+
+            <p className="mx-auto mt-8 max-w-2xl text-balance text-lg md:text-xl text-muted-foreground">
+              Your schedule isn't broken because you're lazy. It's broken because it can't adapt to reality.
+            </p>
+
+            <div className="mt-12 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Button size="lg" className="rounded-full px-7" onClick={() => navigate("/auth")}>
+                Take Back Control
+                <ArrowRight className="ml-1 size-4" />
+              </Button>
+              <Button size="lg" variant="outline" className="rounded-full px-7" onClick={() => navigate("/auth")}>
+                See SERA in Action
+              </Button>
             </div>
           </div>
         </div>
