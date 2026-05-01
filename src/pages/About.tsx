@@ -7,6 +7,7 @@ import { SeraLogo } from "@/components/ui/sera-logo";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AboutPage from "@/components/ui/about-page";
+import LandingNav from "@/components/layout/LandingNav";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -88,24 +89,7 @@ export default function About() {
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      {/* NAV */}
-      <header className="fixed top-0 left-0 right-0 z-50">
-        <div className="mx-auto max-w-6xl px-6 py-5 flex items-center justify-between glass rounded-b-2xl">
-          <Link to="/landing" className="flex items-center gap-2">
-            <SeraLogo className="h-7 w-7" />
-            <span className="font-semibold tracking-tight">SERA</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
-            <Link to="/landing" className="hover:text-foreground transition-colors">Home</Link>
-            <a href="#philosophy" className="hover:text-foreground transition-colors">Philosophy</a>
-            <a href="#architecture" className="hover:text-foreground transition-colors">Architecture</a>
-            <a href="#references" className="hover:text-foreground transition-colors">References</a>
-          </nav>
-          <Button asChild size="sm">
-            <Link to="/auth">Get Started</Link>
-          </Button>
-        </div>
-      </header>
+      <LandingNav />
 
       {/* HERO + ABOUT (new layout) */}
       <AboutPage />
