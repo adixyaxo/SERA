@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { SeraLogo } from "@/components/ui/sera-logo";
 import { cn } from "@/lib/utils";
+import LandingNav from "@/components/layout/LandingNav";
 
 const transitionVariants = {
   item: {
@@ -20,9 +21,10 @@ const transitionVariants = {
 };
 
 const menuItems = [
+  { name: "Home", href: "/", isRoute: true },
+  { name: "About", href: "/about", isRoute: true },
   { name: "Problem", href: "#problem" },
   { name: "Solution", href: "#solution" },
-  { name: "Reality", href: "#reality" },
   { name: "Tech", href: "#tech" },
 ];
 
@@ -50,7 +52,7 @@ const HeroHeader = () => {
         >
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
             <div className="flex w-full justify-between lg:w-auto">
-              <Link to="/landing" className="flex items-center space-x-2">
+              <Link to="/" className="flex items-center space-x-2">
                 <SeraLogo size="sm" />
               </Link>
 
@@ -67,12 +69,21 @@ const HeroHeader = () => {
               <ul className="flex gap-8 text-sm">
                 {menuItems.map((item, index) => (
                   <li key={index}>
-                    <a
-                      href={item.href}
-                      className="text-muted-foreground hover:text-foreground block duration-150"
-                    >
-                      <span>{item.name}</span>
-                    </a>
+                    {item.isRoute ? (
+                      <Link
+                        to={item.href}
+                        className="text-muted-foreground hover:text-foreground block duration-150"
+                      >
+                        <span>{item.name}</span>
+                      </Link>
+                    ) : (
+                      <a
+                        href={item.href}
+                        className="text-muted-foreground hover:text-foreground block duration-150"
+                      >
+                        <span>{item.name}</span>
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -88,12 +99,21 @@ const HeroHeader = () => {
                 <ul className="space-y-6 text-base">
                   {menuItems.map((item, index) => (
                     <li key={index}>
-                      <a
-                        href={item.href}
-                        className="text-muted-foreground hover:text-foreground block duration-150"
-                      >
-                        <span>{item.name}</span>
-                      </a>
+                      {item.isRoute ? (
+                        <Link
+                          to={item.href}
+                          className="text-muted-foreground hover:text-foreground block duration-150"
+                        >
+                          <span>{item.name}</span>
+                        </Link>
+                      ) : (
+                        <a
+                          href={item.href}
+                          className="text-muted-foreground hover:text-foreground block duration-150"
+                        >
+                          <span>{item.name}</span>
+                        </a>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -129,7 +149,7 @@ const Landing = () => {
 
   return (
     <main className="overflow-hidden bg-background text-foreground">
-      <HeroHeader />
+      <LandingNav />
 
       {/* HERO */}
       <section className="relative pt-36 md:pt-44 pb-20 px-6">
