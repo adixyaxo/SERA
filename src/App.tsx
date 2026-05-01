@@ -22,6 +22,7 @@ import Timetable from "./pages/Timetable";
 import Onboarding from "./pages/Onboarding";
 import Landing from "./pages/Landing";
 import About from "./pages/About";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <VoiceCommandProvider>
             <Routes>
               <Route path="/landing" element={<Landing />} />
