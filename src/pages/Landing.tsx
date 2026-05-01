@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { SeraLogo } from "@/components/ui/sera-logo";
 import { cn } from "@/lib/utils";
+import LandingNav from "@/components/layout/LandingNav";
 
 const transitionVariants = {
   item: {
@@ -148,7 +149,7 @@ const Landing = () => {
 
   return (
     <main className="overflow-hidden bg-background text-foreground">
-      <HeroHeader />
+      <LandingNav />
 
       {/* HERO */}
       <section className="relative pt-36 md:pt-44 pb-20 px-6">
