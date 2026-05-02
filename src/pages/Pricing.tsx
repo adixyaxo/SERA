@@ -111,7 +111,7 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <Button asChild className={cn("mt-8 rounded-lg", !t.highlight && "variant-outline")} variant={t.highlight ? "default" : "outline"}>
+              <Button asChild className="mt-8 rounded-lg" variant={t.highlight ? "default" : "outline"}>
                 <Link to="/auth">
                   {t.cta} <ArrowRight className="ml-1 size-4" />
                 </Link>
