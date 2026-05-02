@@ -22,6 +22,9 @@ import Timetable from "./pages/Timetable";
 import Onboarding from "./pages/Onboarding";
 import Landing from "./pages/Landing";
 import About from "./pages/About";
+import Pricing from "./pages/Pricing";
+import Demo from "./pages/Demo";
+import SocialProof from "./pages/SocialProof";
 import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
@@ -40,6 +43,9 @@ const App = () => (
               <Route path="/home" element={<Landing />} />
               <Route path="/landing" element={<Landing />} />
               <Route path="/about" element={<About />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/demo" element={<Demo />} />
+              <Route path="/social-proof" element={<SocialProof />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
               <Route path="/dashboard" element={<ProtectedRoute><Index /></ProtectedRoute>} />

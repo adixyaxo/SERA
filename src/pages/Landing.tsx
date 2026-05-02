@@ -6,7 +6,6 @@ import { AnimatedGroup } from "@/components/ui/animated-group";
 import { SeraLogo } from "@/components/ui/sera-logo";
 import { LiquidNavbar } from "@/components/layout/LiquidNavbar";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
-import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { RevealText } from "@/components/ui/reveal-text";
 import { CardCurtainReveal, CardCurtainRevealBody, CardCurtainRevealTitle, CardCurtainRevealDescription, CardCurtainRevealFooter } from "@/components/ui/card-curtain-reveal";
 import HoverRevealCards from "@/components/ui/cards";
@@ -29,10 +28,9 @@ const transitionVariants = {
 
 const menuItems = [
   { name: "About", href: "/about", isRouterLink: true },
-  { name: "Problem", href: "/home#problem" },
-  { name: "Solution", href: "/home#solution" },
-  { name: "Reality", href: "/home#reality" },
-  { name: "Tech", href: "/home#tech" },
+  { name: "Demo", href: "/demo", isRouterLink: true },
+  { name: "Pricing", href: "/pricing", isRouterLink: true },
+  { name: "Social Proof", href: "/social-proof", isRouterLink: true },
 ];
 
 const FeatureCard: React.FC<{ icon?: React.ElementType; title: string; desc: string; className?: string }> = ({ icon: Icon, title, desc, className }) => (
@@ -57,7 +55,6 @@ const Landing = () => {
 
       {/* HERO SECTION */}
       <section className="relative min-h-[calc(100vh-100px)] mt-[100px] flex flex-col justify-center pb-24 overflow-hidden">
-        <ProgressiveBlur position="bottom" height="25%" />
         <motion.div style={{ y: yBg }} className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--background)_75%)]"></motion.div>
         <div className="mx-auto max-w-6xl px-6 relative z-10 grid grid-cols-12 gap-8 items-center">
           <div className="col-span-12 lg:col-span-7 text-center lg:text-left">
@@ -94,10 +91,11 @@ const Landing = () => {
                   text="ADAPTIVE"
                   textColor="text-foreground/60"
                   overlayColor="text-primary"
-                  fontSize="text-h1 tracking-tighter"
-                  className="justify-center lg:justify-start -ml-2"
+                  fontSize="text-h1 font-black tracking-[-0.08em]"
+                  letterDelay={0.05}
+                  className="justify-center lg:justify-start -ml-2 [&>div]:gap-x-0"
                 />
-                <h1 className="mt-2 text-h1 font-black leading-tight text-foreground">
+                <h1 className="mt-2 text-h1 font-black leading-tight text-foreground tracking-tight">
                   Routine OS for modern workflows
                 </h1>
               </div>
@@ -129,21 +127,24 @@ const Landing = () => {
               }}
             >
               <div className="relative h-[400px] lg:h-[500px] overflow-hidden rounded-lg border border-border/40 shadow-2xl dark:border-white/5">
-                <ZoomParallax 
+                <ZoomParallax
                   images={[
                     {
-                      src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
-                      alt: "Modern architecture"
+                      src: "https://cdn.coverr.co/videos/coverr-typing-on-a-laptop-2584/1080p.mp4",
+                      alt: "Workflow video",
+                      video: true,
                     },
                     {
-                      src: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop",
-                      alt: "Urban cityscape"
+                      src: "https://cdn.coverr.co/videos/coverr-aerial-view-of-a-city-at-night-9447/1080p.mp4",
+                      alt: "City flow",
+                      video: true,
                     },
                     {
-                      src: "https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=600&fit=crop",
-                      alt: "Abstract pattern"
-                    }
-                  ]} 
+                      src: "https://cdn.coverr.co/videos/coverr-clock-time-lapse-1572/1080p.mp4",
+                      alt: "Clock time-lapse",
+                      video: true,
+                    },
+                  ]}
                 />
               </div>
             </AnimatedGroup>
