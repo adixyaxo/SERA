@@ -18,9 +18,9 @@ interface RevealTextProps {
 
 export function RevealText({
   text = "STUNNING",
-  textColor = "text-white",
+  textColor = "text-foreground/60",
   overlayColor = "text-red-500",
-  fontSize = "text-[250px]",
+  fontSize = "text-[250px] font-black",
   letterDelay = 0.08,
   overlayDelay = 0.05,
   overlayDuration = 0.4,
@@ -66,7 +66,7 @@ export function RevealText({
               key={index}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
-              className={`${fontSize} font-semibold tracking-tight cursor-pointer relative overflow-hidden leading-[1]`}
+              className={`${fontSize} font-extrabold tracking-tight cursor-pointer relative overflow-hidden leading-[1]`}
               initial={{ 
                 scale: 0,
                 opacity: 0,

@@ -50,7 +50,14 @@ export function LiquidNavbar({ items }: LiquidNavbarProps) {
   const navY = useTransform(scrollYProgress, [0, 0.05], [0, 16])
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center w-full pointer-events-none">
+    <header className="fixed top-0 left-0 right-0 z-50 flex flex-col items-center pointer-events-none">
+      {/* Scroll Progress Bar - Sleek gradient bar */}
+      <div className="w-full h-[3px] bg-transparent relative overflow-hidden">
+        <motion.div
+          className="h-full bg-gradient-to-r from-accent/80 via-accent to-accent/80 origin-left shadow-lg shadow-accent/20"
+          style={{ scaleX: scrollYProgress }}
+        />
+      </div>
       <motion.nav
         style={{
           width: navWidth,
@@ -60,10 +67,10 @@ export function LiquidNavbar({ items }: LiquidNavbarProps) {
         className={cn(
           "pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] origin-top",
           // System-wide rounded rectangle (4 equal corners) with subtle backdrop and glow
-          "rounded-lg border",
+          "rounded-lg",
           isScrolled
-            ? "bg-background/70 backdrop-blur-md border-border/50 shadow-sm px-6 py-3 mt-0"
-            : "bg-background/50 backdrop-blur-sm border-border/30 px-6 py-4 mt-2 shadow-sm"
+            ? "bg-[#000000]/70 backdrop-blur-md border-border/50 shadow-sm px-6 py-3 mt-0"
+            : "bg-[#000000]/50 backdrop-blur-sm border-transparent px-6 py-4 mt-2 shadow-sm"
         )}
       >
         <div className="flex items-center justify-between w-full">

@@ -60,27 +60,27 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Dark mode - Pitch black */
-    --background: 0 0% 2%;
+    /* Dark mode - Pure black */
+    --background: 0 0% 0%;
     --foreground: 0 0% 98%;
 
-    --card: 0 0% 5%;
+    --card: 0 0% 4%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 5%;
+    --popover: 0 0% 4%;
     --popover-foreground: 0 0% 98%;
 
     --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 2%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 0 0% 8%;
+    --secondary: 0 0% 7%;
     --secondary-foreground: 0 0% 98%;
 
     --muted: 0 0% 10%;
     --muted-foreground: 0 0% 60%;
 
     --accent: 225 90% 72%;
-    --accent-foreground: 0 0% 2%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 70% 60%;
     --destructive-foreground: 0 0% 98%;
@@ -90,15 +90,15 @@ All colors MUST be HSL.
     --ring: 225 90% 72%;
 
     /* Dark glass effects */
-    --glass-background: 0 0% 5% / 0.7;
+    --glass-background: 0 0% 4% / 0.7;
     --glass-border: 0 0% 20% / 0.3;
     --glass-shadow: 225 90% 72% / 0.05;
 
-    --sidebar-background: 0 0% 3% / 0.8;
+    --sidebar-background: 0 0% 2% / 0.8;
     --sidebar-foreground: 0 0% 98%;
     --sidebar-primary: 225 90% 72%;
-    --sidebar-primary-foreground: 0 0% 2%;
-    --sidebar-accent: 0 0% 8%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 7%;
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 0 0% 15%;
     --sidebar-ring: 225 90% 72%;
@@ -113,6 +113,7 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    scroll-behavior: smooth;
   }
 
   /* Glass morphism utilities */
@@ -163,6 +164,66 @@ All colors MUST be HSL.
   .glass-text {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+  }
+
+  /* Research Paper Typography */
+  .paper-section-number {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  .paper-heading {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: hsl(var(--foreground));
+  }
+
+  .paper-subheading {
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: hsl(var(--foreground));
+  }
+
+  .paper-body {
+    font-size: 15px;
+    line-height: 1.7;
+    max-width: 65ch;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .paper-meta {
+    font-size: 12px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    letter-spacing: 0.05em;
+    color: hsl(var(--muted-foreground) / 0.7);
+  }
+
+  .paper-separator {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, hsl(var(--border) / 0.3), transparent);
+  }
+
+  .paper-citation {
+    font-size: 12px;
+    font-style: italic;
+    color: hsl(var(--muted-foreground) / 0.8);
+    border-left: 2px solid hsl(var(--accent) / 0.3);
+    padding-left: 12px;
+  }
+
+  .paper-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
   }
 
   /* Typography scale */
