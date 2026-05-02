@@ -6,7 +6,6 @@ import { AnimatedGroup } from "@/components/ui/animated-group";
 import { SeraLogo } from "@/components/ui/sera-logo";
 import { LiquidNavbar } from "@/components/layout/LiquidNavbar";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
-import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { RevealText } from "@/components/ui/reveal-text";
 import { CardCurtainReveal, CardCurtainRevealBody, CardCurtainRevealTitle, CardCurtainRevealDescription, CardCurtainRevealFooter } from "@/components/ui/card-curtain-reveal";
 import HoverRevealCards from "@/components/ui/cards";
@@ -29,10 +28,9 @@ const transitionVariants = {
 
 const menuItems = [
   { name: "About", href: "/about", isRouterLink: true },
-  { name: "Problem", href: "/home#problem" },
-  { name: "Solution", href: "/home#solution" },
-  { name: "Reality", href: "/home#reality" },
-  { name: "Tech", href: "/home#tech" },
+  { name: "Demo", href: "/demo", isRouterLink: true },
+  { name: "Pricing", href: "/pricing", isRouterLink: true },
+  { name: "Social Proof", href: "/social-proof", isRouterLink: true },
 ];
 
 const FeatureCard: React.FC<{ icon?: React.ElementType; title: string; desc: string; className?: string }> = ({ icon: Icon, title, desc, className }) => (
