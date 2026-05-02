@@ -55,7 +55,6 @@ const Landing = () => {
 
       {/* HERO SECTION */}
       <section className="relative min-h-[calc(100vh-100px)] mt-[100px] flex flex-col justify-center pb-24 overflow-hidden">
-        <ProgressiveBlur position="bottom" height="25%" />
         <motion.div style={{ y: yBg }} className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--background)_75%)]"></motion.div>
         <div className="mx-auto max-w-6xl px-6 relative z-10 grid grid-cols-12 gap-8 items-center">
           <div className="col-span-12 lg:col-span-7 text-center lg:text-left">
