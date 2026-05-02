@@ -1,15 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, useScroll } from "framer-motion";
-import { ArrowRight, Brain, Workflow, RefreshCcw, Sparkles, BookOpen, Lock, GitBranch, Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, Brain, Workflow, RefreshCcw, Sparkles, GitBranch, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SeraLogo } from "@/components/ui/sera-logo";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AboutPage from "@/components/ui/about-page";
 import { LiquidNavbar } from "@/components/layout/LiquidNavbar";
 import { LinkPreview } from "@/components/ui/link-preview";
-import { cn } from "@/lib/utils";
+import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,10 +54,10 @@ const principles = [
 const flow = ["Capture", "Understand", "Plan", "Present", "Confirm", "Execute", "Learn"];
 
 const menuItems = [
-  { name: "Home", href: "/home", isRouterLink: true },
-  { name: "Philosophy", href: "#philosophy" },
-  { name: "Architecture", href: "#architecture" },
-  { name: "References", href: "#references" },
+  { name: "Home", href: "/", isRouterLink: true },
+  { name: "Demo", href: "/demo", isRouterLink: true },
+  { name: "Pricing", href: "/pricing", isRouterLink: true },
+  { name: "Social Proof", href: "/social-proof", isRouterLink: true },
 ];
 
 
