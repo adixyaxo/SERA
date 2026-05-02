@@ -4,13 +4,16 @@ import { useScroll, useTransform, motion } from "framer-motion"
 import { useRef } from "react"
 import { cn } from "@/lib/utils"
 
-interface Image {
+interface MediaItem {
   src: string
   alt?: string
+  /** If true, render as a <video> instead of <img> */
+  video?: boolean
+  poster?: string
 }
 
 interface ZoomParallaxProps {
-  images: Image[]
+  images: MediaItem[]
   className?: string
 }
 
@@ -32,7 +35,8 @@ export function ZoomParallax({ images, className }: ZoomParallaxProps) {
   return (
     <div ref={container} className={cn("relative h-[300vh]", className)}>
       <div className="sticky top-0 h-screen overflow-hidden">
-        {images.map(({ src, alt }, index) => {
+        {images.map((item, index) => {
+          const { src, alt, video, poster } = item
           const scale = scales[index % scales.length]
           let positionClasses = ""
 
@@ -57,11 +61,23 @@ export function ZoomParallax({ images, className }: ZoomParallaxProps) {
               className={`absolute top-0 flex h-full w-full items-center justify-center ${positionClasses}`}
             >
               <div className="relative h-[25vh] w-[25vw]">
-                <img
-                  src={src || "/placeholder.svg"}
-                  alt={alt || `Parallax image ${index + 1}`}
-                  className="h-full w-full object-cover"
-                />
+                {video ? (
+                  <video
+                    src={src}
+                    poster={poster}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <img
+                    src={src || "/placeholder.svg"}
+                    alt={alt || `Parallax image ${index + 1}`}
+                    className="h-full w-full object-cover"
+                  />
+                )}
               </div>
             </motion.div>
           )
