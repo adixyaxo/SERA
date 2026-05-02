@@ -102,6 +102,11 @@ export default function About() {
       {/* NAV */}
       <LiquidNavbar items={menuItems} />
 
+      {/* Sticky viewport-bottom progressive blur */}
+      <div className="pointer-events-none fixed bottom-0 left-0 right-0 h-32 z-40">
+        <ProgressiveBlur position="bottom" height="100%" />
+      </div>
+
       {/* HERO + ABOUT (new layout) */}
       <AboutPage />
 
