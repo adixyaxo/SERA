@@ -91,10 +91,11 @@ const Landing = () => {
                   text="ADAPTIVE"
                   textColor="text-foreground/60"
                   overlayColor="text-primary"
-                  fontSize="text-h1 tracking-tighter"
-                  className="justify-center lg:justify-start -ml-2"
+                  fontSize="text-h1 font-black tracking-[-0.08em]"
+                  letterDelay={0.05}
+                  className="justify-center lg:justify-start -ml-2 [&>div]:gap-x-0"
                 />
-                <h1 className="mt-2 text-h1 font-black leading-tight text-foreground">
+                <h1 className="mt-2 text-h1 font-black leading-tight text-foreground tracking-tight">
                   Routine OS for modern workflows
                 </h1>
               </div>
@@ -126,21 +127,24 @@ const Landing = () => {
               }}
             >
               <div className="relative h-[400px] lg:h-[500px] overflow-hidden rounded-lg border border-border/40 shadow-2xl dark:border-white/5">
-                <ZoomParallax 
+                <ZoomParallax
                   images={[
                     {
-                      src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
-                      alt: "Modern architecture"
+                      src: "https://cdn.coverr.co/videos/coverr-typing-on-a-laptop-2584/1080p.mp4",
+                      alt: "Workflow video",
+                      video: true,
                     },
                     {
-                      src: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop",
-                      alt: "Urban cityscape"
+                      src: "https://cdn.coverr.co/videos/coverr-aerial-view-of-a-city-at-night-9447/1080p.mp4",
+                      alt: "City flow",
+                      video: true,
                     },
                     {
-                      src: "https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=600&fit=crop",
-                      alt: "Abstract pattern"
-                    }
-                  ]} 
+                      src: "https://cdn.coverr.co/videos/coverr-clock-time-lapse-1572/1080p.mp4",
+                      alt: "Clock time-lapse",
+                      video: true,
+                    },
+                  ]}
                 />
               </div>
             </AnimatedGroup>
