@@ -5,7 +5,7 @@ import { motion, useInView } from "framer-motion";
 
 const BulbIcon = ({ isDrawn }: { isDrawn: boolean }) => {
   const [length, setLength] = useState(0);
-  const ref = useRef<SVGSVGElement>(null);
+  const ref = useRef<SVGPathElement>(null);
 
   useEffect(() => {
     if (ref.current) {
@@ -40,7 +40,7 @@ export default function SketchbookRevealCard() {
   const isInView = useInView(cardRef, { once: true, amount: 0.5 });
 
   const [pathLength, setPathLength] = useState(0);
-  const pathRef = useRef<SVGSVGElement>(null);
+  const pathRef = useRef<SVGPathElement>(null);
 
   useEffect(() => {
     if (pathRef.current) {
