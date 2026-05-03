@@ -91,11 +91,11 @@ const Landing = () => {
                   text="ADAPTIVE"
                   textColor="text-foreground/60"
                   overlayColor="text-primary"
-                  fontSize="text-h1 font-black tracking-[-0.08em]"
+                  fontSize="text-[clamp(4rem,12vw,9rem)] font-black tracking-[-0.11em] leading-[0.85]"
                   letterDelay={0.05}
-                  className="justify-center lg:justify-start -ml-2 [&>div]:gap-x-0"
+                  className="justify-center lg:justify-start -ml-1 [&>div]:gap-x-0 [&_span]:!leading-[0.85]"
                 />
-                <h1 className="mt-2 text-h1 font-black leading-tight text-foreground tracking-tight">
+                <h1 className="mt-3 text-h1 font-black leading-[0.95] text-foreground tracking-[-0.04em]">
                   Routine OS for modern workflows
                 </h1>
               </div>
@@ -129,21 +129,9 @@ const Landing = () => {
               <div className="relative h-[400px] lg:h-[500px] overflow-hidden rounded-lg border border-border/40 shadow-2xl dark:border-white/5">
                 <ZoomParallax
                   images={[
-                    {
-                      src: "https://cdn.coverr.co/videos/coverr-typing-on-a-laptop-2584/1080p.mp4",
-                      alt: "Workflow video",
-                      video: true,
-                    },
-                    {
-                      src: "https://cdn.coverr.co/videos/coverr-aerial-view-of-a-city-at-night-9447/1080p.mp4",
-                      alt: "City flow",
-                      video: true,
-                    },
-                    {
-                      src: "https://cdn.coverr.co/videos/coverr-clock-time-lapse-1572/1080p.mp4",
-                      alt: "Clock time-lapse",
-                      video: true,
-                    },
+                    { src: "/hero-video.mp4", alt: "Workflow", video: true },
+                    { src: "/hero-video.mp4", alt: "Workflow", video: true },
+                    { src: "/hero-video.mp4", alt: "Workflow", video: true },
                   ]}
                 />
               </div>
