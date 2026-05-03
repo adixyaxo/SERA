@@ -100,7 +100,10 @@ export default function About() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* NAV */}
-      <LiquidNavbar items={menuItems} />
+      <LiquidNavbar items={menuItems} showProgress />
+
+      {/* Research-paper grain texture */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-[5] opacity-[0.04] mix-blend-overlay [background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22/></filter><rect width=%22120%22 height=%22120%22 filter=%22url(%23n)%22/></svg>')]" />
 
       {/* Sticky viewport-bottom progressive blur */}
       <div className="pointer-events-none fixed bottom-0 left-0 right-0 h-32 z-40">
