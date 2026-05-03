@@ -79,7 +79,7 @@ export default function About() {
         ease: "none",
         scrollTrigger: {
           trigger: section,
-          start: "top top",
+          start: "top+=5% top",
           end: () => `+=${getDistance()}`,
           scrub: 1,
           pin: true,
@@ -100,7 +100,10 @@ export default function About() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* NAV */}
-      <LiquidNavbar items={menuItems} />
+      <LiquidNavbar items={menuItems} showProgress />
+
+      {/* Research-paper grain texture */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-[5] opacity-[0.04] mix-blend-overlay [background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22/></filter><rect width=%22120%22 height=%22120%22 filter=%22url(%23n)%22/></svg>')]" />
 
       {/* Sticky viewport-bottom progressive blur */}
       <div className="pointer-events-none fixed bottom-0 left-0 right-0 h-32 z-40">
@@ -110,27 +113,7 @@ export default function About() {
       {/* HERO + ABOUT (new layout) */}
       <AboutPage />
 
-      {/* CORE STATEMENT - Enhanced with research paper style */}
-      <section id="philosophy" className="px-6 py-32 border-t border-border/50">
-        <div className="mx-auto max-w-6xl">
-          <div className="paper-grid">
-            <div className="col-span-12 md:col-span-6 md:col-start-4">
-              <div className="paper-section-number mb-4">01 — Philosophy</div>
-              <h2 className="paper-heading mb-8">
-                Most systems ask <span className="text-muted-foreground">"what should you do next?"</span>
-                <br />
-                SERA asks <span className="text-foreground">"given your current state, environment, and goals — what is realistically optimal right now?"</span>
-              </h2>
-              <div className="paper-separator mb-8"></div>
-              <p className="paper-body">
-                It doesn't just manage tasks. It continuously negotiates reality on your behalf —
-                acting as a mixed-initiative intelligent system that interprets input, predicts
-                constraints, and restructures schedules in real time.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Philosophy lives inside AboutPage hero (Abstract block) */}
 
       {/* HORIZONTAL SCROLL — GSAP - Enhanced */}
       <section ref={sectionRef} className="relative h-screen overflow-hidden border-t border-border/50">

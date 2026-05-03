@@ -34,12 +34,20 @@ const menuItems = [
 ];
 
 const FeatureCard: React.FC<{ icon?: React.ElementType; title: string; desc: string; className?: string }> = ({ icon: Icon, title, desc, className }) => (
-  <div className={cn("rounded-lg border border-border/50 bg-card/80 backdrop-blur-sm p-8 hover:bg-card/90 hover:shadow-lg transition-all duration-300 group", className)}>
-    <div className="rounded-lg bg-accent/10 p-3 w-fit mb-4 group-hover:bg-accent/20 transition-colors">
-      {Icon && <Icon className="size-6 text-accent" />}
+  <div className={cn(
+    "relative rounded-2xl border border-border/40 p-8 transition-all duration-500 group overflow-hidden",
+    "bg-gradient-to-br from-card/90 via-card/60 to-card/30 backdrop-blur-xl",
+    "hover:border-accent/30 hover:-translate-y-1 hover:shadow-[0_20px_60px_-15px_hsl(var(--accent)/0.25)]",
+    className
+  )}>
+    <div aria-hidden className="absolute -top-20 -right-20 size-40 rounded-full bg-accent/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+    <div className="relative">
+      <div className="rounded-xl bg-accent/10 p-3 w-fit mb-5 ring-1 ring-accent/20 group-hover:bg-accent/20 group-hover:ring-accent/40 transition-all">
+        {Icon && <Icon className="size-5 text-accent" />}
+      </div>
+      <h3 className="text-h3 text-foreground mb-3 tracking-tight">{title}</h3>
+      <p className="text-body text-muted-foreground leading-relaxed">{desc}</p>
     </div>
-    <h3 className="text-h3 text-foreground mb-3">{title}</h3>
-    <p className="text-body text-muted-foreground leading-relaxed">{desc}</p>
   </div>
 );
 
@@ -91,11 +99,11 @@ const Landing = () => {
                   text="ADAPTIVE"
                   textColor="text-foreground/60"
                   overlayColor="text-primary"
-                  fontSize="text-h1 font-black tracking-[-0.08em]"
+                  fontSize="text-[clamp(4rem,12vw,9rem)] font-black tracking-[-0.11em] leading-[0.85]"
                   letterDelay={0.05}
-                  className="justify-center lg:justify-start -ml-2 [&>div]:gap-x-0"
+                  className="justify-center lg:justify-start -ml-1 [&>div]:gap-x-0 [&_span]:!leading-[0.85]"
                 />
-                <h1 className="mt-2 text-h1 font-black leading-tight text-foreground tracking-tight">
+                <h1 className="mt-3 text-h1 font-black leading-[0.95] text-foreground tracking-[-0.04em]">
                   Routine OS for modern workflows
                 </h1>
               </div>
@@ -129,21 +137,9 @@ const Landing = () => {
               <div className="relative h-[400px] lg:h-[500px] overflow-hidden rounded-lg border border-border/40 shadow-2xl dark:border-white/5">
                 <ZoomParallax
                   images={[
-                    {
-                      src: "https://cdn.coverr.co/videos/coverr-typing-on-a-laptop-2584/1080p.mp4",
-                      alt: "Workflow video",
-                      video: true,
-                    },
-                    {
-                      src: "https://cdn.coverr.co/videos/coverr-aerial-view-of-a-city-at-night-9447/1080p.mp4",
-                      alt: "City flow",
-                      video: true,
-                    },
-                    {
-                      src: "https://cdn.coverr.co/videos/coverr-clock-time-lapse-1572/1080p.mp4",
-                      alt: "Clock time-lapse",
-                      video: true,
-                    },
+                    { src: "/hero-video.mp4", alt: "Workflow", video: true },
+                    { src: "/hero-video.mp4", alt: "Workflow", video: true },
+                    { src: "/hero-video.mp4", alt: "Workflow", video: true },
                   ]}
                 />
               </div>
@@ -257,21 +253,22 @@ const Landing = () => {
             { icon: Workflow, title: "Method-aware", desc: "GTD, Pomodoro, time-blocking — SERA adapts to your brain.", image: "https://images.unsplash.com/photo-1516110833967-0b5716ca1387?q=80&w=800&auto=format&fit=crop" },
             { icon: RefreshCw, title: "Continuity Engine", desc: "One disruption doesn't ruin your entire day anymore.", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" },
           ].map((f, i) => (
-            <CardCurtainReveal key={i} className="rounded-lg border border-border/50 overflow-hidden">
-              <div className="relative h-[200px] overflow-hidden">
+            <CardCurtainReveal key={i} className="rounded-2xl border border-border/40 overflow-hidden bg-gradient-to-br from-card/90 via-card/50 to-background hover:border-accent/30 hover:shadow-[0_20px_60px_-15px_hsl(var(--accent)/0.3)] transition-all duration-500">
+              <div className="relative h-[220px] overflow-hidden">
                 <img
                   width="100%"
                   height="100%"
                   alt={f.title}
-                  className="object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-300"
+                  className="object-cover w-full h-full opacity-50 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700"
                   src={f.image}
                 />
+                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
               </div>
-              <CardCurtainRevealBody className="p-6">
-                <div className="rounded-lg bg-accent/10 p-3 w-fit mb-4">
-                  <f.icon className="size-6 text-accent" />
+              <CardCurtainRevealBody className="p-7">
+                <div className="rounded-xl bg-accent/10 p-3 w-fit mb-4 ring-1 ring-accent/20">
+                  <f.icon className="size-5 text-accent" />
                 </div>
-                <CardCurtainRevealTitle className="text-h3 text-foreground mb-3">
+                <CardCurtainRevealTitle className="text-h3 text-foreground mb-3 tracking-tight">
                   {f.title}
                 </CardCurtainRevealTitle>
                 <CardCurtainRevealDescription className="text-body text-muted-foreground leading-relaxed">
@@ -314,7 +311,9 @@ const Landing = () => {
       </Section>
 
       {/* PSYCHO HOOK */}
-      <Section className="border-t border-border/50">
+      <Section className="relative border-t border-border/50 overflow-hidden">
+        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-br from-[#0a1628] via-[#050a14] to-[#0c1830]" />
+        <div aria-hidden className="absolute inset-0 -z-10 [background:radial-gradient(circle_at_30%_20%,hsl(217_91%_60%/0.15),transparent_50%),radial-gradient(circle_at_70%_80%,hsl(220_70%_30%/0.25),transparent_55%)]" />
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-h2 font-bold tracking-tight text-foreground leading-tight">
             You're not inconsistent. <br />

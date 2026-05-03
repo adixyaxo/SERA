@@ -15,9 +15,10 @@ export interface NavItem {
 
 interface LiquidNavbarProps {
   items: NavItem[]
+  showProgress?: boolean
 }
 
-export function LiquidNavbar({ items }: LiquidNavbarProps) {
+export function LiquidNavbar({ items, showProgress = false }: LiquidNavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const { pathname, hash } = useLocation()
   const [activeTab, setActiveTab] = useState("")
@@ -51,13 +52,15 @@ export function LiquidNavbar({ items }: LiquidNavbarProps) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex flex-col items-center pointer-events-none">
-      {/* Scroll Progress Bar - Sleek gradient bar */}
-      <div className="w-full h-[3px] bg-transparent relative overflow-hidden">
-        <motion.div
-          className="h-full bg-gradient-to-r from-accent/80 via-accent to-accent/80 origin-left shadow-lg shadow-accent/20"
-          style={{ scaleX: scrollYProgress }}
-        />
-      </div>
+      {/* Scroll Progress Bar - opt-in per page */}
+      {showProgress && (
+        <div className="w-full h-[3px] bg-transparent relative overflow-hidden">
+          <motion.div
+            className="h-full bg-gradient-to-r from-accent/80 via-accent to-accent/80 origin-left shadow-lg shadow-accent/20"
+            style={{ scaleX: scrollYProgress }}
+          />
+        </div>
+      )}
       <motion.nav
         style={{
           width: navWidth,
