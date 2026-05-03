@@ -79,7 +79,7 @@ export default function About() {
         ease: "none",
         scrollTrigger: {
           trigger: section,
-          start: "top top",
+          start: "top+=5% top",
           end: () => `+=${getDistance()}`,
           scrub: 1,
           pin: true,
@@ -113,27 +113,7 @@ export default function About() {
       {/* HERO + ABOUT (new layout) */}
       <AboutPage />
 
-      {/* CORE STATEMENT - Enhanced with research paper style */}
-      <section id="philosophy" className="px-6 py-32 border-t border-border/50">
-        <div className="mx-auto max-w-6xl">
-          <div className="paper-grid">
-            <div className="col-span-12 md:col-span-6 md:col-start-4">
-              <div className="paper-section-number mb-4">01 — Philosophy</div>
-              <h2 className="paper-heading mb-8">
-                Most systems ask <span className="text-muted-foreground">"what should you do next?"</span>
-                <br />
-                SERA asks <span className="text-foreground">"given your current state, environment, and goals — what is realistically optimal right now?"</span>
-              </h2>
-              <div className="paper-separator mb-8"></div>
-              <p className="paper-body">
-                It doesn't just manage tasks. It continuously negotiates reality on your behalf —
-                acting as a mixed-initiative intelligent system that interprets input, predicts
-                constraints, and restructures schedules in real time.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Philosophy lives inside AboutPage hero (Abstract block) */}
 
       {/* HORIZONTAL SCROLL — GSAP - Enhanced */}
       <section ref={sectionRef} className="relative h-screen overflow-hidden border-t border-border/50">
