@@ -10,6 +10,7 @@ const menuItems = [
   { name: "About", href: "/about", isRouterLink: true },
   { name: "Demo", href: "/demo", isRouterLink: true },
   { name: "Pricing", href: "/pricing", isRouterLink: true },
+  { name: "Social Proof", href: "/social-proof", isRouterLink: true },
 ];
 
 const testimonials = [

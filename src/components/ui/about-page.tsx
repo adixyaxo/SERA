@@ -64,24 +64,24 @@ export default function AboutPage({
         </div>
       </Section>
 
-      {/* ACHIEVEMENTS — plain text, paper style */}
-      <Section id="achievements" className="px-6 py-24 border-t border-border/50">
-        <div className="mx-auto max-w-5xl">
-          <div className="paper-section-number mb-10 text-center">By the Numbers</div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-6">
+      {/* ACHIEVEMENTS — plain text, paper style (compact) */}
+      <Section id="achievements" className="px-6 py-12 border-t border-border/50">
+        <div className="mx-auto max-w-3xl">
+          <div className="paper-section-number mb-4 text-center text-[10px]">By the Numbers</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-3">
             {achievements.map((item, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 8 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
                 className="text-center"
               >
-                <div className="text-5xl md:text-7xl font-medium tracking-[-0.04em] text-foreground tabular-nums">
+                <div className="text-2xl md:text-3xl font-medium tracking-[-0.04em] text-foreground tabular-nums">
                   {item.value}
                 </div>
-                <div className="mt-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">{item.label}</div>
+                <div className="mt-1 text-[9px] uppercase tracking-[0.2em] text-muted-foreground">{item.label}</div>
               </motion.div>
             ))}
           </div>

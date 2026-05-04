@@ -7,7 +7,7 @@ import { SeraLogo } from "@/components/ui/sera-logo";
 import { LiquidNavbar } from "@/components/layout/LiquidNavbar";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import { RevealText } from "@/components/ui/reveal-text";
-import { CardCurtainReveal, CardCurtainRevealBody, CardCurtainRevealTitle, CardCurtainRevealDescription, CardCurtainRevealFooter } from "@/components/ui/card-curtain-reveal";
+
 import HoverRevealCards from "@/components/ui/cards";
 import Section from "@/components/ui/section";
 import { ZoomParallax } from "@/components/ui/zoom-parallax";
@@ -27,6 +27,7 @@ const transitionVariants = {
 };
 
 const menuItems = [
+  { name: "Home", href: "/", isRouterLink: true },
   { name: "About", href: "/about", isRouterLink: true },
   { name: "Demo", href: "/demo", isRouterLink: true },
   { name: "Pricing", href: "/pricing", isRouterLink: true },
@@ -95,14 +96,16 @@ const Landing = () => {
               </Link>
 
               <div className="mt-8">
-                <RevealText
-                  text="ADAPTIVE"
-                  textColor="text-foreground/60"
-                  overlayColor="text-primary"
-                  fontSize="text-[clamp(4rem,12vw,9rem)] font-black tracking-[-0.11em] leading-[0.85]"
-                  letterDelay={0.05}
-                  className="justify-center lg:justify-start -ml-1 [&>div]:gap-x-0 [&_span]:!leading-[0.85]"
-                />
+                <div className="w-full overflow-hidden">
+                  <RevealText
+                    text="ADAPTIVE"
+                    textColor="text-foreground/60"
+                    overlayColor="text-primary"
+                    fontSize="text-[clamp(2.6rem,9.5vw,8rem)] font-black tracking-[-0.11em] leading-[0.85] whitespace-nowrap"
+                    letterDelay={0.05}
+                    className="flex-nowrap justify-center lg:justify-start -ml-1 [&>div]:gap-x-0 [&>div]:flex-nowrap [&_span]:!leading-[0.85] [&_span]:whitespace-nowrap"
+                  />
+                </div>
                 <h1 className="mt-3 text-h1 font-black leading-[0.95] text-foreground tracking-[-0.04em]">
                   Routine OS for modern workflows
                 </h1>
@@ -162,13 +165,22 @@ const Landing = () => {
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-4">The Real Enemy</p>
             </div>
             <div className="relative py-6 w-full md:w-[calc(100%-12rem)] md:pl-8">
-              <InfiniteSlider speedOnHover={20} speed={40} gap={112}>
-                {["nvidia", "column", "github", "nike", "lemonsqueezy", "laravel", "lilly", "openai"].map((logo) => (
-                  <div key={logo} className="flex">
+              <InfiniteSlider speedOnHover={20} speed={40} gap={48}>
+                {[
+                  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1542435503-956c469947f6?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=400&q=80&auto=format&fit=crop",
+                ].map((src, i) => (
+                  <div key={i} className="flex">
                     <img
-                      className="mx-auto h-5 w-fit dark:invert opacity-60 hover:opacity-100 transition-opacity"
-                      src={`https://html.tailus.io/blocks/customers/${logo}.svg`}
-                      alt={`${logo} Logo`}
+                      className="h-14 w-24 md:h-16 md:w-32 object-cover rounded-md opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
+                      src={src}
+                      alt={`Showcase ${i + 1}`}
                     />
                   </div>
                 ))}
@@ -201,7 +213,7 @@ const Landing = () => {
           ))}
         </div>
 
-        <p className="mt-16 text-center text-h2 font-semibold tracking-tight">
+        <p className="mt-16 text-center text-lg md:text-xl font-semibold tracking-tight">
           Your life is dynamic. <span className="text-muted-foreground">Your system is not.</span>
         </p>
       </Section>
@@ -253,30 +265,33 @@ const Landing = () => {
             { icon: Workflow, title: "Method-aware", desc: "GTD, Pomodoro, time-blocking — SERA adapts to your brain.", image: "https://images.unsplash.com/photo-1516110833967-0b5716ca1387?q=80&w=800&auto=format&fit=crop" },
             { icon: RefreshCw, title: "Continuity Engine", desc: "One disruption doesn't ruin your entire day anymore.", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" },
           ].map((f, i) => (
-            <CardCurtainReveal key={i} className="rounded-2xl border border-border/40 overflow-hidden bg-gradient-to-br from-card/90 via-card/50 to-background hover:border-accent/30 hover:shadow-[0_20px_60px_-15px_hsl(var(--accent)/0.3)] transition-all duration-500">
-              <div className="relative h-[220px] overflow-hidden">
-                <img
-                  width="100%"
-                  height="100%"
+            <div
+              key={i}
+              className="group relative rounded-2xl border border-border/40 overflow-hidden bg-gradient-to-br from-card/90 via-card/50 to-background hover:border-accent/30 hover:shadow-[0_20px_60px_-15px_hsl(var(--accent)/0.3)] transition-all duration-500"
+            >
+              <div className="relative h-[260px] overflow-hidden">
+                <motion.img
                   alt={f.title}
-                  className="object-cover w-full h-full opacity-50 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700"
                   src={f.image}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  initial={{ scale: 1.05, x: 0 }}
+                  whileHover={{ scale: 1.18, x: -20 }}
+                  transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                 />
-                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
+                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
+                <motion.div
+                  aria-hidden
+                  className="absolute inset-0 bg-gradient-to-tr from-accent/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                />
               </div>
-              <CardCurtainRevealBody className="p-7">
-                <div className="rounded-xl bg-accent/10 p-3 w-fit mb-4 ring-1 ring-accent/20">
+              <div className="p-7">
+                <div className="rounded-xl bg-accent/10 p-3 w-fit mb-4 ring-1 ring-accent/20 group-hover:bg-accent/20 group-hover:ring-accent/40 transition-all">
                   <f.icon className="size-5 text-accent" />
                 </div>
-                <CardCurtainRevealTitle className="text-h3 text-foreground mb-3 tracking-tight">
-                  {f.title}
-                </CardCurtainRevealTitle>
-                <CardCurtainRevealDescription className="text-body text-muted-foreground leading-relaxed">
-                  {f.desc}
-                </CardCurtainRevealDescription>
-              </CardCurtainRevealBody>
-              <CardCurtainRevealFooter />
-            </CardCurtainReveal>
+                <h3 className="text-h3 text-foreground mb-3 tracking-tight">{f.title}</h3>
+                <p className="text-body text-muted-foreground leading-relaxed">{f.desc}</p>
+              </div>
+            </div>
           ))}
         </div>
       </Section>
@@ -305,15 +320,22 @@ const Landing = () => {
           ))}
         </div>
 
-        <p className="mt-12 text-center text-h2 font-medium tracking-tight text-muted-foreground">
+        <p className="mt-12 text-center text-lg md:text-xl font-medium tracking-tight text-muted-foreground">
           Until your system adapts — <span className="text-foreground">nothing changes.</span>
         </p>
       </Section>
 
       {/* PSYCHO HOOK */}
       <Section className="relative border-t border-border/50 overflow-hidden">
-        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-br from-[#0a1628] via-[#050a14] to-[#0c1830]" />
-        <div aria-hidden className="absolute inset-0 -z-10 [background:radial-gradient(circle_at_30%_20%,hsl(217_91%_60%/0.15),transparent_50%),radial-gradient(circle_at_70%_80%,hsl(220_70%_30%/0.25),transparent_55%)]" />
+        <div aria-hidden className="absolute inset-0 -z-20">
+          <img
+            src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=1920&auto=format&fit=crop"
+            alt=""
+            className="h-full w-full object-cover opacity-30"
+          />
+        </div>
+        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-br from-[#0a1628]/85 via-[#050a14]/90 to-[#0c1830]/85 backdrop-blur-sm" />
+        <div aria-hidden className="absolute inset-0 -z-10 [background:radial-gradient(circle_at_30%_20%,hsl(217_91%_60%/0.18),transparent_50%),radial-gradient(circle_at_70%_80%,hsl(220_70%_30%/0.28),transparent_55%)]" />
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-h2 font-bold tracking-tight text-foreground leading-tight">
             You're not inconsistent. <br />
