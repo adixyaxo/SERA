@@ -95,14 +95,16 @@ const Landing = () => {
               </Link>
 
               <div className="mt-8">
-                <RevealText
-                  text="ADAPTIVE"
-                  textColor="text-foreground/60"
-                  overlayColor="text-primary"
-                  fontSize="text-[clamp(4rem,12vw,9rem)] font-black tracking-[-0.11em] leading-[0.85]"
-                  letterDelay={0.05}
-                  className="justify-center lg:justify-start -ml-1 [&>div]:gap-x-0 [&_span]:!leading-[0.85]"
-                />
+                <div className="w-full overflow-hidden">
+                  <RevealText
+                    text="ADAPTIVE"
+                    textColor="text-foreground/60"
+                    overlayColor="text-primary"
+                    fontSize="text-[clamp(2.6rem,9.5vw,8rem)] font-black tracking-[-0.11em] leading-[0.85] whitespace-nowrap"
+                    letterDelay={0.05}
+                    className="flex-nowrap justify-center lg:justify-start -ml-1 [&>div]:gap-x-0 [&>div]:flex-nowrap [&_span]:!leading-[0.85] [&_span]:whitespace-nowrap"
+                  />
+                </div>
                 <h1 className="mt-3 text-h1 font-black leading-[0.95] text-foreground tracking-[-0.04em]">
                   Routine OS for modern workflows
                 </h1>
