@@ -27,6 +27,7 @@ const transitionVariants = {
 };
 
 const menuItems = [
+  { name: "Home", href: "/", isRouterLink: true },
   { name: "About", href: "/about", isRouterLink: true },
   { name: "Demo", href: "/demo", isRouterLink: true },
   { name: "Pricing", href: "/pricing", isRouterLink: true },
