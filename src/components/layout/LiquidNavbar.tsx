@@ -27,16 +27,13 @@ export function LiquidNavbar({ items, showProgress = false }: LiquidNavbarProps)
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
-    const currentPath = pathname + hash
     const currentItem = items.find((item) => {
       if (item.href.startsWith("#")) return item.href === hash
-      return currentPath.includes(item.href)
+      // Exact match for root, otherwise prefix match on pathname segment
+      if (item.href === "/") return pathname === "/"
+      return pathname === item.href || pathname.startsWith(item.href + "/")
     })
-    if (currentItem) {
-      setActiveTab(currentItem.name)
-    } else {
-      setActiveTab("")
-    }
+    setActiveTab(currentItem ? currentItem.name : "")
   }, [pathname, hash, items])
 
   useEffect(() => {
