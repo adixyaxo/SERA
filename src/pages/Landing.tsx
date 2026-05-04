@@ -164,13 +164,22 @@ const Landing = () => {
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-4">The Real Enemy</p>
             </div>
             <div className="relative py-6 w-full md:w-[calc(100%-12rem)] md:pl-8">
-              <InfiniteSlider speedOnHover={20} speed={40} gap={112}>
-                {["nvidia", "column", "github", "nike", "lemonsqueezy", "laravel", "lilly", "openai"].map((logo) => (
-                  <div key={logo} className="flex">
+              <InfiniteSlider speedOnHover={20} speed={40} gap={48}>
+                {[
+                  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1542435503-956c469947f6?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=400&q=80&auto=format&fit=crop",
+                ].map((src, i) => (
+                  <div key={i} className="flex">
                     <img
-                      className="mx-auto h-5 w-fit dark:invert opacity-60 hover:opacity-100 transition-opacity"
-                      src={`https://html.tailus.io/blocks/customers/${logo}.svg`}
-                      alt={`${logo} Logo`}
+                      className="h-14 w-24 md:h-16 md:w-32 object-cover rounded-md opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
+                      src={src}
+                      alt={`Showcase ${i + 1}`}
                     />
                   </div>
                 ))}
