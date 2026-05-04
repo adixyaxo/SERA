@@ -62,12 +62,12 @@ export const DraggableContainer = ({
 
     const xUnsub = x.on("change", (latest) => {
       const wrappedX = wrap(-(width / 2), 0, latest);
-      x.set(wrappedX);
+      if (wrappedX !== latest) x.set(wrappedX);
     });
 
     const yUnsub = y.on("change", (latest) => {
       const wrappedY = wrap(-(height / 2), 0, latest);
-      y.set(wrappedY);
+      if (wrappedY !== latest) y.set(wrappedY);
     });
 
     const handleWheel = (event: WheelEvent) => {
@@ -80,10 +80,24 @@ export const DraggableContainer = ({
       }
     };
 
+    // Continuous slow auto-scroll for seamless ambient motion
+    let rafId: number;
+    let lastT = performance.now();
+    const tick = (t: number) => {
+      const dt = t - lastT;
+      lastT = t;
+      if (!isDragging) {
+        y.set(y.get() - dt * 0.025);
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+
     window.addEventListener("wheel", handleWheel, { passive: true });
     return () => {
       xUnsub();
       yUnsub();
+      cancelAnimationFrame(rafId);
       window.removeEventListener("wheel", handleWheel);
     };
   }, [x, y, isDragging]);
