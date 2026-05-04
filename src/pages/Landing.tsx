@@ -212,7 +212,7 @@ const Landing = () => {
           ))}
         </div>
 
-        <p className="mt-16 text-center text-h2 font-semibold tracking-tight">
+        <p className="mt-16 text-center text-lg md:text-xl font-semibold tracking-tight">
           Your life is dynamic. <span className="text-muted-foreground">Your system is not.</span>
         </p>
       </Section>
@@ -264,30 +264,33 @@ const Landing = () => {
             { icon: Workflow, title: "Method-aware", desc: "GTD, Pomodoro, time-blocking — SERA adapts to your brain.", image: "https://images.unsplash.com/photo-1516110833967-0b5716ca1387?q=80&w=800&auto=format&fit=crop" },
             { icon: RefreshCw, title: "Continuity Engine", desc: "One disruption doesn't ruin your entire day anymore.", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" },
           ].map((f, i) => (
-            <CardCurtainReveal key={i} className="rounded-2xl border border-border/40 overflow-hidden bg-gradient-to-br from-card/90 via-card/50 to-background hover:border-accent/30 hover:shadow-[0_20px_60px_-15px_hsl(var(--accent)/0.3)] transition-all duration-500">
-              <div className="relative h-[220px] overflow-hidden">
-                <img
-                  width="100%"
-                  height="100%"
+            <div
+              key={i}
+              className="group relative rounded-2xl border border-border/40 overflow-hidden bg-gradient-to-br from-card/90 via-card/50 to-background hover:border-accent/30 hover:shadow-[0_20px_60px_-15px_hsl(var(--accent)/0.3)] transition-all duration-500"
+            >
+              <div className="relative h-[260px] overflow-hidden">
+                <motion.img
                   alt={f.title}
-                  className="object-cover w-full h-full opacity-50 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700"
                   src={f.image}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  initial={{ scale: 1.05, x: 0 }}
+                  whileHover={{ scale: 1.18, x: -20 }}
+                  transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                 />
-                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
+                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
+                <motion.div
+                  aria-hidden
+                  className="absolute inset-0 bg-gradient-to-tr from-accent/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                />
               </div>
-              <CardCurtainRevealBody className="p-7">
-                <div className="rounded-xl bg-accent/10 p-3 w-fit mb-4 ring-1 ring-accent/20">
+              <div className="p-7">
+                <div className="rounded-xl bg-accent/10 p-3 w-fit mb-4 ring-1 ring-accent/20 group-hover:bg-accent/20 group-hover:ring-accent/40 transition-all">
                   <f.icon className="size-5 text-accent" />
                 </div>
-                <CardCurtainRevealTitle className="text-h3 text-foreground mb-3 tracking-tight">
-                  {f.title}
-                </CardCurtainRevealTitle>
-                <CardCurtainRevealDescription className="text-body text-muted-foreground leading-relaxed">
-                  {f.desc}
-                </CardCurtainRevealDescription>
-              </CardCurtainRevealBody>
-              <CardCurtainRevealFooter />
-            </CardCurtainReveal>
+                <h3 className="text-h3 text-foreground mb-3 tracking-tight">{f.title}</h3>
+                <p className="text-body text-muted-foreground leading-relaxed">{f.desc}</p>
+              </div>
+            </div>
           ))}
         </div>
       </Section>
@@ -316,15 +319,22 @@ const Landing = () => {
           ))}
         </div>
 
-        <p className="mt-12 text-center text-h2 font-medium tracking-tight text-muted-foreground">
+        <p className="mt-12 text-center text-lg md:text-xl font-medium tracking-tight text-muted-foreground">
           Until your system adapts — <span className="text-foreground">nothing changes.</span>
         </p>
       </Section>
 
       {/* PSYCHO HOOK */}
       <Section className="relative border-t border-border/50 overflow-hidden">
-        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-br from-[#0a1628] via-[#050a14] to-[#0c1830]" />
-        <div aria-hidden className="absolute inset-0 -z-10 [background:radial-gradient(circle_at_30%_20%,hsl(217_91%_60%/0.15),transparent_50%),radial-gradient(circle_at_70%_80%,hsl(220_70%_30%/0.25),transparent_55%)]" />
+        <div aria-hidden className="absolute inset-0 -z-20">
+          <img
+            src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=1920&auto=format&fit=crop"
+            alt=""
+            className="h-full w-full object-cover opacity-30"
+          />
+        </div>
+        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-br from-[#0a1628]/85 via-[#050a14]/90 to-[#0c1830]/85 backdrop-blur-sm" />
+        <div aria-hidden className="absolute inset-0 -z-10 [background:radial-gradient(circle_at_30%_20%,hsl(217_91%_60%/0.18),transparent_50%),radial-gradient(circle_at_70%_80%,hsl(220_70%_30%/0.28),transparent_55%)]" />
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-h2 font-bold tracking-tight text-foreground leading-tight">
             You're not inconsistent. <br />
