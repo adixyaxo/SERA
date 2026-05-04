@@ -83,37 +83,38 @@ export function LiquidNavbar({ items, showProgress = false }: LiquidNavbarProps)
           <div className="hidden lg:flex items-center gap-6">
                 {items.map((item) => {
                   const isActive = activeTab === item.name
+                  const baseCls = cn(
+                    "relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200",
+                    isActive
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
+                  )
+                  const pill = isActive && (
+                    <motion.div
+                      layoutId="liquid-nav-pill"
+                      className="absolute inset-0 rounded-lg bg-accent/15 border border-accent/40 shadow-[0_0_20px_-4px_hsl(var(--accent)/0.5)]"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  )
                   return item.isRouterLink ? (
                     <Link
                       key={item.name}
                       to={item.href}
                       onClick={() => setActiveTab(item.name)}
-                      className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-foreground/5 rounded-lg transition-all duration-200"
+                      className={baseCls}
                     >
                       <span className="relative z-10"><TextRoll>{item.name}</TextRoll></span>
-                      {isActive && (
-                        <motion.div
-                          layoutId="liquid-nav-pill"
-                          className="absolute inset-0 rounded-lg bg-foreground/5 dark:bg-white/10 border border-accent/20"
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        />
-                      )}
+                      {pill}
                     </Link>
                   ) : (
                     <a
                       key={item.name}
                       href={item.href}
                       onClick={() => setActiveTab(item.name)}
-                      className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-foreground/5 rounded-lg transition-all duration-200"
+                      className={baseCls}
                     >
                       <span className="relative z-10"><TextRoll>{item.name}</TextRoll></span>
-                      {isActive && (
-                        <motion.div
-                          layoutId="liquid-nav-pill"
-                          className="absolute inset-0 rounded-lg bg-foreground/5 dark:bg-white/10 border border-accent/20"
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        />
-                      )}
+                      {pill}
                     </a>
                   )
                 })}
