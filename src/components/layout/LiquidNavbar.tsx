@@ -75,7 +75,7 @@ export function LiquidNavbar({ items, showProgress = false }: LiquidNavbarProps)
       >
         <div className="flex items-center justify-between w-full">
           {/* Logo - Text removed for minimalism */}
-          <Link to="/landing" className="flex items-center justify-center size-10 shrink-0">
+          <Link to="/" className="flex items-center justify-center size-10 shrink-0">
             <SeraLogo size="sm" />
           </Link>
 
