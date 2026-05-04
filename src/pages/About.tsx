@@ -79,7 +79,7 @@ export default function About() {
         ease: "none",
         scrollTrigger: {
           trigger: section,
-          start: "top+=5% top",
+          start: "top-=20% top",
           end: () => `+=${getDistance()}`,
           scrub: 1,
           pin: true,
