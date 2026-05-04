@@ -7,7 +7,7 @@ import { SeraLogo } from "@/components/ui/sera-logo";
 import { LiquidNavbar } from "@/components/layout/LiquidNavbar";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import { RevealText } from "@/components/ui/reveal-text";
-import { CardCurtainReveal, CardCurtainRevealBody, CardCurtainRevealTitle, CardCurtainRevealDescription, CardCurtainRevealFooter } from "@/components/ui/card-curtain-reveal";
+
 import HoverRevealCards from "@/components/ui/cards";
 import Section from "@/components/ui/section";
 import { ZoomParallax } from "@/components/ui/zoom-parallax";
