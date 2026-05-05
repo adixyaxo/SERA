@@ -98,10 +98,10 @@ const Landing = () => {
               <div className="mt-8">
                 <div className="w-full overflow-hidden">
                   <RevealText
-                    text="ADAPTIVE"
+                    text="ADAPT"
                     textColor="text-foreground/60"
                     overlayColor="text-primary"
-                    fontSize="text-[clamp(2.6rem,9.5vw,8rem)] font-black tracking-[-0.11em] leading-[0.85] whitespace-nowrap"
+                    fontSize="text-[clamp(1.8rem,6.6vw,5.6rem)] font-black tracking-[-0.11em] leading-[0.85] whitespace-nowrap"
                     letterDelay={0.05}
                     className="flex-nowrap justify-center lg:justify-start -ml-1 [&>div]:gap-x-0 [&>div]:flex-nowrap [&_span]:!leading-[0.85] [&_span]:whitespace-nowrap"
                   />
