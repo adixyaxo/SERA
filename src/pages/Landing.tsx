@@ -267,16 +267,18 @@ const Landing = () => {
           ].map((f, i) => (
             <div
               key={i}
-              className="group relative rounded-2xl border border-border/40 overflow-hidden bg-gradient-to-br from-card/90 via-card/50 to-background hover:border-accent/30 hover:shadow-[0_20px_60px_-15px_hsl(var(--accent)/0.3)] transition-all duration-500"
+              className="group relative rounded-2xl border border-border/40 overflow-visible bg-gradient-to-br from-card/90 via-card/50 to-background hover:border-accent/30 hover:shadow-[0_20px_60px_-15px_hsl(var(--accent)/0.3)] transition-all duration-500"
+              style={{ perspective: "1200px" }}
             >
-              <div className="relative h-[260px] overflow-hidden">
+              <div className="relative h-[260px] overflow-hidden rounded-t-2xl" style={{ transformStyle: "preserve-3d" }}>
                 <motion.img
                   alt={f.title}
                   src={f.image}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  initial={{ scale: 1.05, x: 0 }}
-                  whileHover={{ scale: 1.18, x: -20 }}
-                  transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0 h-full w-full object-cover will-change-transform"
+                  initial={{ scale: 1, rotateX: 0, y: 0, z: 0 }}
+                  whileHover={{ scale: 1.08, rotateX: -14, y: 30, z: 80 }}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ transformStyle: "preserve-3d", transformOrigin: "center top" }}
                 />
                 <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
                 <motion.div
