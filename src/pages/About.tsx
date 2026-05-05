@@ -80,7 +80,7 @@ export default function About() {
         ease: "none",
         scrollTrigger: {
           trigger: section,
-          start: "top-=7vh top",
+          start: "top-=12vh top",
           end: () => `+=${getDistance()}`,
           scrub: 1,
           pin: true,
@@ -218,20 +218,20 @@ export default function About() {
             <div>
               <h4 className="paper-section-number mb-6">Papers</h4>
               <ul className="space-y-4 text-foreground/90">
-                <li><LinkPreview url="https://www.researchgate.net/publication/228936290_GTD_The_Science_Behind_Stress-Free_Productivity" className="text-foreground hover:text-primary">Heylighen & Vidal</LinkPreview> — <span className="text-muted-foreground">GTD: The Science Behind Stress-Free Productivity</span></li>
-                <li><LinkPreview url="https://ieeexplore.ieee.org" className="text-foreground hover:text-primary">Mahes (2024)</LinkPreview> — <span className="text-muted-foreground">Adaptive Scheduling in Service Systems</span></li>
-                <li><LinkPreview url="https://ieeexplore.ieee.org" className="text-foreground hover:text-primary">Souza (2024)</LinkPreview> — <span className="text-muted-foreground">Adaptive Scheduling Algorithm (ASA)</span></li>
-                <li><LinkPreview url="https://www.aaai.org" className="text-foreground hover:text-primary">Gervasio et al.</LinkPreview> — <span className="text-muted-foreground">Learning User Preferences for Scheduling</span></li>
-                <li><LinkPreview url="https://dl.acm.org" className="text-foreground hover:text-primary">Weber et al.</LinkPreview> — <span className="text-muted-foreground">PTIME Adaptive Assistant System</span></li>
-                <li><LinkPreview url="https://www.sciencedirect.com" className="text-foreground hover:text-primary">Marikyan et al. (2022)</LinkPreview> — <span className="text-muted-foreground">Digital Assistants & Productivity</span></li>
+                <li><LinkPreview url="http://dx.doi.org/10.1016/j.lrp.2008.09.004" className="text-foreground hover:text-primary">Heylighen & Vidal</LinkPreview> — <span className="text-muted-foreground">GTD: The Science Behind Stress-Free Productivity</span></li>
+                <li><LinkPreview url="https://web-archive.southampton.ac.uk/cogprints.org/6289/" className="text-foreground hover:text-primary">Heylighen & Vidal</LinkPreview> — <span className="text-muted-foreground">Getting Things Done (Full PDF)</span></li>
+                <li><LinkPreview url="https://arxiv.org/abs/2401.09733" className="text-foreground hover:text-primary">Souza et al.</LinkPreview> — <span className="text-muted-foreground">Adaptive Scheduling Algorithm (ASA)</span></li>
+                <li><LinkPreview url="https://swepub.kb.se/bib/swepub:oai:DiVA.org:umu-169631" className="text-foreground hover:text-primary">Souza et al.</LinkPreview> — <span className="text-muted-foreground">ASA — Adaptive Scheduling Architecture</span></li>
+                <li><LinkPreview url="https://aaai.org/papers/aaai98-102-learning-to-predict-user-operations-for-adaptive-scheduling/" className="text-foreground hover:text-primary">Gervasio, Iba & Langley</LinkPreview> — <span className="text-muted-foreground">Learning to Predict User Operations for Adaptive Scheduling</span></li>
+                <li><LinkPreview url="https://doi.org/10.1016/j.jbusres.2022.01.015" className="text-foreground hover:text-primary">Marikyan et al.</LinkPreview> — <span className="text-muted-foreground">Digital Assistants & Productivity</span></li>
               </ul>
             </div>
             <div>
               <h4 className="paper-section-number mb-6">Books</h4>
               <ul className="space-y-4 text-foreground/90">
-                <li><LinkPreview url="https://gettingthingsdone.com" className="text-foreground hover:text-primary">Getting Things Done</LinkPreview> <span className="text-muted-foreground">— David Allen</span></li>
-                <li><LinkPreview url="https://jamesclear.com/atomic-habits" className="text-foreground hover:text-primary">Atomic Habits</LinkPreview> <span className="text-muted-foreground">— James Clear</span></li>
-                <li><LinkPreview url="https://www.hup.harvard.edu/catalog.php?isbn=9780674722829" className="text-foreground hover:text-primary">Make It Stick</LinkPreview> <span className="text-muted-foreground">— Brown, Roediger, McDaniel</span></li>
+                <li><LinkPreview url="https://www.goodreads.com/book/show/1633.Getting_Things_Done" className="text-foreground hover:text-primary">Getting Things Done</LinkPreview> <span className="text-muted-foreground">— David Allen</span></li>
+                <li><LinkPreview url="https://www.goodreads.com/book/show/40121378-atomic-habits" className="text-foreground hover:text-primary">Atomic Habits</LinkPreview> <span className="text-muted-foreground">— James Clear</span></li>
+                <li><LinkPreview url="https://www.goodreads.com/book/show/18770267-make-it-stick" className="text-foreground hover:text-primary">Make It Stick</LinkPreview> <span className="text-muted-foreground">— Brown, Roediger, McDaniel</span></li>
               </ul>
             </div>
           </div>

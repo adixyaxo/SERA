@@ -333,10 +333,11 @@ const Landing = () => {
           <img
             src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=1920&auto=format&fit=crop"
             alt=""
-            className="h-full w-full object-cover opacity-30"
+            className="h-full w-full object-cover opacity-70"
+            loading="lazy"
           />
         </div>
-        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-br from-[#0a1628]/85 via-[#050a14]/90 to-[#0c1830]/85 backdrop-blur-sm" />
+        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-br from-[#0a1628]/55 via-[#050a14]/60 to-[#0c1830]/55" />
         <div aria-hidden className="absolute inset-0 -z-10 [background:radial-gradient(circle_at_30%_20%,hsl(217_91%_60%/0.18),transparent_50%),radial-gradient(circle_at_70%_80%,hsl(220_70%_30%/0.28),transparent_55%)]" />
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-h2 font-bold tracking-tight text-foreground leading-tight">
