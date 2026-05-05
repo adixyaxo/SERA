@@ -38,7 +38,7 @@ const FeatureCard: React.FC<{ icon?: React.ElementType; title: string; desc: str
   <div className={cn(
     "relative rounded-2xl border border-border/40 p-8 transition-all duration-500 group overflow-hidden",
     "bg-gradient-to-br from-card/90 via-card/60 to-card/30 backdrop-blur-xl",
-    "hover:border-accent/30 hover:-translate-y-1 hover:shadow-[0_20px_60px_-15px_hsl(var(--accent)/0.25)]",
+    "hover:border-accent/30 hover:-translate-y-1 hover:shadow-[0_16px_48px_-12px_hsl(var(--accent)/0.125)]",
     className
   )}>
     <div aria-hidden className="absolute -top-20 -right-20 size-40 rounded-full bg-accent/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -98,10 +98,10 @@ const Landing = () => {
               <div className="mt-8">
                 <div className="w-full overflow-hidden">
                   <RevealText
-                    text="ADAPTIVE"
+                    text="ADAPT"
                     textColor="text-foreground/60"
                     overlayColor="text-primary"
-                    fontSize="text-[clamp(2.6rem,9.5vw,8rem)] font-black tracking-[-0.11em] leading-[0.85] whitespace-nowrap"
+                    fontSize="text-[clamp(1.8rem,6.6vw,5.6rem)] font-black tracking-[-0.11em] leading-[0.85] whitespace-nowrap"
                     letterDelay={0.05}
                     className="flex-nowrap justify-center lg:justify-start -ml-1 [&>div]:gap-x-0 [&>div]:flex-nowrap [&_span]:!leading-[0.85] [&_span]:whitespace-nowrap"
                   />
@@ -267,16 +267,18 @@ const Landing = () => {
           ].map((f, i) => (
             <div
               key={i}
-              className="group relative rounded-2xl border border-border/40 overflow-hidden bg-gradient-to-br from-card/90 via-card/50 to-background hover:border-accent/30 hover:shadow-[0_20px_60px_-15px_hsl(var(--accent)/0.3)] transition-all duration-500"
+              className="group relative rounded-2xl border border-border/40 overflow-visible bg-gradient-to-br from-card/90 via-card/50 to-background hover:border-accent/30 hover:shadow-[0_16px_48px_-12px_hsl(var(--accent)/0.15)] transition-all duration-500"
+              style={{ perspective: "1200px" }}
             >
-              <div className="relative h-[260px] overflow-hidden">
+              <div className="relative h-[260px] overflow-hidden rounded-t-2xl" style={{ transformStyle: "preserve-3d" }}>
                 <motion.img
                   alt={f.title}
                   src={f.image}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  initial={{ scale: 1.05, x: 0 }}
-                  whileHover={{ scale: 1.18, x: -20 }}
-                  transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0 h-full w-full object-cover will-change-transform"
+                  initial={{ scale: 1, rotateX: 0, y: 0, z: 0 }}
+                  whileHover={{ scale: 1.08, rotateX: -14, y: 30, z: 80 }}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ transformStyle: "preserve-3d", transformOrigin: "center top" }}
                 />
                 <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
                 <motion.div

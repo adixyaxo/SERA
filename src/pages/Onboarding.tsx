@@ -18,7 +18,7 @@ const Onboarding = () => {
   useEffect(() => {
     // If onboarding is already complete, redirect to dashboard
     if (!loading && calibration?.onboarding_completed) {
-      navigate("/");
+      navigate("/dashboard");
     }
   }, [calibration, loading, navigate]);
 

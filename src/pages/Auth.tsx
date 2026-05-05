@@ -132,7 +132,7 @@ const Auth = () => {
         toast.error(error.message);
       } else {
         toast.success('Phone verified successfully!');
-        navigate('/');
+        navigate('/dashboard');
       }
     } catch (err: any) {
       toast.error(err.message || 'Failed to verify OTP');
@@ -177,7 +177,7 @@ const Auth = () => {
       } else {
         toast.success('2FA verified! Welcome back.');
         setShowMfa(false);
-        navigate('/');
+        navigate('/dashboard');
       }
     } catch (err: any) {
       toast.error(err.message || 'Verification failed');
@@ -204,7 +204,7 @@ const Auth = () => {
     const needsMfa = await checkMfa();
     if (!needsMfa) {
       toast.success('Welcome back!');
-      navigate('/');
+      navigate('/dashboard');
     }
     setLoading(false);
   };
