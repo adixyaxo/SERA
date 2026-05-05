@@ -38,7 +38,7 @@ const FeatureCard: React.FC<{ icon?: React.ElementType; title: string; desc: str
   <div className={cn(
     "relative rounded-2xl border border-border/40 p-8 transition-all duration-500 group overflow-hidden",
     "bg-gradient-to-br from-card/90 via-card/60 to-card/30 backdrop-blur-xl",
-    "hover:border-accent/30 hover:-translate-y-1 hover:shadow-[0_20px_60px_-15px_hsl(var(--accent)/0.25)]",
+    "hover:border-accent/30 hover:-translate-y-1 hover:shadow-[0_16px_48px_-12px_hsl(var(--accent)/0.125)]",
     className
   )}>
     <div aria-hidden className="absolute -top-20 -right-20 size-40 rounded-full bg-accent/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -267,7 +267,7 @@ const Landing = () => {
           ].map((f, i) => (
             <div
               key={i}
-              className="group relative rounded-2xl border border-border/40 overflow-visible bg-gradient-to-br from-card/90 via-card/50 to-background hover:border-accent/30 hover:shadow-[0_20px_60px_-15px_hsl(var(--accent)/0.3)] transition-all duration-500"
+              className="group relative rounded-2xl border border-border/40 overflow-visible bg-gradient-to-br from-card/90 via-card/50 to-background hover:border-accent/30 hover:shadow-[0_16px_48px_-12px_hsl(var(--accent)/0.15)] transition-all duration-500"
               style={{ perspective: "1200px" }}
             >
               <div className="relative h-[260px] overflow-hidden rounded-t-2xl" style={{ transformStyle: "preserve-3d" }}>
