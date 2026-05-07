@@ -48,7 +48,10 @@ export function LiquidNavbar({ items, showProgress = false }: LiquidNavbarProps)
   const navY = useTransform(scrollYProgress, [0, 0.05], [0, 16])
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex flex-col items-center pointer-events-none">
+    <header
+      className="fixed top-0 left-0 right-0 z-50 flex flex-col items-center pointer-events-none"
+      style={{ paddingTop: "env(safe-area-inset-top)" }}
+    >
       {/* Scroll Progress Bar - opt-in per page */}
       {showProgress && (
         <div className="w-full h-[3px] bg-transparent relative overflow-hidden">
@@ -65,12 +68,11 @@ export function LiquidNavbar({ items, showProgress = false }: LiquidNavbarProps)
           maxWidth: "1200px",
         }}
         className={cn(
-          "pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] origin-top",
-          // System-wide rounded rectangle (4 equal corners) with subtle backdrop and glow
+          "pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] origin-top w-[calc(100%-1rem)] mx-2 sm:mx-0",
           "rounded-lg",
           isScrolled
-            ? "bg-[#000000]/70 backdrop-blur-md border-border/50 shadow-sm px-6 py-3 mt-0"
-            : "bg-[#000000]/50 backdrop-blur-sm border-transparent px-6 py-4 mt-2 shadow-sm"
+            ? "bg-[#000000]/70 backdrop-blur-md border-border/50 shadow-sm px-4 sm:px-6 py-2.5 sm:py-3 mt-0"
+            : "bg-[#000000]/50 backdrop-blur-sm border-transparent px-4 sm:px-6 py-3 sm:py-4 mt-2 shadow-sm"
         )}
       >
         <div className="flex items-center justify-between w-full">
