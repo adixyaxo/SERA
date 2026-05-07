@@ -135,11 +135,71 @@ export function LiquidNavbar({ items, showProgress = false }: LiquidNavbarProps)
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="p-2 lg:hidden text-foreground/80 hover:text-foreground transition-colors"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="p-2 lg:hidden text-foreground/80 hover:text-foreground transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
           >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
+
+        {/* Mobile Full-Screen Drawer */}
+        <AnimatePresence>
+          {menuOpen && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setMenuOpen(false)}
+                className="fixed inset-0 bg-black/60 backdrop-blur-md lg:hidden -z-10"
+                style={{ top: "calc(env(safe-area-inset-top) + 0px)" }}
+              />
+              <motion.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                className="overflow-hidden lg:hidden"
+              >
+                <div className="flex flex-col gap-3 pt-5 pb-3 px-1">
+                  <div className="flex flex-col gap-1.5">
+                    {items.map((item) => {
+                      const isActive = activeTab === item.name
+                      const cls = cn(
+                        "px-4 py-3.5 text-base font-medium rounded-lg transition-colors min-h-[48px] flex items-center",
+                        isActive
+                          ? "bg-accent/15 text-foreground border border-accent/30"
+                          : "text-foreground/80 hover:bg-foreground/5"
+                      )
+                      return item.isRouterLink ? (
+                        <Link key={item.name} to={item.href} onClick={() => setMenuOpen(false)} className={cls}>
+                          {item.name}
+                        </Link>
+                      ) : (
+                        <a key={item.name} href={item.href} onClick={() => setMenuOpen(false)} className={cls}>
+                          {item.name}
+                        </a>
+                      )
+                    })}
+                  </div>
+                  <div className="flex flex-col gap-2.5 pt-4 mt-1 border-t border-border/40">
+                    <Button asChild variant="outline" className="w-full rounded-lg h-12 text-base">
+                      <Link to="/auth" onClick={() => setMenuOpen(false)}>Login</Link>
+                    </Button>
+                    <Button asChild className="w-full rounded-lg shadow-lg shadow-accent/20 bg-accent hover:bg-accent/90 h-12 text-base">
+                      <Link to="/auth" onClick={() => setMenuOpen(false)}>Get Started</Link>
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+    </header>
+  )
+}
 
         {/* Mobile Menu Dropdown */}
         <AnimatePresence>
