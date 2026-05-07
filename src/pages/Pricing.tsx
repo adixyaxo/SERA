@@ -59,11 +59,11 @@ export default function Pricing() {
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <LiquidNavbar items={menuItems} />
 
-      <section className="relative pt-[140px] pb-24 px-6">
+      <section className="relative pt-[110px] sm:pt-[140px] pb-12 sm:pb-24 px-4 sm:px-6">
         <div aria-hidden className="absolute inset-0 -z-10 [background:radial-gradient(125%_125%_at_50%_0%,hsl(var(--accent)/0.08)_0%,transparent_60%)]" />
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-5">Pricing</p>
-          <h1 className="text-4xl md:text-6xl font-black tracking-[-0.04em] leading-[1.05]">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-[-0.04em] leading-[1.05]">
             Pay for adaptation. <br />
             <span className="text-muted-foreground">Not another planner.</span>
           </h1>
@@ -73,8 +73,8 @@ export default function Pricing() {
         </div>
       </section>
 
-      <section className="px-6 pb-32">
-        <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-6">
+      <section className="px-4 sm:px-6 pb-20 sm:pb-32">
+        <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           {tiers.map((t, i) => (
             <motion.div
               key={t.name}
@@ -83,7 +83,7 @@ export default function Pricing() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
               className={cn(
-                "relative rounded-2xl border p-8 flex flex-col",
+                "relative rounded-2xl border p-6 sm:p-8 flex flex-col",
                 t.highlight
                   ? "bg-card/80 border-accent/40 shadow-2xl shadow-accent/10"
                   : "bg-card/40 border-border/50 backdrop-blur-sm"

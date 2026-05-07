@@ -117,7 +117,7 @@ export default function About() {
       {/* Philosophy lives inside AboutPage hero (Abstract block) */}
 
       {/* HORIZONTAL SCROLL — GSAP - Enhanced */}
-      <section ref={sectionRef} className="relative h-screen overflow-hidden border-t border-border/50">
+      <section ref={sectionRef} className="relative h-[100svh] overflow-hidden border-t border-border/50" style={{ touchAction: "pan-y" }}>
         <div className="absolute top-0 left-0 right-0 z-10 px-6 pt-10 pointer-events-none">
           <div className="mx-auto max-w-6xl flex items-end justify-between">
             <div>
@@ -131,11 +131,11 @@ export default function About() {
         </div>
 
         <div className="h-full flex items-center">
-          <div ref={trackRef} className="flex gap-6 px-6 md:px-16 will-change-transform">
+          <div ref={trackRef} className="flex gap-4 sm:gap-6 px-4 sm:px-6 md:px-16 will-change-transform" style={{ touchAction: "pan-y" }}>
             {principles.map((p, i) => (
               <article
                 key={p.title}
-                className="glass rounded-3xl p-8 md:p-10 w-[80vw] sm:w-[60vw] md:w-[420px] shrink-0 flex flex-col justify-between min-h-[60vh]"
+                className="glass rounded-3xl p-6 sm:p-8 md:p-10 w-[85vw] sm:w-[60vw] md:w-[420px] shrink-0 flex flex-col justify-between min-h-[55vh] sm:min-h-[60vh]"
               >
                 <div>
                   <div className="flex items-center justify-between mb-8">
