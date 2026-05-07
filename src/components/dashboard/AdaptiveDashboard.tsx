@@ -90,7 +90,7 @@ export function AdaptiveDashboard() {
       <Header />
 
       <main className="pt-24 sm:pt-28 pb-24 sm:pb-16 px-3 sm:px-8 min-h-screen relative z-10">
-        <div className="max-w-7xl mx-auto space-y-6">
+        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6">
           {/* Greeting Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -116,9 +116,9 @@ export function AdaptiveDashboard() {
           </motion.div>
 
           {/* Main Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
             {/* Left Column - 2/3 width */}
-            <div className="lg:col-span-2 space-y-6">
+            <div className="lg:col-span-2 space-y-4 sm:space-y-6">
               {/* GTD Mode: Show Quick Capture prominently */}
               {isGTDMode && <QuickCaptureInbox />}
 
@@ -147,7 +147,7 @@ export function AdaptiveDashboard() {
             </div>
 
             {/* Right Column - 1/3 width */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {/* Daily Progress + Habits */}
               <DailyProgressCard
                 completedToday={completedToday}
