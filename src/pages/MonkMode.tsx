@@ -341,7 +341,7 @@ const AccountabilityView = ({ date }: { date: Date }) => {
 /* ---------------- JOURNAL ---------------- */
 const JournalView = ({ date }: { date: Date }) => {
   const { journal, saveJournal } = useMonkDay(date);
-  const prompts: { key: keyof typeof journal & string; label: string; placeholder: string }[] = [
+  const prompts: { key: "went_well" | "time_wasted" | "improve_tomorrow"; label: string; placeholder: string }[] = [
     { key: "went_well", label: "What went well today?", placeholder: "Wins, however small…" },
     { key: "time_wasted", label: "What wasted your time?", placeholder: "Honest, no guilt." },
     { key: "improve_tomorrow", label: "What needs improvement tomorrow?", placeholder: "One concrete shift." },
