@@ -217,6 +217,176 @@ export type Database = {
         }
         Relationships: []
       }
+      monk_daily_plans: {
+        Row: {
+          created_at: string
+          energy_forecast: number | null
+          frog_task_id: string | null
+          id: string
+          intention: string | null
+          plan_date: string
+          planned_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          energy_forecast?: number | null
+          frog_task_id?: string | null
+          id?: string
+          intention?: string | null
+          plan_date: string
+          planned_at?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          energy_forecast?: number | null
+          frog_task_id?: string | null
+          id?: string
+          intention?: string | null
+          plan_date?: string
+          planned_at?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monk_daily_plans_frog_task_id_fkey"
+            columns: ["frog_task_id"]
+            isOneToOne: false
+            referencedRelation: "monk_tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      monk_journal_entries: {
+        Row: {
+          clarity: number | null
+          created_at: string
+          energy: number | null
+          entry_date: string
+          free_form: string | null
+          id: string
+          improve_tomorrow: string | null
+          mood: string | null
+          time_wasted: string | null
+          updated_at: string
+          user_id: string
+          went_well: string | null
+        }
+        Insert: {
+          clarity?: number | null
+          created_at?: string
+          energy?: number | null
+          entry_date: string
+          free_form?: string | null
+          id?: string
+          improve_tomorrow?: string | null
+          mood?: string | null
+          time_wasted?: string | null
+          updated_at?: string
+          user_id: string
+          went_well?: string | null
+        }
+        Update: {
+          clarity?: number | null
+          created_at?: string
+          energy?: number | null
+          entry_date?: string
+          free_form?: string | null
+          id?: string
+          improve_tomorrow?: string | null
+          mood?: string | null
+          time_wasted?: string | null
+          updated_at?: string
+          user_id?: string
+          went_well?: string | null
+        }
+        Relationships: []
+      }
+      monk_schedule_checkins: {
+        Row: {
+          check_date: string
+          created_at: string
+          id: string
+          note: string | null
+          status: string
+          timetable_entry_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          check_date: string
+          created_at?: string
+          id?: string
+          note?: string | null
+          status?: string
+          timetable_entry_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          check_date?: string
+          created_at?: string
+          id?: string
+          note?: string | null
+          status?: string
+          timetable_entry_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      monk_tasks: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          estimate_minutes: number | null
+          id: string
+          notes: string | null
+          order_index: number
+          origin_date: string
+          plan_date: string
+          postpone_count: number
+          priority: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          estimate_minutes?: number | null
+          id?: string
+          notes?: string | null
+          order_index?: number
+          origin_date?: string
+          plan_date: string
+          postpone_count?: number
+          priority?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          estimate_minutes?: number | null
+          id?: string
+          notes?: string | null
+          order_index?: number
+          origin_date?: string
+          plan_date?: string
+          postpone_count?: number
+          priority?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       notes: {
         Row: {
           content: string | null
@@ -516,7 +686,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      monk_carry_forward: {
+        Args: { _from_date: string; _to_date: string; _user_id: string }
+        Returns: number
+      }
     }
     Enums: {
       chronotype_type: "morning_lark" | "night_owl" | "third_bird"

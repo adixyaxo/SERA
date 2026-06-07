@@ -25,6 +25,7 @@ import About from "./pages/About";
 import Pricing from "./pages/Pricing";
 import Demo from "./pages/Demo";
 import SocialProof from "./pages/SocialProof";
+import MonkMode from "./pages/MonkMode";
 import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
@@ -58,6 +59,7 @@ const App = () => (
               <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="/tracker" element={<ProtectedRoute><Tracker /></ProtectedRoute>} />
+              <Route path="/monk" element={<ProtectedRoute><MonkMode /></ProtectedRoute>} />
               <Route path="/timetable" element={<ProtectedRoute><Timetable /></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
