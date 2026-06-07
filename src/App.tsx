@@ -25,6 +25,7 @@ import About from "./pages/About";
 import Pricing from "./pages/Pricing";
 import Demo from "./pages/Demo";
 import SocialProof from "./pages/SocialProof";
+import MonkMode from "./pages/MonkMode";
 import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
