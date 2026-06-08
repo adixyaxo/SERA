@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { lovable } from '@/integrations/lovable/index';
@@ -50,14 +50,21 @@ const Auth = () => {
   const [mfaLoading, setMfaLoading] = useState(false);
   const [showMfa, setShowMfa] = useState(false);
 
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
+
+  // If the user is already signed in, get them out of /auth.
+  useEffect(() => {
+    if (!authLoading && user && !showMfa) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [authLoading, user, showMfa, navigate]);
 
   const handleGoogleSignIn = async () => {
     setGoogleLoading(true);
     try {
       const { error } = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin,
+        redirect_uri: `${window.location.origin}/dashboard`,
       });
       if (error) {
         toast.error(error.message || 'Failed to sign in with Google');
@@ -81,7 +88,7 @@ const Auth = () => {
       const { error } = await supabase.auth.signInWithOtp({
         email: magicLinkEmail,
         options: {
-          emailRedirectTo: `${window.location.origin}/`,
+          emailRedirectTo: `${window.location.origin}/dashboard`,
         },
       });
       if (error) {
