@@ -228,7 +228,10 @@ const Auth = () => {
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success('Account created! Check your email to confirm.');
+      toast.success('Account created!');
+      // If session was created immediately (email confirmation off), the auth listener
+      // will populate `user` and the useEffect above will route to /dashboard,
+      // which in turn routes to /onboarding for first-time users.
     }
     setLoading(false);
   };
