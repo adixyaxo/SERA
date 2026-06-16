@@ -9,6 +9,7 @@ import { Header } from "@/components/layout/Header";
 import { FloatingBackground } from "@/components/dashboard/FloatingBackground";
 import { SeraFAB } from "@/components/sera/SeraFAB";
 import { useMonkDay, formatDate, addDays, MonkTask } from "@/hooks/useMonkDay";
+import { HabitRail } from "@/components/monk/HabitRail";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
