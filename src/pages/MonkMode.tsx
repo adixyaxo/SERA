@@ -202,6 +202,9 @@ const TodayView = ({ date, planningMode = false }: { date: Date; planningMode?: 
         )}
       </div>
 
+      {/* Habit rail */}
+      <HabitRail date={date} />
+
       {/* Quick reflection */}
       {!planningMode && (
         <div className="glass rounded-2xl p-5 bg-background/40 backdrop-blur-md border border-border/30 space-y-3">
