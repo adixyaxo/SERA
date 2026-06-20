@@ -239,8 +239,9 @@ const Analytics = () => {
                       Habit Completion
                     </CardTitle>
                     <CardDescription className="text-xs">
-                      {habitAnalytics.completionRate}% weekly rate • {habitAnalytics.todayCompleted}/{habitAnalytics.totalHabits} today
+                      {habitAnalytics.completionRate}% weekly · {habitAnalytics.todayCompleted}/{habitAnalytics.totalHabits} today · best streak {habitAnalytics.bestStreak}d
                     </CardDescription>
+
                   </CardHeader>
                   <CardContent>
                     <div className="h-52 sm:h-64">
