@@ -20,6 +20,20 @@ interface HabitAnalytics {
   weeklyData: { date: string; completed: number; total: number }[];
 }
 
+const computeBestStreak = (dates: string[]): number => {
+  if (dates.length === 0) return 0;
+  const sorted = [...new Set(dates)].sort();
+  let best = 1, cur = 1;
+  for (let i = 1; i < sorted.length; i++) {
+    const prev = new Date(sorted[i - 1]);
+    const curr = new Date(sorted[i]);
+    const diff = Math.round((curr.getTime() - prev.getTime()) / 86400000);
+    if (diff === 1) { cur++; best = Math.max(best, cur); } else { cur = 1; }
+  }
+  return best;
+};
+
+
 const Analytics = () => {
   const { analytics, isLoading } = useTaskAnalytics();
   const { user } = useAuth();
@@ -29,11 +43,13 @@ const Analytics = () => {
     if (!user) return;
     
     const todayStr = format(new Date(), 'yyyy-MM-dd');
-    const [habitsRes, logsRes] = await Promise.all([
+    const [habitsRes, logsRes, allLogsRes] = await Promise.all([
       supabase.from('habits').select('id, name').eq('user_id', user.id).eq('archived', false),
       supabase.from('habit_logs').select('habit_id, date_string, completed')
         .gte('date_string', format(subDays(new Date(), 6), 'yyyy-MM-dd'))
         .lte('date_string', todayStr),
+      supabase.from('habit_logs').select('habit_id, date_string, completed').eq('completed', true)
+        .gte('date_string', format(subDays(new Date(), 120), 'yyyy-MM-dd')),
     ]);
 
     const habits = habitsRes.data || [];
@@ -56,14 +72,22 @@ const Analytics = () => {
     const totalPossible = totalHabits * 7;
     const totalCompleted = weeklyData.reduce((sum, d) => sum + d.completed, 0);
 
+    // Best streak across any habit
+    const byHabit: Record<string, string[]> = {};
+    (allLogsRes.data || []).forEach((l: any) => {
+      (byHabit[l.habit_id] ??= []).push(l.date_string);
+    });
+    const bestStreak = Object.values(byHabit).reduce((m, ds) => Math.max(m, computeBestStreak(ds)), 0);
+
     setHabitAnalytics({
       totalHabits,
       completionRate: totalPossible > 0 ? Math.round((totalCompleted / totalPossible) * 100) : 0,
-      bestStreak: 0,
+      bestStreak,
       todayCompleted: todayLogs.length,
       weeklyData,
     });
   }, [user]);
+
 
   useEffect(() => {
     loadHabitAnalytics();
@@ -215,8 +239,9 @@ const Analytics = () => {
                       Habit Completion
                     </CardTitle>
                     <CardDescription className="text-xs">
-                      {habitAnalytics.completionRate}% weekly rate • {habitAnalytics.todayCompleted}/{habitAnalytics.totalHabits} today
+                      {habitAnalytics.completionRate}% weekly · {habitAnalytics.todayCompleted}/{habitAnalytics.totalHabits} today · best streak {habitAnalytics.bestStreak}d
                     </CardDescription>
+
                   </CardHeader>
                   <CardContent>
                     <div className="h-52 sm:h-64">

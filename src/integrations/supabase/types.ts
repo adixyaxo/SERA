@@ -185,33 +185,57 @@ export type Database = {
         Row: {
           archived: boolean
           category: string | null
+          color: string | null
           created_at: string
+          cue: string | null
+          difficulty: string
           frequency: string
+          icon: string | null
           id: string
           name: string
+          notes: string | null
+          reminder_time: string | null
+          reward: string | null
           start_date: string | null
+          target_per_week: number
           updated_at: string
           user_id: string
         }
         Insert: {
           archived?: boolean
           category?: string | null
+          color?: string | null
           created_at?: string
+          cue?: string | null
+          difficulty?: string
           frequency?: string
+          icon?: string | null
           id?: string
           name: string
+          notes?: string | null
+          reminder_time?: string | null
+          reward?: string | null
           start_date?: string | null
+          target_per_week?: number
           updated_at?: string
           user_id: string
         }
         Update: {
           archived?: boolean
           category?: string | null
+          color?: string | null
           created_at?: string
+          cue?: string | null
+          difficulty?: string
           frequency?: string
+          icon?: string | null
           id?: string
           name?: string
+          notes?: string | null
+          reminder_time?: string | null
+          reward?: string | null
           start_date?: string | null
+          target_per_week?: number
           updated_at?: string
           user_id?: string
         }
