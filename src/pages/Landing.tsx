@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Menu, X, Brain, Mic, Workflow, RefreshCw, Zap, Target, Sparkles, ChevronRight } from "lucide-react";
 import { AnimatedGroup } from "@/components/ui/animated-group";
@@ -54,9 +55,16 @@ const FeatureCard: React.FC<{ icon?: React.ElementType; title: string; desc: str
 
 const Landing = () => {
   const navigate = useNavigate();
+  const { user, loading } = useAuth();
   const { scrollY } = useScroll();
   const yBg = useTransform(scrollY, [0, 1000], [0, 200]);
   const yVideo = useTransform(scrollY, [0, 1000], [0, 100]);
+
+  // Returning signed-in users skip the marketing site and land on their dashboard.
+  useEffect(() => {
+    if (!loading && user) navigate("/dashboard", { replace: true });
+  }, [loading, user, navigate]);
+
 
   return (
     <main className="overflow-x-hidden bg-background text-foreground">
