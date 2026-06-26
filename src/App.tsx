@@ -27,6 +27,7 @@ import Demo from "./pages/Demo";
 import SocialProof from "./pages/SocialProof";
 import MonkMode from "./pages/MonkMode";
 import ScrollToTop from "./components/ScrollToTop";
+import RootRedirect from "./components/RootRedirect";
 
 const queryClient = new QueryClient();
 
@@ -40,7 +41,7 @@ const App = () => (
           <ScrollToTop />
           <VoiceCommandProvider>
             <Routes>
-              <Route path="/" element={<Landing />} />
+              <Route path="/" element={<RootRedirect />} />
               <Route path="/home" element={<Landing />} />
               <Route path="/landing" element={<Landing />} />
               <Route path="/about" element={<About />} />

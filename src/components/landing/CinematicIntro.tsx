@@ -3,59 +3,51 @@ import { gsap } from "gsap";
 
 interface CinematicIntroProps {
   videoSrc?: string;
-  /** CSS selector for the phone screen target (defaults to [data-phone-screen]). */
   targetSelector?: string;
   /** ms the video plays fullscreen before morph begins */
   holdDuration?: number;
   /** ms the morph itself takes */
   morphDuration?: number;
-  /** Phone <video> ref to sync currentTime at handoff for a seamless cut */
   phoneVideoRef?: React.RefObject<HTMLVideoElement>;
   onComplete?: () => void;
 }
 
-const STORAGE_KEY = "sera-intro-played-v1";
-
 /**
  * Apple-style cinematic intro. Plays a fullscreen video, then morphs it into
- * the existing phone mockup using a GSAP timeline (transforms only).
+ * the existing phone mockup. Animates width/height/top/left directly (not
+ * scale) so the inner video keeps object-cover without squeezing.
  */
 export const CinematicIntro: React.FC<CinematicIntroProps> = ({
   videoSrc = "/hero-video.mp4",
   targetSelector = "[data-phone-screen]",
-  holdDuration = 3200,
-  morphDuration = 900,
+  holdDuration = 2600,
+  morphDuration = 1100,
   phoneVideoRef,
   onComplete,
 }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const videoBoxRef = useRef<HTMLDivElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const vignetteRef = useRef<HTMLDivElement>(null);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
     const prefersReduced =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const alreadyPlayed =
-      typeof sessionStorage !== "undefined" &&
-      sessionStorage.getItem(STORAGE_KEY) === "1";
-
-    if (prefersReduced || alreadyPlayed) {
+    if (prefersReduced) {
       setDone(true);
       onComplete?.();
       return;
     }
 
-    // Lock scroll
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    const wrapper = wrapperRef.current!;
-    const box = videoBoxRef.current!;
+    const box = boxRef.current!;
     const video = videoRef.current!;
+    const vignette = vignetteRef.current;
 
-    // Ensure starting state
     gsap.set(box, {
       position: "fixed",
       top: 0,
@@ -63,17 +55,11 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({
       width: "100vw",
       height: "100vh",
       borderRadius: 0,
-      x: 0,
-      y: 0,
-      scale: 1,
-      transformOrigin: "top left",
       force3D: true,
     });
 
     let cancelled = false;
-    const tl = gsap.timeline({
-      defaults: { ease: "cubic-bezier(0.22,1,0.36,1)" },
-    });
+    const tl = gsap.timeline();
 
     const startMorph = () => {
       if (cancelled) return;
@@ -83,19 +69,27 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({
         return;
       }
       const rect = target.getBoundingClientRect();
-      const sx = rect.width / window.innerWidth;
-      const sy = rect.height / window.innerHeight;
 
+      // Pre-morph: gentle zoom-in beat for cinematic feel
       tl.to(box, {
-        x: rect.left,
-        y: rect.top,
-        scaleX: sx,
-        scaleY: sy,
-        borderRadius: 34 / Math.max(sx, sy), // pre-scale so visual radius ~34px
-        duration: morphDuration / 1000,
+        scale: 1.04,
+        duration: 0.5,
+        ease: "power2.inOut",
+        transformOrigin: "50% 50%",
       })
+        .to(vignette, { opacity: 0.6, duration: 0.4 }, "<")
+        .to(box, {
+          // Animate raw box geometry so the video (object-cover) never squeezes.
+          top: rect.top,
+          left: rect.left,
+          width: rect.width,
+          height: rect.height,
+          borderRadius: 34,
+          scale: 1,
+          duration: morphDuration / 1000,
+          ease: "expo.inOut",
+        })
         .add(() => {
-          // Sync phone video to overlay's currentTime for a perfect handoff
           const phoneVideo = phoneVideoRef?.current;
           if (phoneVideo) {
             try {
@@ -104,27 +98,17 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({
             } catch {}
           }
         })
-        .to(
-          box,
-          { opacity: 0, duration: 0.25, ease: "power2.out" },
-          ">-0.02"
-        )
+        .to(box, { opacity: 0, duration: 0.28, ease: "power2.out" }, ">-0.05")
         .add(finish);
     };
 
     const finish = () => {
       if (cancelled) return;
-      sessionStorage.setItem(STORAGE_KEY, "1");
       document.body.style.overflow = prevOverflow;
-      // Reveal hero content
-      wrapper.dispatchEvent(
-        new CustomEvent("sera-intro-done", { bubbles: true })
-      );
       setDone(true);
       onComplete?.();
     };
 
-    // Kick off video, then morph after hold
     const playPromise = video.play();
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => {});
@@ -148,7 +132,7 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({
       className="fixed inset-0 z-[100] bg-black"
       aria-hidden
     >
-      <div ref={videoBoxRef} className="overflow-hidden bg-black will-change-transform">
+      <div ref={boxRef} className="overflow-hidden bg-black will-change-transform">
         <video
           ref={videoRef}
           src={videoSrc}
@@ -158,12 +142,12 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({
           preload="auto"
           className="h-full w-full object-cover"
         />
-        {/* Ambient cinematic vignette + soft blue glow */}
         <div
-          className="pointer-events-none absolute inset-0"
+          ref={vignetteRef}
+          className="pointer-events-none absolute inset-0 opacity-30 transition-opacity"
           style={{
             background:
-              "radial-gradient(60% 50% at 50% 50%, transparent 50%, rgba(0,0,0,0.55) 100%)",
+              "radial-gradient(70% 60% at 50% 50%, transparent 45%, rgba(0,0,0,0.7) 100%)",
           }}
         />
         <div

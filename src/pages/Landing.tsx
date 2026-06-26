@@ -30,7 +30,7 @@ const transitionVariants = {
 };
 
 const menuItems = [
-  { name: "Home", href: "/", isRouterLink: true },
+  { name: "Home", href: "/home", isRouterLink: true },
   { name: "About", href: "/about", isRouterLink: true },
   { name: "Demo", href: "/demo", isRouterLink: true },
   { name: "Pricing", href: "/pricing", isRouterLink: true },
@@ -63,13 +63,7 @@ const Landing = () => {
   const yVideo = useTransform(scrollY, [0, 1000], [0, 100]);
   const phoneVideoRef = useRef<HTMLVideoElement>(null);
   const prefersReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const alreadyPlayed = typeof sessionStorage !== "undefined" && sessionStorage.getItem("sera-intro-played-v1") === "1";
-  const [introDone, setIntroDone] = useState(prefersReduced || alreadyPlayed);
-
-  // Returning signed-in users skip the marketing site and land on their dashboard.
-  useEffect(() => {
-    if (!loading && user) navigate("/dashboard", { replace: true });
-  }, [loading, user, navigate]);
+  const [introDone, setIntroDone] = useState(prefersReduced);
 
 
   return (
