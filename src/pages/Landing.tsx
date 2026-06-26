@@ -148,23 +148,8 @@ const Landing = () => {
             </AnimatedGroup>
           </div>
 
-          <div className="col-span-12 lg:col-span-5 w-full max-w-xl mx-auto lg:mx-0">
-            <AnimatedGroup
-              variants={{
-                container: { visible: { transition: { delayChildren: 0.6 } } },
-                item: transitionVariants.item,
-              }}
-            >
-              <div className="relative h-[260px] sm:h-[360px] lg:h-[500px] overflow-hidden rounded-lg border border-border/40 shadow-2xl dark:border-white/5">
-                <ZoomParallax
-                  images={[
-                    { src: "/hero-video.mp4", alt: "Workflow", video: true },
-                    { src: "/hero-video.mp4", alt: "Workflow", video: true },
-                    { src: "/hero-video.mp4", alt: "Workflow", video: true },
-                  ]}
-                />
-              </div>
-            </AnimatedGroup>
+          <div className="col-span-12 lg:col-span-5 w-full max-w-xl mx-auto lg:mx-0 flex justify-center">
+            <PhoneMockup videoRef={phoneVideoRef} videoSrc="/hero-video.mp4" />
           </div>
         </div>
       </section>
