@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -14,6 +14,8 @@ import Section from "@/components/ui/section";
 import { ZoomParallax } from "@/components/ui/zoom-parallax";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { PhoneMockup } from "@/components/landing/PhoneMockup";
+import { CinematicIntro } from "@/components/landing/CinematicIntro";
 
 const transitionVariants = {
   item: {
@@ -59,6 +61,10 @@ const Landing = () => {
   const { scrollY } = useScroll();
   const yBg = useTransform(scrollY, [0, 1000], [0, 200]);
   const yVideo = useTransform(scrollY, [0, 1000], [0, 100]);
+  const phoneVideoRef = useRef<HTMLVideoElement>(null);
+  const prefersReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const alreadyPlayed = typeof sessionStorage !== "undefined" && sessionStorage.getItem("sera-intro-played-v1") === "1";
+  const [introDone, setIntroDone] = useState(prefersReduced || alreadyPlayed);
 
   // Returning signed-in users skip the marketing site and land on their dashboard.
   useEffect(() => {
@@ -68,12 +74,16 @@ const Landing = () => {
 
   return (
     <main className="overflow-x-hidden bg-background text-foreground">
+      <CinematicIntro phoneVideoRef={phoneVideoRef} onComplete={() => setIntroDone(true)} />
       <LiquidNavbar items={menuItems} />
 
       {/* HERO SECTION */}
       <section className="relative min-h-[calc(100svh-80px)] sm:min-h-[calc(100vh-100px)] mt-[80px] sm:mt-[100px] flex flex-col justify-center pb-12 sm:pb-24 overflow-hidden">
         <motion.div style={{ y: yBg }} className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--background)_75%)]"></motion.div>
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 relative z-10 grid grid-cols-12 gap-6 sm:gap-8 items-center">
+        <div
+          className="mx-auto max-w-6xl px-4 sm:px-6 relative z-10 grid grid-cols-12 gap-6 sm:gap-8 items-center transition-opacity duration-700"
+          style={{ opacity: introDone ? 1 : 0 }}
+        >
           <div className="col-span-12 lg:col-span-7 text-center lg:text-left">
             <AnimatedGroup
               variants={{
@@ -138,23 +148,8 @@ const Landing = () => {
             </AnimatedGroup>
           </div>
 
-          <div className="col-span-12 lg:col-span-5 w-full max-w-xl mx-auto lg:mx-0">
-            <AnimatedGroup
-              variants={{
-                container: { visible: { transition: { delayChildren: 0.6 } } },
-                item: transitionVariants.item,
-              }}
-            >
-              <div className="relative h-[260px] sm:h-[360px] lg:h-[500px] overflow-hidden rounded-lg border border-border/40 shadow-2xl dark:border-white/5">
-                <ZoomParallax
-                  images={[
-                    { src: "/hero-video.mp4", alt: "Workflow", video: true },
-                    { src: "/hero-video.mp4", alt: "Workflow", video: true },
-                    { src: "/hero-video.mp4", alt: "Workflow", video: true },
-                  ]}
-                />
-              </div>
-            </AnimatedGroup>
+          <div className="col-span-12 lg:col-span-5 w-full max-w-xl mx-auto lg:mx-0 flex justify-center">
+            <PhoneMockup videoRef={phoneVideoRef} videoSrc="/hero-video.mp4" />
           </div>
         </div>
       </section>
