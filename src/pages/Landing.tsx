@@ -61,6 +61,10 @@ const Landing = () => {
   const { scrollY } = useScroll();
   const yBg = useTransform(scrollY, [0, 1000], [0, 200]);
   const yVideo = useTransform(scrollY, [0, 1000], [0, 100]);
+  const phoneVideoRef = useRef<HTMLVideoElement>(null);
+  const prefersReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const alreadyPlayed = typeof sessionStorage !== "undefined" && sessionStorage.getItem("sera-intro-played-v1") === "1";
+  const [introDone, setIntroDone] = useState(prefersReduced || alreadyPlayed);
 
   // Returning signed-in users skip the marketing site and land on their dashboard.
   useEffect(() => {
@@ -70,6 +74,7 @@ const Landing = () => {
 
   return (
     <main className="overflow-x-hidden bg-background text-foreground">
+      <CinematicIntro phoneVideoRef={phoneVideoRef} onComplete={() => setIntroDone(true)} />
       <LiquidNavbar items={menuItems} />
 
       {/* HERO SECTION */}
