@@ -41,7 +41,7 @@ const App = () => (
           <ScrollToTop />
           <VoiceCommandProvider>
             <Routes>
-              <Route path="/" element={<Landing />} />
+              <Route path="/" element={<RootRedirect />} />
               <Route path="/home" element={<Landing />} />
               <Route path="/landing" element={<Landing />} />
               <Route path="/about" element={<About />} />
