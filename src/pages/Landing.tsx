@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -14,6 +14,8 @@ import Section from "@/components/ui/section";
 import { ZoomParallax } from "@/components/ui/zoom-parallax";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { PhoneMockup } from "@/components/landing/PhoneMockup";
+import { CinematicIntro } from "@/components/landing/CinematicIntro";
 
 const transitionVariants = {
   item: {
