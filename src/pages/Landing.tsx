@@ -251,45 +251,13 @@ const Landing = () => {
             Not another planner. A system that thinks, adjusts, and reacts with you.
           </p>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            { icon: Brain, title: "Dynamic Adaptation", desc: "Late? SERA reschedules your day instantly.", image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop" },
-            { icon: Mic, title: "Voice-first Control", desc: "Say it. It's handled.", image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?q=80&w=800&auto=format&fit=crop" },
-            { icon: Workflow, title: "Method-aware", desc: "GTD, Pomodoro, time-blocking — SERA adapts to your brain.", image: "https://images.unsplash.com/photo-1516110833967-0b5716ca1387?q=80&w=800&auto=format&fit=crop" },
-            { icon: RefreshCw, title: "Continuity Engine", desc: "One disruption doesn't ruin your entire day anymore.", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" },
-          ].map((f, i) => (
-            <div
-              key={i}
-              className="group relative rounded-2xl border border-border/40 overflow-visible bg-gradient-to-br from-card/90 via-card/50 to-background hover:border-accent/30 hover:shadow-[0_16px_48px_-12px_hsl(var(--accent)/0.15)] transition-all duration-500"
-              style={{ perspective: "1200px" }}
-            >
-              <div className="relative h-[260px] overflow-hidden rounded-t-2xl" style={{ transformStyle: "preserve-3d" }}>
-                <motion.img
-                  alt={f.title}
-                  src={f.image}
-                  className="absolute inset-0 h-full w-full object-cover will-change-transform"
-                  initial={{ scale: 1, rotateX: 0, y: 0, z: 0 }}
-                  whileHover={{ scale: 1.08, rotateX: -14, y: 30, z: 80 }}
-                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ transformStyle: "preserve-3d", transformOrigin: "center top" }}
-                />
-                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
-                <motion.div
-                  aria-hidden
-                  className="absolute inset-0 bg-gradient-to-tr from-accent/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                />
-              </div>
-              <div className="p-7">
-                <div className="rounded-xl bg-accent/10 p-3 w-fit mb-4 ring-1 ring-accent/20 group-hover:bg-accent/20 group-hover:ring-accent/40 transition-all">
-                  <f.icon className="size-5 text-accent" />
-                </div>
-                <h3 className="text-h3 text-foreground mb-3 tracking-tight">{f.title}</h3>
-                <p className="text-body text-muted-foreground leading-relaxed">{f.desc}</p>
-              </div>
-            </div>
-          ))}
+        <div>
+          <BentoCard
+            title="A system that thinks, adjusts, and reacts with you."
+            description="Dynamic adaptation, voice-first control, method-aware, continuity engine."
+          />
         </div>
+
       </Section>
 
       {/* REALITY VS EXPECTATION */}
