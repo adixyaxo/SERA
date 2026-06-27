@@ -201,16 +201,13 @@ const Landing = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            { t: "Static schedules ≠ real life", d: "The day you planned never matches the day you live." },
-            { t: "To-do lists don't adapt — they accumulate", d: "Each unfinished task becomes tomorrow's burden." },
-            { t: "Apps track tasks, not reality", d: "They measure intent, not what actually happened." },
-            { t: "You plan for ideal days, not actual days", d: "Energy, context, and interruptions are never accounted for." },
-          ].map((item, i) => (
-            <FeatureCard key={i} title={item.t} desc={item.d} />
-          ))}
+        <div className="mt-4">
+          <BentoCard
+            title="The system you trust is quietly failing you."
+            description="Static schedules, accumulating to-dos, and apps that track intent — not reality."
+          />
         </div>
+
 
         <p className="mt-16 text-center text-lg md:text-xl font-semibold tracking-tight">
           Your life is dynamic. <span className="text-muted-foreground">Your system is not.</span>
