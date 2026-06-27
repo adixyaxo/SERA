@@ -90,8 +90,12 @@ const BentoCard: React.FC<BentoCardProps> = ({
 
   return (
     <LayoutGroup>
-      <div className="w-full max-w-5xl mx-auto rounded-3xl border border-border/60 bg-card/40 backdrop-blur-xl p-3 shadow-[0_24px_80px_-32px_rgba(0,0,0,0.6)]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
+      <div className="relative w-full max-w-5xl mx-auto rounded-3xl border border-border bg-card p-3 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]">
+        {/* subtle inner highlight to lift from pure-black bg */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/5" />
+        {/* soft top glow */}
+        <div aria-hidden className="pointer-events-none absolute -top-px left-1/2 -translate-x-1/2 h-px w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-3">
           {/* Left: Title */}
           <div className="lg:col-span-4 p-6 flex flex-col justify-between min-h-[460px]">
             <div>
@@ -113,7 +117,8 @@ const BentoCard: React.FC<BentoCardProps> = ({
           </div>
 
           {/* Right: Interactive panel */}
-          <div className="lg:col-span-8 rounded-2xl border border-border/60 bg-background/60 overflow-hidden">
+          <div className="lg:col-span-8 rounded-2xl border border-border bg-secondary/40 overflow-hidden">
+
             {/* Window chrome */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-border/60 bg-card/40">
               <div className="flex items-center gap-1.5">
