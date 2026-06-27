@@ -227,15 +227,13 @@ const Landing = () => {
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { icon: Zap, label: "Energy", desc: "Match work to your cognitive state." },
-            { icon: Target, label: "Context", desc: "Where you are shapes what you can do." },
-            { icon: RefreshCw, label: "Interruptions", desc: "Reality intrudes — your system should absorb it." },
-          ].map((c, i) => (
-            <FeatureCard key={i} icon={c.icon} title={c.label} desc={c.desc} />
-          ))}
+        <div className="mt-16">
+          <BentoCard
+            title="Align tasks with what's actually happening."
+            description="Energy, context, and interruptions — the three axes your planner ignores."
+          />
         </div>
+
       </Section>
 
       {/* SOLUTION */}
