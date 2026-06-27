@@ -16,6 +16,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { PhoneMockup } from "@/components/landing/PhoneMockup";
 import { CinematicIntro } from "@/components/landing/CinematicIntro";
+import BentoCard from "@/components/ui/bento-card";
+
 
 const transitionVariants = {
   item: {
