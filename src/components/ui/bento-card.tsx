@@ -120,7 +120,7 @@ const BentoCard: React.FC<BentoCardProps> = ({
           <div className="lg:col-span-8 rounded-2xl border border-border bg-secondary/40 overflow-hidden">
 
             {/* Window chrome */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-border/60 bg-card/40">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-card">
               <div className="flex items-center gap-1.5">
                 <span className="size-2.5 rounded-full bg-red-400/70" />
                 <span className="size-2.5 rounded-full bg-yellow-400/70" />
@@ -134,7 +134,7 @@ const BentoCard: React.FC<BentoCardProps> = ({
             </div>
 
             {/* Tab bar */}
-            <div className="px-3 pt-3 border-b border-border/60">
+            <div className="px-3 pt-3 border-b border-border">
               <div className="flex items-center gap-1 flex-wrap">
                 {TABS.map((tab) => {
                   const isActive = activeTab.id === tab.id;
@@ -214,7 +214,7 @@ export default BentoCard;
 
 const OverviewDashboard = () => (
   <div className="grid grid-cols-2 gap-3">
-    <div className="col-span-2 rounded-xl border border-border/60 bg-card/40 p-4">
+    <div className="col-span-2 rounded-xl border border-border bg-card p-4">
       <div className="flex items-start justify-between">
         <div>
           <p className="text-xs text-muted-foreground">Team Performance</p>
@@ -235,7 +235,7 @@ const OverviewDashboard = () => (
       <p className="mt-2 text-[11px] text-muted-foreground">Score across Search & Delivery campaigns</p>
     </div>
 
-    <div className="rounded-xl border border-border/60 bg-card/40 p-4">
+    <div className="rounded-xl border border-border bg-card p-4">
       <div className="flex items-center gap-2 text-muted-foreground">
         <HugeiconsIcon icon={BarChartIcon} size={14} />
         <span className="text-[11px]">Keywords</span>
@@ -243,7 +243,7 @@ const OverviewDashboard = () => (
       <p className="mt-2 text-xl font-semibold text-foreground">1,070</p>
     </div>
 
-    <div className="rounded-xl border border-border/60 bg-card/40 p-4">
+    <div className="rounded-xl border border-border bg-card p-4">
       <div className="flex items-center gap-2 text-muted-foreground">
         <HugeiconsIcon icon={Tick01Icon} size={14} />
         <span className="text-[11px]">Credits</span>
@@ -266,7 +266,7 @@ const ManagementDashboard = () => (
         initial={{ opacity: 0, x: -8 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: i * 0.05 }}
-        className="flex items-center gap-3 p-3 rounded-xl border border-border/60 bg-card/40 hover:bg-card/70 transition-colors"
+        className="flex items-center gap-3 p-3 rounded-xl border border-border bg-card hover:bg-card/70 transition-colors"
       >
         <div className="size-8 rounded-full bg-muted flex items-center justify-center">
           <HugeiconsIcon icon={UserIcon} size={14} className="text-muted-foreground" />
@@ -294,7 +294,7 @@ const ThreadsDashboard = () => (
         <motion.div
           key={i}
           whileHover={{ y: -2 }}
-          className="rounded-xl border border-border/60 bg-card/40 p-4"
+          className="rounded-xl border border-border bg-card p-4"
         >
           <HugeiconsIcon icon={card.icon} size={16} className="text-accent" />
           <p className="mt-2 text-xs font-medium text-foreground">{card.title}</p>
@@ -306,7 +306,7 @@ const ThreadsDashboard = () => (
         </motion.div>
       ))}
     </div>
-    <div className="flex items-center gap-3 p-3 rounded-xl border border-dashed border-border/60">
+    <div className="flex items-center gap-3 p-3 rounded-xl border border-dashed border-border">
       <div className="size-7 rounded-lg bg-muted flex items-center justify-center">
         <HugeiconsIcon icon={Add01Icon} size={14} className="text-muted-foreground" />
       </div>
@@ -329,7 +329,7 @@ const ResourcesDashboard = () => (
         initial={{ opacity: 0, y: 4 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: i * 0.04 }}
-        className="flex items-center gap-3 p-3 rounded-xl border border-border/60 bg-card/40 hover:bg-card/70 transition-colors"
+        className="flex items-center gap-3 p-3 rounded-xl border border-border bg-card hover:bg-card/70 transition-colors"
       >
         <div className="size-8 rounded-lg bg-muted flex items-center justify-center">
           <HugeiconsIcon icon={item.icon} size={14} className="text-muted-foreground" />
