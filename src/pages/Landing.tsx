@@ -41,11 +41,12 @@ const menuItems = [
 
 const FeatureCard: React.FC<{ icon?: React.ElementType; title: string; desc: string; className?: string }> = ({ icon: Icon, title, desc, className }) => (
   <div className={cn(
-    "relative rounded-2xl border border-border/40 p-8 transition-all duration-500 group overflow-hidden",
-    "bg-gradient-to-br from-card/90 via-card/60 to-card/30 backdrop-blur-xl",
-    "hover:border-accent/30 hover:-translate-y-1 hover:shadow-[0_16px_48px_-12px_hsl(var(--accent)/0.125)]",
+    "relative rounded-2xl border border-border bg-card p-8 transition-all duration-500 group overflow-hidden",
+    "shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset,0_20px_60px_-30px_rgba(0,0,0,0.6)]",
+    "hover:border-accent/40 hover:-translate-y-1 hover:shadow-[0_24px_60px_-20px_hsl(var(--accent)/0.18)]",
     className
   )}>
+    <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
     <div aria-hidden className="absolute -top-20 -right-20 size-40 rounded-full bg-accent/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
     <div className="relative">
       <div className="rounded-xl bg-accent/10 p-3 w-fit mb-5 ring-1 ring-accent/20 group-hover:bg-accent/20 group-hover:ring-accent/40 transition-all">
@@ -56,6 +57,7 @@ const FeatureCard: React.FC<{ icon?: React.ElementType; title: string; desc: str
     </div>
   </div>
 );
+
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -166,23 +168,26 @@ const Landing = () => {
             <div className="relative py-6 w-full md:w-[calc(100%-12rem)] md:pl-8">
               <InfiniteSlider speedOnHover={20} speed={40} gap={48}>
                 {[
-                  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=80&auto=format&fit=crop",
-                  "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&q=80&auto=format&fit=crop",
-                  "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=80&auto=format&fit=crop",
-                  "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&q=80&auto=format&fit=crop",
-                  "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=400&q=80&auto=format&fit=crop",
-                  "https://images.unsplash.com/photo-1542435503-956c469947f6?w=400&q=80&auto=format&fit=crop",
-                  "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?w=400&q=80&auto=format&fit=crop",
-                  "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=400&q=80&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=70&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&q=70&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=70&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&q=70&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=400&q=70&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1542435503-956c469947f6?w=400&q=70&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?w=400&q=70&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=400&q=70&auto=format&fit=crop",
                 ].map((src, i) => (
                   <div key={i} className="flex">
                     <img
                       className="h-14 w-24 md:h-16 md:w-32 object-cover rounded-md opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
                       src={src}
                       alt={`Showcase ${i + 1}`}
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 ))}
+
               </InfiniteSlider>
 
               <div className="bg-gradient-to-r from-background absolute inset-y-0 left-0 w-20 z-10 pointer-events-none md:left-8"></div>
