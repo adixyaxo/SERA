@@ -68,69 +68,70 @@ export function LiquidNavbar({ items, showProgress = false }: LiquidNavbarProps)
           maxWidth: "1200px",
         }}
         className={cn(
-          "pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] origin-top w-[calc(100%-1rem)] mx-2 sm:mx-0",
-          "rounded-lg",
+          "pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] origin-top w-[calc(100%-1rem)] mx-2 sm:mx-0 border",
+          "rounded-full",
           isScrolled
-            ? "bg-[#000000]/70 backdrop-blur-md border-border/50 shadow-sm px-4 sm:px-6 py-2.5 sm:py-3 mt-0"
-            : "bg-[#000000]/50 backdrop-blur-sm border-transparent px-4 sm:px-6 py-3 sm:py-4 mt-2 shadow-sm"
+            ? "bg-black/75 backdrop-blur-xl border-white/10 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.6)] px-3 sm:px-4 py-2 mt-0"
+            : "bg-black/40 backdrop-blur-md border-transparent px-4 sm:px-5 py-2.5 mt-3"
         )}
       >
-        <div className="flex items-center justify-between w-full">
-          {/* Logo - Text removed for minimalism */}
-          <Link to="/" className="flex items-center justify-center size-10 shrink-0">
+        <div className="flex items-center justify-between w-full gap-4">
+          {/* Logo */}
+          <Link to="/" className="flex items-center justify-center size-9 shrink-0">
             <SeraLogo size="sm" />
           </Link>
 
           {/* Desktop Nav Items */}
-          <div className="hidden lg:flex items-center gap-6">
-                {items.map((item) => {
-                  const isActive = activeTab === item.name
-                  const baseCls = cn(
-                    "relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200",
-                    isActive
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
-                  )
-                  const pill = isActive && (
-                    <motion.div
-                      layoutId="liquid-nav-pill"
-                      className="absolute inset-0 rounded-lg bg-accent/15 border border-accent/40 shadow-[0_0_20px_-4px_hsl(var(--accent)/0.5)]"
-                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                    />
-                  )
-                  return item.isRouterLink ? (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      onClick={() => setActiveTab(item.name)}
-                      className={baseCls}
-                    >
-                      <span className="relative z-10"><TextRoll>{item.name}</TextRoll></span>
-                      {pill}
-                    </Link>
-                  ) : (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => setActiveTab(item.name)}
-                      className={baseCls}
-                    >
-                      <span className="relative z-10"><TextRoll>{item.name}</TextRoll></span>
-                      {pill}
-                    </a>
-                  )
-                })}
+          <div className="hidden lg:flex items-center gap-1">
+            {items.map((item) => {
+              const isActive = activeTab === item.name
+              const baseCls = cn(
+                "relative px-3.5 py-1.5 text-[11px] font-mono uppercase tracking-[0.18em] rounded-full transition-colors duration-300",
+                isActive
+                  ? "text-foreground"
+                  : "text-muted-foreground/80 hover:text-foreground"
+              )
+              const pill = isActive && (
+                <motion.div
+                  layoutId="liquid-nav-pill"
+                  className="absolute inset-0 rounded-full bg-white/10 border border-white/15"
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )
+              return item.isRouterLink ? (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  onClick={() => setActiveTab(item.name)}
+                  className={baseCls}
+                >
+                  <span className="relative z-10">{item.name}</span>
+                  {pill}
+                </Link>
+              ) : (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setActiveTab(item.name)}
+                  className={baseCls}
+                >
+                  <span className="relative z-10">{item.name}</span>
+                  {pill}
+                </a>
+              )
+            })}
           </div>
 
           {/* Actions */}
-          <div className="hidden lg:flex items-center gap-3">
-            <Button asChild variant="ghost" size="sm" className="rounded-lg text-muted-foreground hover:text-foreground">
+          <div className="hidden lg:flex items-center gap-2">
+            <Button asChild variant="ghost" size="sm" className="rounded-full text-[11px] font-mono uppercase tracking-[0.18em] text-muted-foreground hover:text-foreground h-8 px-3">
               <Link to="/auth">Login</Link>
             </Button>
-            <Button asChild size="sm" className="rounded-lg shadow-lg shadow-accent/20 bg-accent hover:bg-accent/90">
-              <Link to="/auth">Get Started</Link>
+            <Button asChild size="sm" className="rounded-full bg-foreground text-background hover:bg-foreground/90 h-8 px-4 text-[11px] font-mono uppercase tracking-[0.18em] gap-1.5">
+              <Link to="/auth">Get Started <ArrowRight className="size-3" /></Link>
             </Button>
           </div>
+
 
           {/* Mobile Menu Toggle */}
           <button
