@@ -197,217 +197,270 @@ const Landing = () => {
         </div>
       </motion.div>
 
-      {/* PROBLEM */}
-      <Section id="problem">
-        <div className="text-center mb-16">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-4">The Real Enemy</p>
-          <h2 className="text-h2 font-bold tracking-tight text-foreground max-w-3xl mx-auto leading-tight">
-            The system you trust is quietly failing you.
-          </h2>
-        </div>
-
-        <div className="mt-4">
-          <BentoCard
-            title="The system you trust is quietly failing you."
-            description="Static schedules, accumulating to-dos, and apps that track intent — not reality."
-          />
-        </div>
-
-
-        <p className="mt-16 text-center text-lg md:text-xl font-semibold tracking-tight">
-          Your life is dynamic. <span className="text-muted-foreground">Your system is not.</span>
-        </p>
-      </Section>
-
-      {/* REFRAME */}
-      <Section className="border-t border-border/50">
-        <div className="text-center max-w-3xl mx-auto">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-4">Reframe</p>
-          <h2 className="text-h2 font-bold tracking-tight text-foreground leading-tight">
-            Stop managing time. <br />
-            <span className="text-muted-foreground">Start managing reality.</span>
-          </h2>
-          <p className="mt-8 text-body text-muted-foreground">
-            Productivity isn't about managing hours. It's about aligning tasks with what's actually happening.
-          </p>
-        </div>
-
-        <div className="mt-16">
-          <BentoCard
-            title="Align tasks with what's actually happening."
-            description="Energy, context, and interruptions — the three axes your planner ignores."
-          />
-        </div>
-
-      </Section>
-
-      {/* SOLUTION */}
-      <Section id="solution" className="border-t border-border/50">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 glass rounded-lg px-4 py-1.5 mb-6">
-            <Sparkles className="size-3.5 text-accent" />
-            <span className="text-xs">Introducing</span>
-          </div>
-          <h2 className="text-h2 font-bold tracking-tight text-foreground leading-tight">
-            Meet SERA — <br />
-            <span className="gradient-text">your adaptive routine system.</span>
-          </h2>
-          <p className="mt-8 text-body text-muted-foreground">
-            Not another planner. A system that thinks, adjusts, and reacts with you.
-          </p>
-        </div>
-        <div>
-          <BentoCard
-            title="A system that thinks, adjusts, and reacts with you."
-            description="Dynamic adaptation, voice-first control, method-aware, continuity engine."
-          />
-        </div>
-
-      </Section>
-
-      {/* REALITY VS EXPECTATION */}
-      <Section id="reality" className="border-t border-border/50">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-4">Reality Check</p>
-          <h2 className="text-h2 font-bold tracking-tight text-foreground">Expectation vs. Reality</h2>
-        </div>
-
-        <div className="rounded-lg border border-border/50 overflow-hidden">
-          <div className="grid grid-cols-2 border-b border-border/50 text-sm uppercase tracking-wider text-muted-foreground">
-            <div className="p-5">Expectation</div>
-            <div className="p-5 border-l border-border/50">Reality</div>
-          </div>
-          {[
-            ["I'll follow my schedule", "You don't."],
-            ["I'll catch up later", "You don't."],
-            ["Tomorrow will be better", "It repeats."],
-          ].map(([e, r], i) => (
-            <div key={i} className="grid grid-cols-2 border-b border-border/30 last:border-0">
-              <div className="p-6 text-lg">{e}</div>
-              <div className="p-6 border-l border-border/50 text-lg text-muted-foreground">{r}</div>
+      {/* ============ SERVICES / WHAT SERA DOES ============ */}
+      <section className="armory-section">
+        <div className="armory-container">
+          <div className="grid grid-cols-12 gap-8 md:gap-12 mb-16 md:mb-24">
+            <div className="col-span-12 md:col-span-5">
+              <p className="eyebrow mb-6">Services</p>
+              <h2 className="display-lg">
+                Integrate with the world's most adaptive routine engine.
+              </h2>
             </div>
-          ))}
-        </div>
+            <div className="col-span-12 md:col-span-6 md:col-start-7 flex items-end">
+              <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-xl">
+                Seamlessly connect your calendar, tasks and rituals to a system that observes,
+                predicts, and reschedules in real time — built for the way modern work actually happens.
+              </p>
+            </div>
+          </div>
 
-        <p className="mt-12 text-center text-lg md:text-xl font-medium tracking-tight text-muted-foreground">
-          Until your system adapts — <span className="text-foreground">nothing changes.</span>
-        </p>
-      </Section>
-
-      {/* PSYCHO HOOK */}
-      <Section className="relative border-t border-border/50 overflow-hidden">
-        <div aria-hidden className="absolute inset-0 -z-20">
-          <img
-            src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=1920&auto=format&fit=crop"
-            alt=""
-            className="h-full w-full object-cover opacity-70"
-            loading="lazy"
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+            {[
+              { t: "Adaptive Engine", d: "Reconfigures your day against energy, priority shifts, and real-world delays — automatically.", n: "01" },
+              { t: "Voice Capture", d: "Speak intent. SERA classifies, slots, and schedules with sub-second latency across surfaces.", n: "02" },
+              { t: "Continuity Loop", d: "One disruption doesn't ruin the day. Missed blocks are re-negotiated, never lost.", n: "03" },
+              { t: "Method-Aware", d: "An execution layer over GTD, Atomic Habits, and Pomodoro — bring your framework, keep your flow.", n: "04" },
+            ].map((f, i) => (
+              <motion.div
+                key={f.t}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.6, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                className="armory-card p-7 md:p-8 min-h-[280px] flex flex-col justify-between"
+              >
+                <div className="flex items-start justify-between mb-10">
+                  <div className="size-9 rounded-lg bg-foreground/10 flex items-center justify-center">
+                    <Zap className="size-4 text-foreground" />
+                  </div>
+                  <span className="text-[10px] font-mono text-muted-foreground/60 tracking-widest">{f.n}</span>
+                </div>
+                <div>
+                  <h3 className="text-lg md:text-xl font-medium tracking-tight mb-3">{f.t}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{f.d}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
-        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-br from-[#0a1628]/55 via-[#050a14]/60 to-[#0c1830]/55" />
-        <div aria-hidden className="absolute inset-0 -z-10 [background:radial-gradient(circle_at_30%_20%,hsl(217_91%_60%/0.18),transparent_50%),radial-gradient(circle_at_70%_80%,hsl(220_70%_30%/0.28),transparent_55%)]" />
-        <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-h2 font-bold tracking-tight text-foreground leading-tight">
-            You're not inconsistent. <br />
-            <span className="text-muted-foreground">Your system is.</span>
-          </h2>
-          <p className="mt-8 text-body text-muted-foreground">
-            Consistency is engineered, not forced. Your brain isn't built for static schedules.
+      </section>
+
+      {/* ============ STATISTICS ============ */}
+      <section className="armory-section">
+        <div className="armory-container">
+          <div className="grid grid-cols-12 gap-8 mb-16">
+            <div className="col-span-12 md:col-span-8">
+              <p className="eyebrow mb-6">Statistics</p>
+              <h2 className="display-lg text-muted-foreground">
+                <span className="text-foreground">Quantifiable impact</span> across every day you use it. We measure success by the friction we remove.
+              </h2>
+            </div>
+            <div className="col-span-12 md:col-span-3 md:col-start-10 flex md:items-end md:justify-end">
+              <Link to="/about" className="btn-ghost-outline">
+                <span className="icon-box"><ArrowRight className="size-3.5" /></span>
+                <span>View research</span>
+              </Link>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { v: "87%", l: "of missed blocks auto-recovered within the same day." },
+              { v: "3.4x", l: "faster capture-to-scheduled compared to typing." },
+              { v: "99.9%", l: "sync uptime across calendar and task integrations." },
+            ].map((s, i) => (
+              <motion.div
+                key={s.v}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                className="armory-card p-8 md:p-10"
+              >
+                <div className="text-5xl md:text-6xl font-medium tracking-[-0.04em] text-foreground tabular-nums mb-4">
+                  {s.v}
+                </div>
+                <div className="h-px bg-border/60 my-5" />
+                <p className="text-sm text-muted-foreground leading-relaxed">{s.l}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ CASE STUDIES / MEET SERA ============ */}
+      <section className="armory-section">
+        <div className="armory-container">
+          <div className="grid grid-cols-12 gap-8 mb-16">
+            <div className="col-span-12 md:col-span-6">
+              <p className="eyebrow mb-6">The Product</p>
+              <h2 className="display-lg">
+                Meet SERA — <br />
+                <span className="text-muted-foreground">your adaptive routine system.</span>
+              </h2>
+            </div>
+            <div className="col-span-12 md:col-span-5 md:col-start-8 flex md:items-end">
+              <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+                Not another planner. A system that thinks, adjusts, and reacts with you — designed
+                for lives that don't fit inside a static grid.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+            {[
+              {
+                img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop",
+                tag: "Dynamic Adaptation",
+                title: "Reality-aware scheduling",
+                copy: "SERA reads context — energy, interruptions, priority drift — and reshuffles automatically.",
+              },
+              {
+                img: "https://images.unsplash.com/photo-1589254065878-42c9da997008?q=80&w=1200&auto=format&fit=crop",
+                tag: "Voice First",
+                title: "Speak your day into place",
+                copy: "Sub-second capture. Every phrase becomes a scheduled, classified, actionable block.",
+              },
+              {
+                img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+                tag: "Continuity",
+                title: "Disruption-proof by design",
+                copy: "A missed hour reshapes the week — instead of collapsing the day.",
+              },
+            ].map((c, i) => (
+              <motion.article
+                key={c.tag}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.7, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                className="armory-card overflow-hidden group"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src={c.img}
+                    alt={c.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                </div>
+                <div className="p-7">
+                  <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground/80 mb-3">
+                    //2026 · {c.tag}
+                  </p>
+                  <h3 className="text-xl font-medium tracking-tight mb-3">{c.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{c.copy}</p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ EXPECTATION VS REALITY ============ */}
+      <section className="armory-section">
+        <div className="armory-container">
+          <div className="mb-16">
+            <p className="eyebrow mb-6">Reframe</p>
+            <h2 className="display-lg max-w-3xl">
+              Stop managing time. <span className="text-muted-foreground">Start managing reality.</span>
+            </h2>
+          </div>
+
+          <div className="armory-card overflow-hidden">
+            <div className="grid grid-cols-2 border-b border-border/60">
+              <div className="px-6 md:px-8 py-5 eyebrow !mb-0">Expectation</div>
+              <div className="px-6 md:px-8 py-5 eyebrow !mb-0 border-l border-border/60">Reality</div>
+            </div>
+            {[
+              ["I'll follow my schedule", "You don't."],
+              ["I'll catch up later", "You don't."],
+              ["Tomorrow will be better", "It repeats."],
+            ].map(([e, r], i) => (
+              <div key={i} className="grid grid-cols-2 border-b border-border/30 last:border-0">
+                <div className="px-6 md:px-8 py-7 md:py-8 text-lg md:text-xl">{e}</div>
+                <div className="px-6 md:px-8 py-7 md:py-8 border-l border-border/60 text-lg md:text-xl text-muted-foreground">
+                  {r}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-12 text-center text-lg md:text-xl text-muted-foreground">
+            Until your system adapts — <span className="text-foreground">nothing changes.</span>
           </p>
         </div>
-      </Section>
+      </section>
 
-      {/* TECH EDGE */}
-      <Section id="tech" className="border-t border-border/50">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-          <div className="md:col-span-7">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-4">Under the Hood</p>
-            <h2 className="text-h2 font-bold tracking-tight text-foreground leading-tight">
-              Research-backed intelligence.
-            </h2>
-            <p className="mt-8 text-body text-muted-foreground leading-relaxed">
-              SERA is built on adaptive scheduling, behavioral feedback loops, and cognitive-state-aware planning — not gimmicks.
+      {/* ============ TECH EDGE ============ */}
+      <section className="armory-section">
+        <div className="armory-container grid grid-cols-12 gap-8">
+          <div className="col-span-12 md:col-span-6">
+            <p className="eyebrow mb-6">Under the Hood</p>
+            <h2 className="display-lg">Research-backed intelligence.</h2>
+            <p className="mt-8 text-muted-foreground text-base md:text-lg leading-relaxed max-w-lg">
+              SERA is built on adaptive scheduling, behavioral feedback loops, and
+              cognitive-state-aware planning — not gimmicks.
             </p>
+            <Link to="/about" className="btn-ghost-outline mt-10">
+              <span className="icon-box"><ArrowRight className="size-3.5" /></span>
+              <span>Read the paper</span>
+            </Link>
           </div>
-          <div className="md:col-span-5 grid gap-4">
+          <div className="col-span-12 md:col-span-5 md:col-start-8 grid gap-3">
             {[
-              "Adaptive scheduling algorithms",
-              "Behavioral feedback loops",
-              "Cognitive-state-aware planning",
-            ].map((line, i) => (
-              <div key={i} className="rounded-lg border border-border/50 bg-card/60 backdrop-blur-sm p-5 flex items-center gap-3 hover:bg-card/80 transition-all duration-300">
-                <div className="size-2 rounded-full bg-accent shrink-0" />
-                <span className="text-body">{line}</span>
+              { k: "01", t: "Adaptive scheduling algorithms" },
+              { k: "02", t: "Behavioral feedback loops" },
+              { k: "03", t: "Cognitive-state-aware planning" },
+              { k: "04", t: "Mixed-initiative AI collaboration" },
+            ].map((l) => (
+              <div
+                key={l.k}
+                className="armory-card px-6 py-5 flex items-center gap-5"
+              >
+                <span className="text-[10px] font-mono text-muted-foreground/70 tracking-widest">{l.k}</span>
+                <span className="text-base">{l.t}</span>
+                <ArrowRight className="size-4 text-muted-foreground/50 ml-auto" />
               </div>
             ))}
           </div>
         </div>
-      </Section>
+      </section>
 
-      {/* HOVER REVEAL CARDS */}
-      <Section className="border-t border-border/50">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-4">See SERA in Action</p>
-          <h2 className="text-h2 font-bold tracking-tight text-foreground leading-tight">
-            Built for real life.
-          </h2>
-        </div>
-        <HoverRevealCards
-          items={[
-            {
-              id: 1,
-              title: 'Dynamic Adaptation',
-              subtitle: 'Smart Scheduling',
-              imageUrl: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop',
-            },
-            {
-              id: 2,
-              title: 'Voice Control',
-              subtitle: 'Hands-Free',
-              imageUrl: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?q=80&w=800&auto=format&fit=crop',
-            },
-            {
-              id: 3,
-              title: 'Method Aware',
-              subtitle: 'GTD, Pomodoro & More',
-              imageUrl: 'https://images.unsplash.com/photo-1516110833967-0b5716ca1387?q=80&w=800&auto=format&fit=crop',
-            },
-            {
-              id: 4,
-              title: 'Continuity Engine',
-              subtitle: 'Disruption-Proof',
-              imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
-            },
-          ]}
-        />
-      </Section>
-
-      {/* FINAL CTA */}
-      <Section className="border-t border-border/50">
-        <div className="glass-strong rounded-2xl p-12 md:p-20 text-center relative overflow-hidden border border-border/50">
-          <div aria-hidden className="absolute -top-32 left-1/2 -translate-x-1/2 size-[400px] rounded-full bg-accent/10 blur-3xl" />
-          <h2 className="relative text-h2 font-bold tracking-tight text-foreground">
-            Fix your system. <span className="text-muted-foreground">Fix your day.</span>
-          </h2>
-          <p className="relative mt-8 text-body text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Plans fail. Systems adapt. Life interrupts. SERA recalculates.
-          </p>
-          <div className="relative mt-12 flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="rounded-lg px-8 h-12 text-base" onClick={() => navigate("/auth")}>
-              Stop Planning. Start Adapting.
-              <ArrowRight className="ml-2 size-5" />
-            </Button>
-            <Button size="lg" variant="outline" className="rounded-lg px-8 h-12 text-base" onClick={() => navigate("/auth")}>
-              Take Back Control
-            </Button>
+      {/* ============ FINAL CTA ============ */}
+      <section className="armory-section">
+        <div className="armory-container">
+          <div className="armory-card relative p-10 md:p-20 text-center overflow-hidden">
+            <div aria-hidden className="absolute -top-40 left-1/2 -translate-x-1/2 size-[520px] rounded-full bg-white/[0.03] blur-3xl" />
+            <p className="eyebrow mb-8 justify-center">Start</p>
+            <h2 className="display-lg max-w-2xl mx-auto">
+              Fix your system. <span className="text-muted-foreground">Fix your day.</span>
+            </h2>
+            <p className="relative mt-8 text-muted-foreground max-w-xl mx-auto text-base md:text-lg leading-relaxed">
+              Plans fail. Systems adapt. Life interrupts. SERA recalculates.
+            </p>
+            <div className="relative mt-12 flex flex-col sm:flex-row gap-3 justify-center">
+              <Button size="lg" className="rounded-lg px-8 h-12 text-base" onClick={() => navigate("/auth")}>
+                Start adapting <ArrowRight className="ml-2 size-4" />
+              </Button>
+              <Link to="/pricing" className="btn-ghost-outline justify-center">
+                <span className="icon-box"><ArrowRight className="size-3.5" /></span>
+                <span>See pricing</span>
+              </Link>
+            </div>
           </div>
         </div>
-      </Section>
+      </section>
 
       <footer className="border-t border-border/50 py-10 px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <SeraLogo size="sm" />
-          <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} SERA — Adaptive Routine System</p>
+          <p className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
+            © {new Date().getFullYear()} SERA — Adaptive Routine System
+          </p>
         </div>
       </footer>
     </main>
@@ -415,3 +468,4 @@ const Landing = () => {
 };
 
 export default Landing;
+
