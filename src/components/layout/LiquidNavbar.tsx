@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { Menu, X, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SeraLogo } from "@/components/ui/sera-logo"
 import { TextRoll } from "@/components/ui/text-roll"
