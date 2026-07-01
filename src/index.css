@@ -331,6 +331,134 @@ All colors MUST be HSL.
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 1.5rem;
   }
+
+  /* ============================================
+     ARMORY-INSPIRED DESIGN LANGUAGE
+     ============================================ */
+
+  /* Small mono eyebrow labels above section titles */
+  .eyebrow {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground) / 0.85);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 22px;
+    height: 1px;
+    background: hsl(var(--muted-foreground) / 0.6);
+  }
+
+  /* Editorial display type — Armory hero-style */
+  .display-xl {
+    font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+    color: hsl(var(--foreground));
+  }
+  .display-lg {
+    font-size: clamp(2rem, 4.8vw, 3.75rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    color: hsl(var(--foreground));
+  }
+  .display-md {
+    font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+
+  /* Armory card — subtle raised surface on pitch black */
+  .armory-card {
+    position: relative;
+    background:
+      linear-gradient(180deg, hsl(0 0% 8%) 0%, hsl(0 0% 5%) 100%);
+    border: 1px solid hsl(0 0% 14%);
+    border-radius: 1.25rem;
+    transition:
+      border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      background 0.5s ease;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .armory-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, hsl(0 0% 100% / 0.06), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .armory-card:hover {
+    border-color: hsl(0 0% 26%);
+    transform: translateY(-2px);
+  }
+
+  /* Ghost outline chip button (Armory CTA) */
+  .btn-ghost-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem 0.75rem 0.5rem;
+    border: 1px solid hsl(0 0% 22%);
+    border-radius: 0.5rem;
+    background: hsl(0 0% 6%);
+    color: hsl(var(--foreground));
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-ghost-outline:hover {
+    border-color: hsl(0 0% 45%);
+    background: hsl(0 0% 10%);
+  }
+  .btn-ghost-outline .icon-box {
+    width: 28px;
+    height: 28px;
+    border-radius: 0.35rem;
+    background: hsl(var(--foreground));
+    color: hsl(var(--background));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Section shells */
+  .armory-section {
+    padding: clamp(4rem, 10vw, 8rem) 1.5rem;
+    border-top: 1px solid hsl(var(--border) / 0.5);
+  }
+  .armory-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* Subtle grain overlay for premium feel */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  }
 }
 
   @keyframes float {
