@@ -7,7 +7,7 @@ import { LiquidNavbar } from "@/components/layout/LiquidNavbar";
 import { cn } from "@/lib/utils";
 
 const menuItems = [
-  { name: "Home", href: "/", isRouterLink: true },
+  { name: "Home", href: "/home", isRouterLink: true },
   { name: "About", href: "/about", isRouterLink: true },
   { name: "Demo", href: "/demo", isRouterLink: true },
   { name: "Pricing", href: "/pricing", isRouterLink: true },
