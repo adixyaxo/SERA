@@ -58,36 +58,38 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Vercel-inspired dark palette (Geist) — tuned for card legibility */
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+    /* Armory-inspired pitch-black palette with acid lime accent */
+    --background: 240 6% 4%;
+    --foreground: 0 0% 96%;
 
     /* Card lifted from background so surfaces don't blend into black */
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 100%;
+    --card: 240 5% 7%;
+    --card-foreground: 0 0% 96%;
 
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 240 5% 6%;
+    --popover-foreground: 0 0% 96%;
 
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 0 0% 96%;
+    --primary-foreground: 240 6% 4%;
 
-    --secondary: 0 0% 11%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 240 5% 11%;
+    --secondary-foreground: 0 0% 96%;
 
-    --muted: 0 0% 13%;
-    --muted-foreground: 0 0% 67%;
+    --muted: 240 4% 13%;
+    --muted-foreground: 240 3% 62%;
 
-    --accent: 211 100% 50%;
-    --accent-foreground: 0 0% 100%;
+    /* Acid lime — used sparingly for CTAs, active states, glow */
+    --accent: 75 100% 62%;
+    --accent-foreground: 240 6% 4%;
 
     --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Brighter border for clear card edges on pure-black canvas */
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 211 100% 50%;
+    /* Hairline borders */
+    --border: 240 4% 14%;
+    --input: 240 4% 14%;
+    --ring: 75 100% 62%;
+
 
 
     --glass-background: 0 0% 4% / 0.7;
