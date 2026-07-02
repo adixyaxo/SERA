@@ -9,6 +9,8 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { lazy, Suspense } from "react";
 import ScrollToTop from "./components/ScrollToTop";
 import RootRedirect from "./components/RootRedirect";
+import { useEffect } from "react";
+
 
 // Eager: small + entry critical
 import Auth from "./pages/Auth";
@@ -42,12 +44,19 @@ const RouteFallback = () => (
   </div>
 );
 
-const App = () => (
+const App = () => {
+  useEffect(() => {
+    document.documentElement.classList.add("dark");
+  }, []);
+  return (
+
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <div className="page-grain" aria-hidden />
+
         <BrowserRouter>
           <ScrollToTop />
           <VoiceCommandProvider>
@@ -81,7 +90,9 @@ const App = () => (
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
-  </QueryClientProvider>
-);
+    </QueryClientProvider>
+  );
+};
+
 
 export default App;

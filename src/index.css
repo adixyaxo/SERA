@@ -28,18 +28,19 @@ All colors MUST be HSL.
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 40%;
 
-    /* Vercel blue #0070F3 */
-    --accent: 211 100% 48%;
-    --accent-foreground: 0 0% 100%;
+    /* Acid lime accent — armory signature */
+    --accent: 75 100% 62%;
+    --accent-foreground: 0 0% 6%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 92%;
     --input: 0 0% 92%;
-    --ring: 211 100% 48%;
+    --ring: 75 100% 62%;
 
-    --radius: 0.75rem;
+    --radius: 0.25rem;
+
 
     /* Glass effects */
     --glass-background: 0 0% 100% / 0.7;
@@ -57,36 +58,38 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Vercel-inspired dark palette (Geist) — tuned for card legibility */
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+    /* Armory-inspired pitch-black palette with acid lime accent */
+    --background: 240 6% 4%;
+    --foreground: 0 0% 96%;
 
     /* Card lifted from background so surfaces don't blend into black */
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 100%;
+    --card: 240 5% 7%;
+    --card-foreground: 0 0% 96%;
 
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 240 5% 6%;
+    --popover-foreground: 0 0% 96%;
 
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 0 0% 96%;
+    --primary-foreground: 240 6% 4%;
 
-    --secondary: 0 0% 11%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 240 5% 11%;
+    --secondary-foreground: 0 0% 96%;
 
-    --muted: 0 0% 13%;
-    --muted-foreground: 0 0% 67%;
+    --muted: 240 4% 13%;
+    --muted-foreground: 240 3% 62%;
 
-    --accent: 211 100% 50%;
-    --accent-foreground: 0 0% 100%;
+    /* Acid lime — used sparingly for CTAs, active states, glow */
+    --accent: 75 100% 62%;
+    --accent-foreground: 240 6% 4%;
 
     --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Brighter border for clear card edges on pure-black canvas */
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 211 100% 50%;
+    /* Hairline borders */
+    --border: 240 4% 14%;
+    --input: 240 4% 14%;
+    --ring: 75 100% 62%;
+
 
 
     --glass-background: 0 0% 4% / 0.7;
@@ -378,13 +381,13 @@ All colors MUST be HSL.
     line-height: 1.1;
   }
 
-  /* Armory card — subtle raised surface on pitch black */
+  /* Armory card — subtle raised surface on pitch black, sharp editorial corners */
   .armory-card {
     position: relative;
     background:
-      linear-gradient(180deg, hsl(0 0% 8%) 0%, hsl(0 0% 5%) 100%);
-    border: 1px solid hsl(0 0% 14%);
-    border-radius: 1.25rem;
+      linear-gradient(180deg, hsl(240 5% 8%) 0%, hsl(240 5% 5%) 100%);
+    border: 1px solid hsl(240 4% 14%);
+    border-radius: 4px;
     transition:
       border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
@@ -405,9 +408,10 @@ All colors MUST be HSL.
     pointer-events: none;
   }
   .armory-card:hover {
-    border-color: hsl(0 0% 26%);
+    border-color: hsl(0 0% 30%);
     transform: translateY(-2px);
   }
+
 
   /* Ghost outline chip button (Armory CTA) */
   .btn-ghost-outline {
@@ -415,39 +419,94 @@ All colors MUST be HSL.
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem 1.25rem 0.75rem 0.5rem;
-    border: 1px solid hsl(0 0% 22%);
-    border-radius: 0.5rem;
-    background: hsl(0 0% 6%);
+    border: 1px solid hsl(240 4% 18%);
+    border-radius: 4px;
+    background: hsl(240 5% 6%);
     color: hsl(var(--foreground));
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     font-weight: 500;
+    letter-spacing: 0.02em;
     transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .btn-ghost-outline:hover {
-    border-color: hsl(0 0% 45%);
-    background: hsl(0 0% 10%);
+    border-color: hsl(var(--accent) / 0.6);
+    background: hsl(240 5% 9%);
+    color: hsl(var(--accent));
   }
   .btn-ghost-outline .icon-box {
     width: 28px;
     height: 28px;
-    border-radius: 0.35rem;
+    border-radius: 3px;
     background: hsl(var(--foreground));
     color: hsl(var(--background));
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .btn-ghost-outline:hover .icon-box {
+    background: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+  }
+
+  /* Solid acid CTA — the signature Armory button */
+  .btn-acid {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.4rem;
+    border-radius: 4px;
+    background: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    box-shadow: 0 0 0 1px hsl(var(--accent) / 0.25), 0 12px 40px -12px hsl(var(--accent) / 0.5);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background 0.3s ease;
+  }
+  .btn-acid:hover {
+    transform: translateY(-1px);
+    background: hsl(75 100% 68%);
+    box-shadow: 0 0 0 1px hsl(var(--accent) / 0.4), 0 18px 50px -12px hsl(var(--accent) / 0.7);
   }
 
   /* Section shells */
   .armory-section {
     padding: clamp(4rem, 10vw, 8rem) 1.5rem;
     border-top: 1px solid hsl(var(--border) / 0.5);
+    position: relative;
   }
   .armory-container {
-    max-width: 1200px;
+    max-width: 1240px;
     margin: 0 auto;
     width: 100%;
   }
+
+  /* Strict 4-column editorial grid */
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  @media (max-width: 900px) {
+    .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 560px) {
+    .grid-4 { grid-template-columns: 1fr; }
+  }
+
+  /* Global page grain — subtle premium tactile layer */
+  .page-grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0.055;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  }
+
+
 
   /* Subtle grain overlay for premium feel */
   .grain::after {
