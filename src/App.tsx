@@ -44,7 +44,12 @@ const RouteFallback = () => (
   </div>
 );
 
-const App = () => (
+const App = () => {
+  useEffect(() => {
+    document.documentElement.classList.add("dark");
+  }, []);
+  return (
+
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <TooltipProvider>
