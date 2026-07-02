@@ -381,13 +381,13 @@ All colors MUST be HSL.
     line-height: 1.1;
   }
 
-  /* Armory card — subtle raised surface on pitch black */
+  /* Armory card — subtle raised surface on pitch black, sharp editorial corners */
   .armory-card {
     position: relative;
     background:
-      linear-gradient(180deg, hsl(0 0% 8%) 0%, hsl(0 0% 5%) 100%);
-    border: 1px solid hsl(0 0% 14%);
-    border-radius: 1.25rem;
+      linear-gradient(180deg, hsl(240 5% 8%) 0%, hsl(240 5% 5%) 100%);
+    border: 1px solid hsl(240 4% 14%);
+    border-radius: 4px;
     transition:
       border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
@@ -408,9 +408,10 @@ All colors MUST be HSL.
     pointer-events: none;
   }
   .armory-card:hover {
-    border-color: hsl(0 0% 26%);
+    border-color: hsl(0 0% 30%);
     transform: translateY(-2px);
   }
+
 
   /* Ghost outline chip button (Armory CTA) */
   .btn-ghost-outline {
