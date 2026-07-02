@@ -28,18 +28,19 @@ All colors MUST be HSL.
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 40%;
 
-    /* Vercel blue #0070F3 */
-    --accent: 211 100% 48%;
-    --accent-foreground: 0 0% 100%;
+    /* Acid lime accent — armory signature */
+    --accent: 75 100% 62%;
+    --accent-foreground: 0 0% 6%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 92%;
     --input: 0 0% 92%;
-    --ring: 211 100% 48%;
+    --ring: 75 100% 62%;
 
-    --radius: 0.75rem;
+    --radius: 0.25rem;
+
 
     /* Glass effects */
     --glass-background: 0 0% 100% / 0.7;
