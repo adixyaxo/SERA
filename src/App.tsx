@@ -9,6 +9,8 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { lazy, Suspense } from "react";
 import ScrollToTop from "./components/ScrollToTop";
 import RootRedirect from "./components/RootRedirect";
+import { useEffect } from "react";
+
 
 // Eager: small + entry critical
 import Auth from "./pages/Auth";
