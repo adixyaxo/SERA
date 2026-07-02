@@ -55,6 +55,8 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <div className="page-grain" aria-hidden />
+
         <BrowserRouter>
           <ScrollToTop />
           <VoiceCommandProvider>
