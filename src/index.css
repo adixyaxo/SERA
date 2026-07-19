@@ -58,52 +58,50 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Armory-inspired pitch-black palette with acid lime accent */
-    --background: 240 6% 4%;
-    --foreground: 0 0% 96%;
+    /* Monochrome neutral palette — dark only */
+    --background: 0 0% 0%;                 /* #000 */
+    --foreground: 40 100% 98%;             /* Floral White #FFFBF4 */
 
-    /* Card lifted from background so surfaces don't blend into black */
-    --card: 240 5% 7%;
-    --card-foreground: 0 0% 96%;
+    --card: 0 0% 4%;                       /* #0A0A0A surface_1 */
+    --card-foreground: 40 100% 98%;
 
-    --popover: 240 5% 6%;
-    --popover-foreground: 0 0% 96%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 40 100% 98%;
 
-    --primary: 0 0% 96%;
-    --primary-foreground: 240 6% 4%;
+    /* Primary = white fill (inverse buttons) */
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 240 5% 11%;
-    --secondary-foreground: 0 0% 96%;
+    --secondary: 0 0% 9%;                  /* #171717 surface_2 */
+    --secondary-foreground: 40 100% 98%;
 
-    --muted: 240 4% 13%;
-    --muted-foreground: 240 3% 62%;
+    --muted: 0 0% 9%;
+    --muted-foreground: 350 2% 54%;        /* Silver Slate #8C8889 */
 
-    /* Acid lime — used sparingly for CTAs, active states, glow */
-    --accent: 75 100% 62%;
-    --accent-foreground: 240 6% 4%;
+    /* Desaturated olive accent — badges/tags only, not CTAs */
+    --accent: 46 8% 32%;                   /* Olive Drab #565449 */
+    --accent-foreground: 40 100% 98%;
 
-    --destructive: 0 70% 55%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 40 100% 98%;
 
     /* Hairline borders */
-    --border: 240 4% 14%;
-    --input: 240 4% 14%;
-    --ring: 75 100% 62%;
-
-
+    --border: 0 0% 22%;                    /* #373737 */
+    --input: 0 0% 9%;
+    --ring: 0 0% 60%;
 
     --glass-background: 0 0% 4% / 0.7;
-    --glass-border: 0 0% 15% / 0.6;
+    --glass-border: 0 0% 22% / 0.6;
     --glass-shadow: 0 0% 0% / 0.4;
 
-    --sidebar-background: 0 0% 2% / 0.8;
-    --sidebar-foreground: 0 0% 100%;
+    --sidebar-background: 0 0% 0% / 0.85;
+    --sidebar-foreground: 40 100% 98%;
     --sidebar-primary: 0 0% 100%;
     --sidebar-primary-foreground: 0 0% 0%;
     --sidebar-accent: 0 0% 9%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 211 100% 50%;
+    --sidebar-accent-foreground: 40 100% 98%;
+    --sidebar-border: 0 0% 22%;
+    --sidebar-ring: 0 0% 60%;
   }
 
 }
