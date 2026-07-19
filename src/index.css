@@ -427,9 +427,9 @@ All colors MUST be HSL.
     transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .btn-ghost-outline:hover {
-    border-color: hsl(var(--accent) / 0.6);
-    background: hsl(240 5% 9%);
-    color: hsl(var(--accent));
+    border-color: hsl(0 0% 40%);
+    background: hsl(0 0% 9%);
+    color: hsl(var(--foreground));
   }
   .btn-ghost-outline .icon-box {
     width: 28px;
@@ -443,29 +443,29 @@ All colors MUST be HSL.
     transition: background 0.3s ease, color 0.3s ease;
   }
   .btn-ghost-outline:hover .icon-box {
-    background: hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
+    background: hsl(0 0% 100%);
+    color: hsl(0 0% 0%);
   }
 
-  /* Solid acid CTA — the signature Armory button */
+  /* Solid CTA — white inverse button */
   .btn-acid {
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
     padding: 0.85rem 1.4rem;
     border-radius: 4px;
-    background: hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
+    background: hsl(0 0% 100%);
+    color: hsl(0 0% 0%);
     font-size: 0.875rem;
     font-weight: 600;
     letter-spacing: 0.01em;
-    box-shadow: 0 0 0 1px hsl(var(--accent) / 0.25), 0 12px 40px -12px hsl(var(--accent) / 0.5);
+    box-shadow: 0 0 0 1px hsl(0 0% 100% / 0.1), 0 12px 40px -12px hsl(0 0% 100% / 0.15);
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background 0.3s ease;
   }
   .btn-acid:hover {
     transform: translateY(-1px);
-    background: hsl(75 100% 68%);
-    box-shadow: 0 0 0 1px hsl(var(--accent) / 0.4), 0 18px 50px -12px hsl(var(--accent) / 0.7);
+    background: hsl(0 0% 92%);
+    box-shadow: 0 0 0 1px hsl(0 0% 100% / 0.2), 0 18px 50px -12px hsl(0 0% 100% / 0.25);
   }
 
   /* Section shells */
