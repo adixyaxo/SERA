@@ -87,101 +87,96 @@ const Cell = ({ v }: { v: string | boolean }) => {
 };
 
 export default function Pricing() {
+  const [yearly, setYearly] = useState(true);
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <LiquidNavbar items={menuItems} />
 
-      {/* HERO */}
-      <section className="relative pt-[130px] md:pt-[180px] pb-16 md:pb-24 px-6">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 [background:radial-gradient(120%_120%_at_50%_0%,hsl(0_0%_10%)_0%,transparent_55%)]"
-        />
-        <div className="armory-container">
-          <div className="grid grid-cols-12 gap-8">
-            <div className="col-span-12 md:col-span-8">
-              <p className="eyebrow mb-6">Pricing · 2026</p>
-              <h1 className="display-xl">
-                Pay for adaptation. <br />
-                <span className="text-muted-foreground">Not another planner.</span>
-              </h1>
-            </div>
-            <div className="col-span-12 md:col-span-4 md:col-start-9 flex md:items-end">
-              <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-sm">
-                Three tiers. Zero lock-in. Cancel any time — your data always stays yours.
-              </p>
-            </div>
+      {/* HERO + TIERS with bleeding oversized title */}
+      <section className="relative pt-[140px] md:pt-[180px] pb-24 md:pb-32 px-6">
+        <div className="armory-container relative">
+          {/* Billing toggle */}
+          <div className="flex items-center gap-3 mb-8">
+            <button
+              onClick={() => setYearly(!yearly)}
+              className={cn(
+                "relative h-6 w-11 rounded-full border border-[#373737] transition-colors",
+                yearly ? "bg-[#262626]" : "bg-[#171717]"
+              )}
+              aria-label="Toggle billing period"
+            >
+              <span
+                className={cn(
+                  "absolute top-0.5 h-4 w-4 rounded-full bg-white transition-transform",
+                  yearly ? "translate-x-6" : "translate-x-1"
+                )}
+              />
+            </button>
+            <span className="text-sm text-muted-foreground">Billed {yearly ? 'Yearly' : 'Monthly'}</span>
+          </div>
+
+          {/* Oversized bleeding title */}
+          <h1
+            aria-label="Pricing"
+            className="pointer-events-none select-none font-medium tracking-[-0.05em] text-foreground leading-[0.85] text-center"
+            style={{ fontSize: 'clamp(6rem, 18vw, 16rem)' }}
+          >
+            Pricing
+          </h1>
+
+          {/* Cards overlapping the title */}
+          <div className="relative -mt-[6vw] md:-mt-[8vw] grid grid-cols-1 md:grid-cols-3 gap-5">
+            {tiers.map((t, i) => (
+              <motion.div
+                key={t.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                className={cn(
+                  "relative flex flex-col p-8 md:p-10 min-h-[560px]",
+                  "bg-[#0A0A0A] border border-[#373737]",
+                  "rounded-[24px]",
+                  "shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)]",
+                  t.highlight && "ring-1 ring-[#525252]"
+                )}
+              >
+                <span className="text-xs text-muted-foreground mb-6">{t.name} Plan</span>
+
+                <div className="mb-8 flex items-baseline gap-1">
+                  <span className="text-5xl md:text-6xl font-semibold tracking-[-0.04em] text-white">
+                    {t.price}
+                  </span>
+                  {t.price !== 'Free' && (
+                    <span className="text-xl text-muted-foreground font-medium">/m</span>
+                  )}
+                </div>
+
+                <div className="h-px bg-[#373737] mb-6" />
+
+                <ul className="space-y-4 flex-1">
+                  {t.features.map((f) => (
+                    <li key={f} className="flex items-start gap-3 text-sm">
+                      <span className="mt-0.5 shrink-0 h-5 w-5 rounded-full bg-[#262626] flex items-center justify-center">
+                        <Check className="size-3 text-white" strokeWidth={2.5} />
+                      </span>
+                      <span className="text-muted-foreground leading-relaxed">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Button
+                  asChild
+                  className="mt-10 rounded-full h-12 text-sm bg-white text-black hover:bg-white/90 font-medium"
+                >
+                  <Link to="/auth">Get Started</Link>
+                </Button>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* TIERS */}
-      <section className="px-6 pb-24 md:pb-32">
-        <div className="armory-container grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-          {tiers.map((t, i) => (
-            <motion.div
-              key={t.name}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className={cn(
-                "armory-card relative p-8 md:p-10 flex flex-col min-h-[560px]",
-                t.highlight && "border-foreground/40"
-              )}
-            >
-              {t.highlight && (
-                <div aria-hidden className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-foreground/60 to-transparent" />
-              )}
-              <div className="flex items-start justify-between mb-10">
-                <div>
-                  <span className="text-[10px] font-mono text-muted-foreground/70 tracking-widest">
-                    //{t.tag}
-                  </span>
-                  <h3 className="mt-3 text-2xl font-medium tracking-tight">{t.name}</h3>
-                </div>
-                {t.highlight && (
-                  <span className="rounded-full border border-foreground/30 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.2em]">
-                    Recommended
-                  </span>
-                )}
-              </div>
-
-              <div className="mb-2 flex items-baseline gap-2">
-                <span className="text-6xl font-medium tracking-[-0.045em]">{t.price}</span>
-              </div>
-              <p className="text-xs font-mono uppercase tracking-[0.18em] text-muted-foreground/80">
-                {t.period}
-              </p>
-              <p className="mt-6 text-sm text-muted-foreground leading-relaxed">{t.desc}</p>
-
-              <div className="my-8 h-px bg-border/60" />
-
-              <ul className="space-y-4 flex-1">
-                {t.features.map((f) => (
-                  <li key={f} className="flex items-start gap-3 text-sm">
-                    <Check className="size-4 text-foreground shrink-0 mt-0.5" />
-                    <span className="text-foreground/90">{f}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Button
-                asChild
-                className={cn(
-                  "mt-10 rounded-lg h-12 text-base",
-                  !t.highlight && "bg-foreground/10 text-foreground hover:bg-foreground/20"
-                )}
-                variant={t.highlight ? "default" : "secondary"}
-              >
-                <Link to="/auth">
-                  {t.cta} <ArrowRight className="ml-1 size-4" />
-                </Link>
-              </Button>
-            </motion.div>
-          ))}
-        </div>
-      </section>
 
       {/* COMPARE */}
       <section className="armory-section">
