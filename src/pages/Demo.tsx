@@ -269,22 +269,22 @@ export default function Demo() {
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <LiquidNavbar items={menuItems} />
 
-      <section className="relative pt-[140px] pb-16 px-6">
-        <div aria-hidden className="absolute inset-0 -z-10 [background:radial-gradient(125%_125%_at_50%_0%,hsl(var(--accent)/0.08)_0%,transparent_60%)]" />
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-5">Demo</p>
-          <h1 className="text-4xl md:text-6xl font-black tracking-[-0.04em] leading-[1.05]">
+      {/* Full-screen demo: nav-height compensated on desktop, natural scroll on mobile */}
+      <section
+        className="px-6 pt-24 md:pt-28 pb-10 md:pb-8 md:h-screen md:overflow-hidden flex flex-col"
+      >
+        <div className="mx-auto max-w-3xl text-center mb-6 md:mb-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-3">Demo</p>
+          <h1 className="text-3xl md:text-5xl font-black tracking-[-0.04em] leading-[1.05]">
             See SERA <span className="text-muted-foreground">negotiate reality.</span>
           </h1>
-          <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
+          <p className="mt-3 text-sm md:text-base text-muted-foreground max-w-xl mx-auto">
             Four interactive demos. Try them. They respond.
           </p>
         </div>
-      </section>
 
-      <section className="px-6 pb-32">
-        <div className="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-5 space-y-4" style={{ perspective: 1200 }}>
+        <div className="mx-auto max-w-6xl w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 md:min-h-0">
+          <div className="lg:col-span-5 space-y-3 md:overflow-y-auto md:pr-1" style={{ perspective: 1200 }}>
             {demos.map((d, i) => (
               <Tilt3DCard key={d.title} active={active === i} onClick={() => setActive(i)} index={i}>
                 <div className="flex items-start gap-4">
@@ -300,8 +300,8 @@ export default function Demo() {
             ))}
           </div>
 
-          <div className="lg:col-span-7">
-            <div className="sticky top-32 rounded-2xl border border-border/50 bg-card/40 backdrop-blur-sm p-8 md:p-10 min-h-[480px] flex flex-col">
+          <div className="lg:col-span-7 md:min-h-0">
+            <div className="h-full rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-[20px] p-6 md:p-8 flex flex-col">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={active}
@@ -309,17 +309,17 @@ export default function Demo() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.35 }}
-                  className="flex-1 flex flex-col"
+                  className="flex-1 flex flex-col min-h-0"
                 >
-                  <p className="text-xs font-mono text-muted-foreground mb-2">DEMO {String(active + 1).padStart(2, "0")}</p>
-                  <h2 className="text-2xl md:text-3xl font-medium tracking-tight">{demos[active].title}</h2>
-                  <p className="mt-2 text-sm text-muted-foreground">{demos[active].sub}</p>
-                  <div className="mt-8 flex-1 flex items-center justify-center rounded-xl bg-background/40 border border-border/30 p-6 md:p-8">
+                  <p className="text-xs font-mono text-muted-foreground mb-1">DEMO {String(active + 1).padStart(2, "0")}</p>
+                  <h2 className="text-xl md:text-2xl font-medium tracking-tight">{demos[active].title}</h2>
+                  <p className="mt-1 text-sm text-muted-foreground">{demos[active].sub}</p>
+                  <div className="mt-4 flex-1 flex items-center justify-center rounded-xl bg-background/40 border border-border/30 p-5 md:p-6 min-h-0 overflow-auto">
                     {visuals[active]}
                   </div>
                 </motion.div>
               </AnimatePresence>
-              <div className="mt-6 pt-6 border-t border-border/40 flex items-center justify-between">
+              <div className="mt-4 pt-4 border-t border-border/40 flex items-center justify-between">
                 <p className="text-xs text-muted-foreground">Interactive · Try it</p>
                 <Button asChild size="sm">
                   <Link to="/auth">Use it for real <ArrowRight className="ml-1 size-3" /></Link>
@@ -332,3 +332,4 @@ export default function Demo() {
     </main>
   );
 }
+

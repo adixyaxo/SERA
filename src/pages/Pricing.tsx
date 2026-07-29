@@ -92,15 +92,15 @@ export default function Pricing() {
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <LiquidNavbar items={menuItems} />
 
-      {/* HERO + TIERS with bleeding oversized title */}
+      {/* HERO + TIERS */}
       <section className="relative pt-[140px] md:pt-[180px] pb-24 md:pb-32 px-6">
         <div className="armory-container relative">
-          {/* Billing toggle */}
-          <div className="flex items-center gap-3 mb-8">
+          {/* Billing toggle — explicit gap prevents knob/label overlap */}
+          <div className="flex items-center gap-4 mb-10">
             <button
               onClick={() => setYearly(!yearly)}
               className={cn(
-                "relative h-6 w-11 rounded-full border border-[#373737] transition-colors",
+                "relative h-6 w-11 rounded-full border border-[#373737] transition-colors shrink-0",
                 yearly ? "bg-[#262626]" : "bg-[#171717]"
               )}
               aria-label="Toggle billing period"
@@ -112,20 +112,23 @@ export default function Pricing() {
                 )}
               />
             </button>
-            <span className="text-sm text-muted-foreground">Billed {yearly ? 'Yearly' : 'Monthly'}</span>
+            <span className="text-sm text-foreground/80">Billed {yearly ? 'Yearly' : 'Monthly'}</span>
           </div>
 
-          {/* Oversized bleeding title */}
+          {/* Oversized watermark — lowered opacity, hidden on mobile, safely behind cards */}
           <h1
             aria-label="Pricing"
-            className="pointer-events-none select-none font-medium tracking-[-0.05em] text-foreground leading-[0.85] text-center"
-            style={{ fontSize: 'clamp(6rem, 18vw, 16rem)' }}
+            className="pointer-events-none select-none font-medium tracking-[-0.05em] leading-[0.85] text-center hidden md:block absolute inset-x-0 top-8 z-0"
+            style={{
+              fontSize: 'clamp(6rem, 14vw, 12rem)',
+              color: 'hsl(var(--foreground) / 0.06)',
+            }}
           >
             Pricing
           </h1>
 
-          {/* Cards overlapping the title */}
-          <div className="relative -mt-[6vw] md:-mt-[8vw] grid grid-cols-1 md:grid-cols-3 gap-5">
+          {/* Cards — glassmorphism */}
+          <div className="relative z-10 mt-32 md:mt-40 grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
             {tiers.map((t, i) => (
               <motion.div
                 key={t.name}
@@ -134,40 +137,50 @@ export default function Pricing() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className={cn(
-                  "relative flex flex-col p-8 md:p-10 min-h-[560px]",
-                  "bg-[#0A0A0A] border border-[#373737]",
-                  "rounded-[24px]",
-                  "shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)]",
-                  t.highlight && "ring-1 ring-[#525252]"
+                  "relative flex flex-col p-8 md:p-10 min-h-[560px] rounded-[24px] transition-all duration-500",
+                  "bg-white/[0.04] border border-white/10 backdrop-blur-[20px] backdrop-saturate-150",
+                  "shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.08)]",
+                  "hover:-translate-y-1 hover:border-white/20",
+                  t.highlight && "md:scale-[1.03] bg-white/[0.07] border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.12),0_0_60px_-20px_rgba(168,85,247,0.5)]"
                 )}
               >
-                <span className="text-xs text-muted-foreground mb-6">{t.name} Plan</span>
+                {t.highlight && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-[0.2em] bg-white text-black shadow-lg">
+                    Most Popular
+                  </span>
+                )}
+                <span className="text-xs text-foreground/60 mb-6">{t.name} Plan</span>
 
                 <div className="mb-8 flex items-baseline gap-1">
                   <span className="text-5xl md:text-6xl font-semibold tracking-[-0.04em] text-white">
                     {t.price}
                   </span>
                   {t.price !== 'Free' && (
-                    <span className="text-xl text-muted-foreground font-medium">/m</span>
+                    <span className="text-xl text-foreground/60 font-medium">/m</span>
                   )}
                 </div>
 
-                <div className="h-px bg-[#373737] mb-6" />
+                <div className="h-px bg-white/10 mb-6" />
 
                 <ul className="space-y-4 flex-1">
                   {t.features.map((f) => (
                     <li key={f} className="flex items-start gap-3 text-sm">
-                      <span className="mt-0.5 shrink-0 h-5 w-5 rounded-full bg-[#262626] flex items-center justify-center">
+                      <span className="mt-0.5 shrink-0 h-5 w-5 rounded-full bg-white/10 flex items-center justify-center">
                         <Check className="size-3 text-white" strokeWidth={2.5} />
                       </span>
-                      <span className="text-muted-foreground leading-relaxed">{f}</span>
+                      <span className="text-foreground/80 leading-relaxed">{f}</span>
                     </li>
                   ))}
                 </ul>
 
                 <Button
                   asChild
-                  className="mt-10 rounded-full h-12 text-sm bg-white text-black hover:bg-white/90 font-medium"
+                  className={cn(
+                    "mt-10 rounded-full h-12 text-sm font-medium",
+                    t.highlight
+                      ? "bg-white text-black hover:bg-white/90"
+                      : "bg-white/10 text-white hover:bg-white/20 border border-white/15"
+                  )}
                 >
                   <Link to="/auth">Get Started</Link>
                 </Button>
@@ -176,6 +189,7 @@ export default function Pricing() {
           </div>
         </div>
       </section>
+
 
 
       {/* COMPARE */}
