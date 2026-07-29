@@ -67,7 +67,8 @@ const Landing = () => {
   const yVideo = useTransform(scrollY, [0, 1000], [0, 100]);
   const phoneVideoRef = useRef<HTMLVideoElement>(null);
   const prefersReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const [introDone, setIntroDone] = useState(prefersReduced);
+  const [introDone, setIntroDone] = useState(true); // hero always visible; intro overlays on top
+
 
 
   return (
