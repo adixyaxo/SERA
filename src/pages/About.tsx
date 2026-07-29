@@ -1,16 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Brain, Workflow, RefreshCcw, Sparkles, GitBranch, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AboutPage from "@/components/ui/about-page";
 import { LiquidNavbar } from "@/components/layout/LiquidNavbar";
 import { LinkPreview } from "@/components/ui/link-preview";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 
-gsap.registerPlugin(ScrollTrigger);
 
 const principles = [
   {
