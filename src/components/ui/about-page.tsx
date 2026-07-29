@@ -9,11 +9,12 @@ interface AboutPageProps {
 }
 
 const defaultAchievements = [
-  { label: "Companies Supported", value: "300+" },
-  { label: "Projects Finalized", value: "800+" },
-  { label: "Happy Customers", value: "99%" },
-  { label: "Recognized Awards", value: "10+" },
+  { label: "Routines Adapted", value: "12k+" },
+  { label: "Missed Blocks Recovered", value: "87%" },
+  { label: "Daily Adjustments", value: "3.4x" },
+  { label: "Sync Uptime", value: "99.9%" },
 ]
+
 
 export default function AboutPage({
   achievements = defaultAchievements,
