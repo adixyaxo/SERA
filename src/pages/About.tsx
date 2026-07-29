@@ -1,16 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Brain, Workflow, RefreshCcw, Sparkles, GitBranch, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AboutPage from "@/components/ui/about-page";
 import { LiquidNavbar } from "@/components/layout/LiquidNavbar";
 import { LinkPreview } from "@/components/ui/link-preview";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 
-gsap.registerPlugin(ScrollTrigger);
 
 const principles = [
   {
@@ -64,40 +61,6 @@ const menuItems = [
 
 
 export default function About() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    const section = sectionRef.current;
-    if (!track || !section) return;
-
-    const ctx = gsap.context(() => {
-      const getDistance = () => track.scrollWidth - window.innerWidth;
-
-      const tween = gsap.to(track, {
-        x: () => -getDistance(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top-=12vh top",
-          end: () => `+=${getDistance()}`,
-          scrub: 1,
-          pin: true,
-          invalidateOnRefresh: true,
-          anticipatePin: 1,
-        },
-      });
-
-      return () => {
-        tween.scrollTrigger?.kill();
-        tween.kill();
-      };
-    }, section);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* NAV */}
@@ -114,50 +77,45 @@ export default function About() {
       {/* HERO + ABOUT (new layout) */}
       <AboutPage />
 
-      {/* Philosophy lives inside AboutPage hero (Abstract block) */}
-
-      {/* HORIZONTAL SCROLL — GSAP - Enhanced */}
-      <section ref={sectionRef} className="relative h-[100svh] overflow-hidden border-t border-border/50" style={{ touchAction: "pan-y" }}>
-        <div className="absolute top-0 left-0 right-0 z-10 px-6 pt-10 pointer-events-none">
-          <div className="mx-auto max-w-6xl flex items-end justify-between">
-            <div>
-              <div className="paper-section-number mb-2">
-                02 — Theoretical Foundations
-              </div>
-              <h3 className="text-2xl md:text-3xl font-medium">What SERA is built on</h3>
-            </div>
-            <p className="hidden md:block paper-meta">scroll →</p>
+      {/* PRINCIPLES — native scroll-snap carousel (replaces broken GSAP marquee) */}
+      <section className="relative py-20 md:py-28 border-t border-border/50 overflow-hidden">
+        <div className="mx-auto max-w-6xl px-6 mb-10 md:mb-14 flex items-end justify-between">
+          <div>
+            <div className="paper-section-number mb-2">02 — Theoretical Foundations</div>
+            <h3 className="text-2xl md:text-3xl font-medium">What SERA is built on</h3>
           </div>
+          <p className="hidden md:block paper-meta">swipe →</p>
         </div>
 
-        <div className="h-full flex items-center">
-          <div ref={trackRef} className="flex gap-4 sm:gap-6 px-4 sm:px-6 md:px-16 will-change-transform" style={{ touchAction: "pan-y" }}>
-            {principles.map((p, i) => (
-              <article
-                key={p.title}
-                className="glass rounded-3xl p-6 sm:p-8 md:p-10 w-[85vw] sm:w-[60vw] md:w-[420px] shrink-0 flex flex-col justify-between min-h-[55vh] sm:min-h-[60vh]"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-8">
-                    <div className="h-12 w-12 rounded-2xl glass-strong flex items-center justify-center">
-                      <p.icon className="h-5 w-5 text-accent" />
-                    </div>
-                    <span className="paper-meta tabular-nums">
-                      {String(i + 1).padStart(2, "0")} / {String(principles.length).padStart(2, "0")}
-                    </span>
+        <div
+          className="flex gap-5 md:gap-6 overflow-x-auto snap-x snap-mandatory px-6 md:px-16 pb-6"
+          style={{ scrollbarWidth: "thin" }}
+        >
+          {principles.map((p, i) => (
+            <article
+              key={p.title}
+              className="armory-card p-7 md:p-9 w-[85vw] sm:w-[420px] md:w-[400px] shrink-0 snap-start flex flex-col justify-between min-h-[440px]"
+              style={{ wordBreak: "normal", overflowWrap: "break-word" }}
+            >
+              <div>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="h-11 w-11 rounded-lg bg-foreground/10 flex items-center justify-center">
+                    <p.icon className="h-5 w-5 text-foreground" />
                   </div>
-                  <h4 className="text-2xl font-medium mb-4 tracking-tight">{p.title}</h4>
-                  <p className="text-muted-foreground leading-relaxed">{p.body}</p>
+                  <span className="paper-meta tabular-nums">
+                    {String(i + 1).padStart(2, "0")} / {String(principles.length).padStart(2, "0")}
+                  </span>
                 </div>
-                <div className="paper-separator my-6"></div>
-                <p className="paper-citation">
-                  {p.ref}
-                </p>
-              </article>
-            ))}
-          </div>
+                <h4 className="text-2xl font-medium mb-4 tracking-tight">{p.title}</h4>
+                <p className="text-muted-foreground leading-relaxed">{p.body}</p>
+              </div>
+              <div className="paper-separator my-6"></div>
+              <p className="paper-citation">{p.ref}</p>
+            </article>
+          ))}
         </div>
       </section>
+
 
       {/* ARCHITECTURE - Enhanced with research paper style */}
       <section id="architecture" className="px-6 py-32 border-t border-border/50">

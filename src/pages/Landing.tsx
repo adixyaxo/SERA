@@ -67,7 +67,8 @@ const Landing = () => {
   const yVideo = useTransform(scrollY, [0, 1000], [0, 100]);
   const phoneVideoRef = useRef<HTMLVideoElement>(null);
   const prefersReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const [introDone, setIntroDone] = useState(prefersReduced);
+  const [introDone, setIntroDone] = useState(true); // hero always visible; intro overlays on top
+
 
 
   return (
@@ -179,7 +180,7 @@ const Landing = () => {
                 ].map((src, i) => (
                   <div key={i} className="flex">
                     <img
-                      className="h-14 w-24 md:h-16 md:w-32 object-cover rounded-md opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
+                      className="h-14 w-24 md:h-16 md:w-32 object-cover rounded-md opacity-95 hover:opacity-100 transition-opacity"
                       src={src}
                       alt={`Showcase ${i + 1}`}
                       loading="lazy"
@@ -187,6 +188,7 @@ const Landing = () => {
                     />
                   </div>
                 ))}
+
 
               </InfiniteSlider>
 
@@ -337,16 +339,17 @@ const Landing = () => {
                 transition={{ duration: 0.7, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className="armory-card overflow-hidden group"
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-neutral-800 to-neutral-950">
                   <img
                     src={c.img}
                     alt={c.title}
                     loading="lazy"
                     decoding="async"
-                    className="h-full w-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    className="h-full w-full object-cover group-hover:scale-[1.03] transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                 </div>
+
                 <div className="p-7">
                   <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground/80 mb-3">
                     //2026 · {c.tag}

@@ -76,7 +76,8 @@ All colors MUST be HSL.
     --secondary-foreground: 40 100% 98%;
 
     --muted: 0 0% 9%;
-    --muted-foreground: 350 2% 54%;        /* Silver Slate #8C8889 */
+    --muted-foreground: 0 0% 68%;          /* raised for WCAG AA on pitch black */
+
 
     /* Desaturated olive accent — badges/tags only, not CTAs */
     --accent: 46 8% 32%;                   /* Olive Drab #565449 */
